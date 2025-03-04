@@ -2550,6 +2550,8 @@ by this document. CAs SHOULD examine RFC 5280, Appendix B for further issues to 
 |-------------|-----------------------------------------|------------------------------|
 | `notBefore` | One day prior to the time of signing   | The time of signing          |
 | `notAfter`  | 2922 days (approx. 8 years)           | 9132 days (approx. 25 years) |
+Note: This restriction applies even in the event of generating a new Root CA Certificate for an
+existing subject and subjectPublicKeyInfo (e.g. reissuance). The new CA Certificate MUST conform to these rules.
 
 ### 7.1.2.1.2 *Root CA Extensions*
 
@@ -2659,10 +2661,6 @@ In all other cases, the extKeyUsage extension **MUST** be "restricted" as descri
 
 #### Table: Unrestricted Extended Key Usage Purposes (Affiliated Cross-Certified CA)
 
-### 7.1.2.2.4 Cross-Certified Subordinate CA Extended Key Usage - Unrestricted
-
-#### Table: Unrestricted Extended Key Usage Purposes (Affiliated Cross-Certified CA)
-
 | Key Purpose             | Description |
 |-------------------------|-------------|
 | `anyExtendedKeyUsage`   | The special extended key usage to indicate there are no restrictions applied. If present, this MUST be the only key usage present. |
@@ -2696,47 +2694,61 @@ In all other cases, the extKeyUsage extension **MUST** be "restricted" as descri
 
 Each included Extended Key Usage key usage purpose:
 
-- **MUST** apply in the context of the public Internet, unless:
+- **1. MUST** apply in the context of the public Internet, unless:
   - (i.a) The key usage purpose falls within an OID arc for which the Applicant demonstrates ownership.
   - (ii.b) The Applicant can otherwise demonstrate the right to assert the key usage purpose in a public context.
-- **MUST NOT** include semantics that mislead a Relying Party about the certificate information verified by the CA.
-- **MUST** be verified by the Issuing CA (i.e., the Issuing CA MUST verify the Cross-Certified Subordinate CA is authorized to assert the key usage purpose).
-- **CAs MUST NOT** include additional key usage purposes unless the CA is aware of a reason for including the key usage purpose in the Certificate.
+- **2. MUST NOT** include semantics that mislead a Relying Party about the certificate information verified by the CA.
+- **3. MUST** be verified by the Issuing CA (i.e., the Issuing CA MUST verify the Cross-Certified Subordinate CA is authorized to assert the key usage purpose).
+**CAs MUST NOT** include additional key usage purposes unless the CA is aware of a reason for including the key usage purpose in the Certificate.
 
----
+# 7.1.2.3 Technically Constrained Non-TLS Subordinate CA Certificate Profile
 
-### 7.1.2.2.6 Cross-Certified Subordinate CA Certificate Certificate Policies
+This Certificate Profile MAY be used when issuing a CA Certificate that will be considered Technically Constrained, and which will not be used to issue TLS certificates directly or transitively.
 
-The Certificate Policies extension MUST contain at least one `PolicyInformation`. Each `PolicyInformation` MUST match the following profile:
+| Field               | Description  |
+|---------------------|-------------|
+| **tbsCertificate**  |             |
+| **version**        | MUST be v3(2) |
+| **serialNumber**   | MUST be a non-sequential number greater than zero (0) and less than 2¹⁵⁹ containing at least 64 bits of output from a CSPRNG. |
+| **signature**      | See Section 7.1.3.2 |
+| **issuer**         | MUST be byte-for-byte identical to the subject field of the Issuing CA. See Section 7.1.4.1 |
+| **validity**       | See Section 7.1.2.10.1 |
+| **subject**        | See Section 7.1.2.10.2 |
+| **subjectPublicKeyInfo** | See Section 7.1.3.1 |
+| **issuerUniqueID** | MUST NOT be present |
+| **subjectUniqueID** | MUST NOT be present |
+| **extensions**     | See Section 7.1.2.3.1 |
+| **signatureAlgorithm** | Encoded value MUST be byte-for-byte identical to the `tbsCertificate.signature`. |
+| **signature**      |             |
 
-#### Table: No Policy Restrictions (Affiliated CA)
+| Extension                              | Presence       | Critical | Description                      |
+|----------------------------------------|---------------|----------|----------------------------------|
+| **authorityKeyIdentifier**            | MUST          | N        | See Section 7.1.2.11.1          |
+| **basicConstraints**                   | MUST          | Y        | See Section 7.1.2.10.4          |
+| **crlDistributionPoints**              | MUST          | N        | See Section 7.1.2.11.2          |
+| **keyUsage**                           | MUST          | Y        | See Section 7.1.2.10.7          |
+| **subjectKeyIdentifier**               | MUST          | N        | See Section 7.1.2.11.4          |
+| **extKeyUsage**                        | MUST⁴        | N        | See Section 7.1.2.3.3           |
+| **authorityInformationAccess**         | SHOULD        | N        | See Section 7.1.2.10.3          |
+| **certificatePolicies**                | MAY           | N        | See Section 7.1.2.3.2           |
+| **nameConstraints**                    | MAY           | *⁵       | See Section 7.1.2.10.8          |
+| **Signed Certificate Timestamp List**  | MAY           | N        | See Section 7.1.2.11.3          |
+| **Any other extension**                | NOT RECOMMENDED | -      | See Section 7.1.2.11.5          |
 
-| Field              | Presence | Contents |
-|-------------------|-----------|-------------|
-| `policyIdentifier` | MUST      | When the Issuing CA wishes to express that there are no policy restrictions, and if the Subordinate CA is an Affiliate of the Issuing CA, then the Issuing CA MAY use the `anyPolicy` Policy Identifier, which MUST be the only `PolicyInformation` value. |
-| `anyPolicy`       | MUST      |  |
-| `policyQualifiers` | NOT RECOMMENDED | If present, MUST contain only permitted `policyQualifiers` from the table below. |
+*7.1.2.3.2 Technically Constrained Non-TLS Subordinate CA Certificate Policies*
 
-#### Table: Policy Restricted
+If present, the Certificate Policies extension MUST be formatted as one of the two tables below:
 
-| Field              | Presence | Contents |
-|-------------------|-----------|-------------|
-| `policyIdentifier` | MUST      | One of the following policy identifiers: |
-| **A Reserved Certificate Policy Identifier** | MUST | The CA MUST include at least one Reserved Certificate Policy Identifier (see Section 7.1.6.1) associated with the given Subscriber Certificate type (see Section 7.1.2.7.1) transitively issued by this Certificate. |
-| `anyPolicy`       | MUST NOT | The `anyPolicy` Policy Identifier MUST NOT be present. |
-| Any other identifier | MAY | If present, MUST be defined by the CA and documented by the CA in its Certificate Policy and/or Certification Practice Statement. |
-| `policyQualifiers` | NOT RECOMMENDED | If present, MUST contain only permitted `policyQualifiers` from the table below. |
+Table: No Policy Restrictions (Affiliated CA)
 
-This Profile **RECOMMENDS** that the first `PolicyInformation` value within the Certificate Policies extension contains the Reserved Certificate Policy Identifier (see 7.1.6.1). Regardless of the order of `PolicyInformation` values, the Certificate Policies extension **MUST** include at least one Reserved Certificate Policy Identifier.
 
-If `policyQualifiers` is permitted and present within a `PolicyInformation` field, it MUST be formatted as follows:
+  
 
-#### Table: Permitted policyQualifiers
 
-| Qualifier ID                    | Presence | Field Type | Contents |
-|--------------------------------|-----------|-------------|-------------|
-| `id-qt-cps` (OID: 1.3.6.1.5.5.7.2.1) | MAY | IA5String | The HTTP or HTTPS URL for the Issuing CA's Certificate Policies, Certification Practice Statement, Relying Party Agreement, or other pointer to online policy information provided by the Issuing CA. |
-| Any other qualifier            | MUST NOT | - | - |
+
+
+
+
 
 ### 7.1.2.7.10. Subscriber Certificate Extended Key Usage
 
