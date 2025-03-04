@@ -2511,8 +2511,7 @@ of the following certificate profiles, which incorporate, and are derived from R
 all normative requirements imposed by RFC 5280 shall apply, in addition to the normative requirements imposed
 by this document. CAs SHOULD examine RFC 5280, Appendix B for further issues to be aware of.
 
-# CA Certificates
-
+**CA Certificates**
 - **Section 7.1.2.1** – Root CA Certificate Profile
 - **Subordinate CA Certificates**
   - **Cross Certificates**
@@ -2531,7 +2530,7 @@ by this document. CAs SHOULD examine RFC 5280, Appendix B for further issues to 
 | **Field**               | **Description** |
 |-------------------------|---------------|
 | **tbsCertificate**      |               |
-| version                | MUST be v3(2) |
+| **version**                | MUST be v3(2) |
 | **serialNumber**        | MUST be a non-sequential number greater than zero (0) and less than 2¹⁵⁹ containing at least 64 bits of output from a CSPRNG. |
 | **signature**           | See Section 7.1.3.2 |
 | **issuer**             | Encoded value MUST be byte-for-byte identical to the encoded subject |
@@ -2550,6 +2549,7 @@ by this document. CAs SHOULD examine RFC 5280, Appendix B for further issues to 
 |-------------|-----------------------------------------|------------------------------|
 | `notBefore` | One day prior to the time of signing   | The time of signing          |
 | `notAfter`  | 2922 days (approx. 8 years)           | 9132 days (approx. 25 years) |
+
 Note: This restriction applies even in the event of generating a new Root CA Certificate for an
 existing subject and subjectPublicKeyInfo (e.g. reissuance). The new CA Certificate MUST conform to these rules.
 
@@ -2664,9 +2664,9 @@ In all other cases, the extKeyUsage extension **MUST** be "restricted" as descri
 | Key Purpose             | Description |
 |-------------------------|-------------|
 | `anyExtendedKeyUsage`   | The special extended key usage to indicate there are no restrictions applied. If present, this MUST be the only key usage present. |
-| Any other value        | CAs MUST NOT include any other key usage with the `anyExtendedKeyUsage` key usage present. Alternatively, if the Issuing CA does not use this form, then the Extended Key Usage extension, if present, MUST be encoded as specified in Section 7.1.2.2.5. |
+| Any other value        | CAs MUST NOT include any other key usage with the `anyExtendedKeyUsage` key usage present. |
 
----
+Alternatively, if the Issuing CA does not use this form, then the Extended Key Usage extension, if present, MUST be encoded as specified in Section 7.1.2.2.5. 
 
 ### 7.1.2.2.5 Cross-Certified Subordinate CA Extended Key Usage
 
@@ -2683,7 +2683,7 @@ In all other cases, the extKeyUsage extension **MUST** be "restricted" as descri
 | `anyExtendedKeyUsage`   | MUST NOT be present. |
 | Any other value         | NOT RECOMMENDED. |
 
-#### Restricted Non-TLS Cross-Certified Subordinate CA Extended Key Usage Purposes
+#### Table: Restricted Non-TLS Cross-Certified Subordinate CA Extended Key Usage Purposes
 *(i.e., for restricted Cross-Certified Subordinate CAs not issuing TLS certificates directly or transitively)*
 
 | Key Purpose              | Description |
@@ -2694,12 +2694,16 @@ In all other cases, the extKeyUsage extension **MUST** be "restricted" as descri
 
 Each included Extended Key Usage key usage purpose:
 
-- **1. MUST** apply in the context of the public Internet, unless:
-  - (i.a) The key usage purpose falls within an OID arc for which the Applicant demonstrates ownership.
-  - (ii.b) The Applicant can otherwise demonstrate the right to assert the key usage purpose in a public context.
-- **2. MUST NOT** include semantics that mislead a Relying Party about the certificate information verified by the CA.
-- **3. MUST** be verified by the Issuing CA (i.e., the Issuing CA MUST verify the Cross-Certified Subordinate CA is authorized to assert the key usage purpose).
+1. **MUST** apply in the context of the public Internet (e.g. **MUST NOT** be for a service that is only valid in a privately managed network), unless:  
+   - a. the key usage purpose falls within an OID arc for which the Applicant demonstrates ownership; or,  
+   - b. the Applicant can otherwise demonstrate the right to assert the key usage purpose in a public context.
+
+2. **MUST NOT** include semantics that will mislead the Relying Party about the certificate information verified by the CA, such as including a key usage purpose asserting storage on a smart card, where the CA is not able to verify that the corresponding Private Key is confined to such hardware due to remote issuance.
+
+3. **MUST** be verified by the Issuing CA (i.e. the Issuing CA **MUST** verify the Cross-Certified Subordinate CA is authorized to assert the key usage purpose).
+
 **CAs MUST NOT** include additional key usage purposes unless the CA is aware of a reason for including the key usage purpose in the Certificate.
+
 
 # 7.1.2.3 Technically Constrained Non-TLS Subordinate CA Certificate Profile
 
@@ -2721,6 +2725,8 @@ This Certificate Profile MAY be used when issuing a CA Certificate that will be 
 | **signatureAlgorithm** | Encoded value MUST be byte-for-byte identical to the `tbsCertificate.signature`. |
 | **signature**      |             |
 
+# 7.1.2.3.2 Technically Constrained Non-TLS Subordinate CA Certificate Policies
+
 | Extension                              | Presence       | Critical | Description                      |
 |----------------------------------------|---------------|----------|----------------------------------|
 | **authorityKeyIdentifier**            | MUST          | N        | See Section 7.1.2.11.1          |
@@ -2735,7 +2741,7 @@ This Certificate Profile MAY be used when issuing a CA Certificate that will be 
 | **Signed Certificate Timestamp List**  | MAY           | N        | See Section 7.1.2.11.3          |
 | **Any other extension**                | NOT RECOMMENDED | -      | See Section 7.1.2.11.5          |
 
-*7.1.2.3.2 Technically Constrained Non-TLS Subordinate CA Certificate Policies*
+
 
 If present, the Certificate Policies extension MUST be formatted as one of the two tables below:
 
@@ -2764,7 +2770,7 @@ Table: No Policy Restrictions (Affiliated CA)
 | id-qt-cps (OID: 1.3.6.1.5.5.7.2.1)    | MAY        | IA5String  | The HTTP or HTTPS URL for the Issuing CA's Certificate Policies, Certification Practice Statement, Relying Party Agreement, or other pointer to online policy information provided by the Issuing CA. |
 | Any other qualifier                    | MUST NOT   | -          | -         |
 
-*7.1.2.3.3 Technically Constrained Non-TLS Subordinate CA Extended Key Usage*
+#7.1.2.3.3 Technically Constrained Non-TLS Subordinate CA Extended Key Usage
 
 The Issuing CA **MUST** verify that the Subordinate CA Certificate is authorized to issue certificates for each included extended key usage purpose. Multiple, independent key purposes (e.g. id-kp-timeStamping and id-kp-codeSigning) are **NOT RECOMMENDED**.
 
@@ -2776,7 +2782,6 @@ The Issuing CA **MUST** verify that the Subordinate CA Certificate is authorized
 | **Precertificate Signing Certificate** | 1.3.6.1.4.1.11129.2.4.4 | MUST NOT  |
 | **Any other value**                   | -                       | MAY       |
 
----
 
 ### 7.1.2.4 Technically Constrained Precertificate Signing CA Certificate Profile
 
@@ -2802,7 +2807,7 @@ As noted in RFC 6962, Section 3.2, the signature field of a Precertificate is no
 | **signatureAlgorithm** | Encoded value MUST be byte-for-byte identical to the `tbsCertificate.signature`. |
 | **signature**        |             |
 
-*7.1.2.4.2 Technically Constrained Precertificate Signing CA Extended Key Usage*
+# 7.1.2.4.2 Technically Constrained Precertificate Signing CA Extended Key Usage
 
 | Key Purpose                         | OID                     | Presence  |
 |--------------------------------------|-------------------------|-----------|
@@ -2829,7 +2834,7 @@ This Certificate Profile **MAY** be used when issuing a CA Certificate that will
 | **signatureAlgorithm** | Encoded value MUST be byte-for-byte identical to the `tbsCertificate.signature`. |
 | **signature**        |             |
 
-*7.1.2.5.1 Technically Constrained TLS Subordinate CA Extensions*
+# 7.1.2.5.1 Technically Constrained TLS Subordinate CA Extensions
 
 | Extension                | Presence  | Critical | Description                      |
 |--------------------------|----------|----------|----------------------------------|
@@ -2840,17 +2845,12 @@ This Certificate Profile **MAY** be used when issuing a CA Certificate that will
 | **keyUsage**              | MUST     | Y        | See Section 7.1.2.10.7          |
 | **subjectKeyIdentifier**   | MUST     | N        | See Section 7.1.2.11.4          |
 | **extKeyUsage**           | MUST⁸    | N        | See Section 7.1.2.10.6          |
-
----
-
-| Extension                               | Presence        | Critical | Description                      |
-|-----------------------------------------|----------------|----------|----------------------------------|
 | **nameConstraints**                      | MUST           | *⁹      | See Section 7.1.2.5.2           |
 | **authorityInformationAccess**           | SHOULD         | N        | See Section 7.1.2.10.3          |
 | **Signed Certificate Timestamp List**    | MAY            | N        | See Section 7.1.2.11.3          |
 | **Any other extension**                  | NOT RECOMMENDED | -        | See Section 7.1.2.11.5          |
 
-*7.1.2.5.2 Technically Constrained TLS Subordinate CA Name Constraints*
+# 7.1.2.5.2 Technically Constrained TLS Subordinate CA Name Constraints
 
 For a TLS Subordinate CA to be Technically Constrained, Name Constraints extension **MUST** be encoded as follows.  
 As an explicit exception from RFC 5280, this extension **SHOULD** be marked critical, but **MAY** be marked non-critical if compatibility with certain legacy applications that do not support Name Constraints is necessary.
@@ -2867,12 +2867,6 @@ As an explicit exception from RFC 5280, this extension **SHOULD** be marked crit
 | **excludedSubtrees** | The `excludedSubtrees` **MUST** contain at least one `GeneralSubtree` for each of the `dNSName` and `iPAddress` GeneralName name types, unless there is an instance present of that name type in the `permittedSubtrees`. The `directoryName` name type is **NOT RECOMMENDED**. |
 | **GeneralSubtree** | The requirements for a `GeneralSubtree` that appears within a `permittedSubtrees`. |
 | **base**          | See following table. |
-
-
-#### Table: GeneralSubtree constraints
-
-| Field     | Description  |
-|----------|-------------|
 | **minimum** | **MUST NOT** be present. |
 | **maximum** | **MUST NOT** be present. |
 
