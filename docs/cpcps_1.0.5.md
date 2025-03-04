@@ -2741,6 +2741,1090 @@ If present, the Certificate Policies extension MUST be formatted as one of the t
 
 Table: No Policy Restrictions (Affiliated CA)
 
+| Field             | Presence        | Contents  |
+|------------------|----------------|-----------|
+| **policyIdentifier** | MUST          | When the Issuing CA wishes to express that there are no policy restrictions, the Subordinate CA MUST be an Affiliate of the Issuing CA. The Certificate Policies extension MUST contain only a single PolicyInformation value, which MUST contain the anyPolicy Policy Identifier. |
+| **anyPolicy**    | MUST          |           |
+| **policyQualifiers** | NOT RECOMMENDED | If present, MUST contain only permitted policyQualifiers from the table below. |
+
+**Table: Policy Restricted**
+
+| Field                                | Presence       | Contents  |
+|--------------------------------------|---------------|-----------|
+| **policyIdentifier**                 | MUST          | One of the following policy identifiers: |
+| A Reserved Certificate Policy Identifier | MUST NOT     |           |
+| **anyPolicy**                        | MUST NOT      | The anyPolicy Policy Identifier MUST NOT be present. |
+| **Any other identifier**             | MAY           | If present, MUST be documented by the CA in its Certificate Policy and/or Certification Practice Statement. |
+| **policyQualifiers**                 | NOT RECOMMENDED | If present, MUST contain only permitted policyQualifiers from the table below. |
+
+**Table: Permitted policyQualifiers**
+
+| Qualifier ID                           | Presence    | Field Type | Contents  |
+|----------------------------------------|------------|------------|-----------|
+| id-qt-cps (OID: 1.3.6.1.5.5.7.2.1)    | MAY        | IA5String  | The HTTP or HTTPS URL for the Issuing CA's Certificate Policies, Certification Practice Statement, Relying Party Agreement, or other pointer to online policy information provided by the Issuing CA. |
+| Any other qualifier                    | MUST NOT   | -          | -         |
+
+*7.1.2.3.3 Technically Constrained Non-TLS Subordinate CA Extended Key Usage*
+
+The Issuing CA **MUST** verify that the Subordinate CA Certificate is authorized to issue certificates for each included extended key usage purpose. Multiple, independent key purposes (e.g. id-kp-timeStamping and id-kp-codeSigning) are **NOT RECOMMENDED**.
+
+| Key Purpose                          | OID                     | Presence  |
+|--------------------------------------|-------------------------|-----------|
+| **id-kp-serverAuth**                 | 1.3.6.1.5.5.7.3.1       | MUST NOT  |
+| **id-kp-OCSPSigning**                | 1.3.6.1.5.5.7.3.9       | MUST NOT  |
+| **anyExtendedKeyUsage**               | 2.5.29.37.0             | MUST NOT  |
+| **Precertificate Signing Certificate** | 1.3.6.1.4.1.11129.2.4.4 | MUST NOT  |
+| **Any other value**                   | -                       | MAY       |
+
+---
+
+### 7.1.2.4 Technically Constrained Precertificate Signing CA Certificate Profile
+
+This Certificate Profile **MUST** be used when issuing a CA Certificate that will be used as a Precertificate Signing CA, as described in RFC 6962, Section 3.1. If a CA Certificate conforms to this profile, it is considered Technically Constrained.
+
+A Precertificate Signing CA **MUST** only be used to sign Precertificates, as defined in Section 7.1.2.9. When a Precertificate Signing CA issues a Precertificate, it shall be interpreted as if the Issuing CA of the Precertificate Signing CA has issued a Certificate with a matching `tbsCertificate` of the Precertificate, after applying the modifications specified in RFC 6962, Section 3.2.
+
+As noted in RFC 6962, Section 3.2, the signature field of a Precertificate is not altered as part of these modifications. As such, the Precertificate Signing CA **MUST** use the same signature algorithm as the Issuing CA when issuing Precertificates, and, correspondingly, **MUST** use a public key of the same public key algorithm as the Issuing CA, although **MAY** use a different CA Key Pair.
+
+| Field                  | Description  |
+|------------------------|-------------|
+| **tbsCertificate**     |             |
+| **version**           | MUST be v3(2) |
+| **serialNumber**      | MUST be a non-sequential number greater than zero (0) and less than 2¹⁵⁹ containing at least 64 bits of output from a CSPRNG. |
+| **signature**         | See Section 7.1.3.2 |
+| **issuer**           | MUST be byte-for-byte identical to the subject field of the Issuing CA. See Section 7.1.4.1 |
+| **validity**         | See Section 7.1.2.10.1 |
+| **subject**          | See Section 7.1.2.10.2 |
+| **subjectPublicKeyInfo** | The algorithm identifier MUST be byte-for-byte identical to the algorithm identifier of the subjectPublicKeyInfo field of the Issuing CA. See Section 7.1.3.1 |
+| **issuerUniqueID**   | MUST NOT be present |
+| **subjectUniqueID**  | MUST NOT be present |
+| **extensions**       | See Section 7.1.2.4.1 |
+| **signatureAlgorithm** | Encoded value MUST be byte-for-byte identical to the `tbsCertificate.signature`. |
+| **signature**        |             |
+
+*7.1.2.4.2 Technically Constrained Precertificate Signing CA Extended Key Usage*
+
+| Key Purpose                         | OID                     | Presence  |
+|--------------------------------------|-------------------------|-----------|
+| **Precertificate Signing Certificate** | 1.3.6.1.4.1.11129.2.4.4 | MUST      |
+| **Any other value**                   | -                       | MUST NOT  |
+
+### 7.1.2.5 Technically Constrained TLS Subordinate CA Certificate Profile
+
+This Certificate Profile **MAY** be used when issuing a CA Certificate that will be considered Technically Constrained, and which will be used to issue TLS certificates directly or transitively.
+
+| Field                  | Description  |
+|------------------------|-------------|
+| **tbsCertificate**     |             |
+| **version**           | MUST be v3(2) |
+| **serialNumber**      | MUST be a non-sequential number greater than zero (0) and less than 2¹⁵⁹ containing at least 64 bits of output from a CSPRNG. |
+| **signature**         | See Section 7.1.3.2 |
+| **issuer**           | MUST be byte-for-byte identical to the subject field of the Issuing CA. See Section 7.1.4.1 |
+| **validity**         | See Section 7.1.2.10.1 |
+| **subject**          | See Section 7.1.2.10.2 |
+| **subjectPublicKeyInfo** | See Section 7.1.3.1 |
+| **issuerUniqueID**   | MUST NOT be present |
+| **subjectUniqueID**  | MUST NOT be present |
+| **extensions**       | See Section 7.1.2.5.1 |
+| **signatureAlgorithm** | Encoded value MUST be byte-for-byte identical to the `tbsCertificate.signature`. |
+| **signature**        |             |
+
+*7.1.2.5.1 Technically Constrained TLS Subordinate CA Extensions*
+
+| Extension                | Presence  | Critical | Description                      |
+|--------------------------|----------|----------|----------------------------------|
+| **authorityKeyIdentifier**  | MUST     | N        | See Section 7.1.2.11.1          |
+| **basicConstraints**       | MUST     | Y        | See Section 7.1.2.10.4          |
+| **certificatePolicies**    | MUST     | N        | See Section 7.1.2.10.5          |
+| **crlDistributionPoints**  | MUST     | N        | See Section 7.1.2.11.2          |
+| **keyUsage**              | MUST     | Y        | See Section 7.1.2.10.7          |
+| **subjectKeyIdentifier**   | MUST     | N        | See Section 7.1.2.11.4          |
+| **extKeyUsage**           | MUST⁸    | N        | See Section 7.1.2.10.6          |
+
+---
+
+| Extension                               | Presence        | Critical | Description                      |
+|-----------------------------------------|----------------|----------|----------------------------------|
+| **nameConstraints**                      | MUST           | *⁹      | See Section 7.1.2.5.2           |
+| **authorityInformationAccess**           | SHOULD         | N        | See Section 7.1.2.10.3          |
+| **Signed Certificate Timestamp List**    | MAY            | N        | See Section 7.1.2.11.3          |
+| **Any other extension**                  | NOT RECOMMENDED | -        | See Section 7.1.2.11.5          |
+
+*7.1.2.5.2 Technically Constrained TLS Subordinate CA Name Constraints*
+
+For a TLS Subordinate CA to be Technically Constrained, Name Constraints extension **MUST** be encoded as follows.  
+As an explicit exception from RFC 5280, this extension **SHOULD** be marked critical, but **MAY** be marked non-critical if compatibility with certain legacy applications that do not support Name Constraints is necessary.
+
+#### Table: nameConstraints requirements
+
+| Field               | Description  |
+|--------------------|-------------|
+| **permittedSubtrees** | The `permittedSubtrees` **MUST** contain at least one `GeneralSubtree` for both of the `dNSName` and `iPAddress` GeneralName name types, **UNLESS** the specified GeneralName name type appears within the `excludedSubtrees` to exclude all names of that name type. Additionally, the `permittedSubtrees` **MUST** contain at least one `GeneralSubtree` of the `directoryName` GeneralName name type. |
+| **GeneralSubtree** | The requirements for a `GeneralSubtree` that appears within a `permittedSubtrees`. |
+| **base**          | See following table. |
+| **minimum**       | **MUST NOT** be present. |
+| **maximum**       | **MUST NOT** be present. |
+| **excludedSubtrees** | The `excludedSubtrees` **MUST** contain at least one `GeneralSubtree` for each of the `dNSName` and `iPAddress` GeneralName name types, unless there is an instance present of that name type in the `permittedSubtrees`. The `directoryName` name type is **NOT RECOMMENDED**. |
+| **GeneralSubtree** | The requirements for a `GeneralSubtree` that appears within a `permittedSubtrees`. |
+| **base**          | See following table. |
+
+
+#### Table: GeneralSubtree constraints
+
+| Field     | Description  |
+|----------|-------------|
+| **minimum** | **MUST NOT** be present. |
+| **maximum** | **MUST NOT** be present. |
+
+The following table contains the requirements for the `GeneralName` that appears within the `base` of  
+a `GeneralSubtree` in either the `permittedSubtrees` or `excludedSubtrees`.
+
+#### Table: GeneralName requirements for the base field
+
+| Name Type      | Presence | Permitted Subtrees | Excluded Subtrees | Entire Namespace Exclusion |
+|---------------|----------|--------------------|--------------------|----------------------------|
+| **dNSName**   | MUST     | The CA **MUST** confirm that the Applicant has registered the `dNSName` or has been authorized by the domain registrant to act on the registrant's behalf. See Section 3.2.2.4. | If at least one `dNSName` instance is present in the `permittedSubtrees`, the CA **MAY** indicate one or more subordinate domains to be excluded. If no `dNSName` instance is present in the `permittedSubtrees`, then the CA **MUST** include a zero-length `dNSName` to indicate no domain names are permitted. | |
+| **iPAddress** | MUST     | The CA **MUST** confirm that the Applicant has been assigned the `iPAddress` range or has been authorized by the assigner to act on the assignee's behalf. See Section 3.2.2.5. | If at least one `iPAddress` instance is present in the `permittedSubtrees`, the CA **MAY** indicate one or more subdivisions of those ranges to be excluded. If no IPv4 `iPAddress` is present in the `permittedSubtrees`, the CA **MUST** include an `iPAddress` of 8 zero octets, indicating the IPv4 range of `0.0.0.0/0` being excluded. If no IPv6 `iPAddress` is present in the `permittedSubtrees`, the CA **MUST** include an `iPAddress` of 32 zero octets, indicating the IPv6 range of `::0/0` being excluded. | |
+| **directoryName** | MUST  | The CA **MUST** confirm the Applicant's and/or Subsidiary's name attributes such that all certificates issued will comply with the relevant Certificate Profile (see Section 7.1.2), including Name Forms (See Section 7.1.4). | It is **NOT RECOMMENDED** to include values within `excludedSubtrees`. | The CA **MUST** include a value within `permittedSubtrees`, and as such, this does not apply. See the `Excluded Subtrees` requirements for more. |
+| **otherName** | NOT RECOMMENDED | See below | See below | See below |
+| **Any other value** | MUST NOT | - | - | - |
+
+Any otherName, if present:
+
+1. **MUST** apply in the context of the public Internet, unless:  
+   a. The `type-id` falls within an OID arc for which the Applicant demonstrates ownership, or  
+   b. The Applicant can otherwise demonstrate the right to assert the data in a public context.
+2. **MUST NOT** include semantics that will mislead the Relying Party about certificate information verified by the CA.
+3. **MUST** be DER encoded according to the relevant ASN.1 module defining the `otherName type-id` and value.
+CAs **SHALL NOT** include additional names unless the CA is aware of a reason for including the data in the Certificate.
+
+### 7.1.2.6 TLS Subordinate CA Certificate Profile
+
+| Field                  | Description  |
+|------------------------|-------------|
+| **tbsCertificate**     |             |
+| **version**           | MUST be v3(2) |
+| **serialNumber**      | MUST be a non-sequential number greater than zero (0) and less than 2¹⁵⁹ containing at least 64 bits of output from a CSPRNG. |
+| **signature**         | See Section 7.1.3.2 |
+| **issuer**           | MUST be byte-for-byte identical to the subject field of the Issuing CA. See Section 7.1.4.1 |
+| **validity**         | See Section 7.1.2.10.1 |
+| **subject**          | See Section 7.1.2.10.2 |
+| **subjectPublicKeyInfo** | See Section 7.1.3.1 |
+| **issuerUniqueID**   | MUST NOT be present |
+| **subjectUniqueID**  | MUST NOT be present |
+| **extensions**       | See Section 7.1.2.6.1 |
+| **signatureAlgorithm** | Encoded value MUST be byte-for-byte identical to the `tbsCertificate.signature`. |
+| **signature**        |             |
+
+---
+
+### 7.1.2.6.1 TLS Subordinate CA Extensions
+
+| Extension                              | Presence       | Critical | Description                      |
+|----------------------------------------|---------------|----------|----------------------------------|
+| **authorityKeyIdentifier**             | MUST          | N        | See Section 7.1.2.11.1          |
+| **basicConstraints**                   | MUST          | Y        | See Section 7.1.2.10.4          |
+| **certificatePolicies**                | MUST          | N        | See Section 7.1.2.10.5          |
+| **crlDistributionPoints**              | MUST          | N        | See Section 7.1.2.11.2          |
+| **keyUsage**                           | MUST          | Y        | See Section 7.1.2.10.7          |
+| **subjectKeyIdentifier**               | MUST          | N        | See Section 7.1.2.11.4          |
+| **extKeyUsage**                        | MUST¹⁰       | N        | See Section 7.1.2.10.6          |
+| **authorityInformationAccess**         | SHOULD        | N        | See Section 7.1.2.10.3          |
+| **nameConstraints**                    | MAY           | *¹¹      | See Section 7.1.2.10.8          |
+| **Signed Certificate Timestamp List**  | MAY           | N        | See Section 7.1.2.11.3          |
+| **Any other extension**                | NOT RECOMMENDED | -      | See Section 7.1.2.11.5          |
+
+### 7.1.2.7 Subscriber (Server) Certificate Profile
+
+| Field                  | Description  |
+|------------------------|-------------|
+| **tbsCertificate**     |             |
+| **version**           | MUST be v3(2) |
+| **serialNumber**      | MUST be a non-sequential number greater than zero (0) and less than 2¹⁵⁹ containing at least 64 bits of output from a CSPRNG. |
+| **signature**         | See Section 7.1.3.2 |
+| **issuer**           | MUST be byte-for-byte identical to the subject field of the Issuing CA. See Section 7.1.4.1 |
+| **validity**         |             |
+| **notBefore**        | A value within 48 hours of the certificate signing operation. |
+| **notAfter**         | See Section 6.3.2 |
+| **subject**          | See Section 7.1.2.7.1 |
+| **subjectPublicKeyInfo** | See Section 7.1.3.1 |
+| **issuerUniqueID**   | MUST NOT be present |
+| **subjectUniqueID**  | MUST NOT be present |
+| **extensions**       | See Section 7.1.2.7.6 |
+| **signatureAlgorithm** | Encoded value MUST be byte-for-byte identical to the `tbsCertificate.signature`. |
+| **signature**        |             |
+
+### 7.1.2.7.1 Subscriber Certificate Types
+
+There are four types of Subscriber Certificates that may be issued, which vary based on the amount of Subject Information that is included.  
+Each of these certificate types shares a common profile, with three exceptions:  
+1. The subject name fields that may occur  
+2. How those fields are validated  
+3. The contents of the `certificatePolicies` extension  
+
+| Type                   | Description                         |
+|------------------------|-------------------------------------|
+| **Domain Validated (DV)**  | See Section 7.1.2.7.2            |
+| **Individual Validated (IV)**  | See Section 7.1.2.7.3        |
+| **Organization Validated (OV)**  | See Section 7.1.2.7.4    |
+| **Extended Validation (EV)**  | See Section 7.1.2.7.5        |
+
+**Note:** Although each Subscriber Certificate type varies in Subject Information, all Certificates provide the same level of assurance of the device identity (domain name and/or IP address).
+
+---
+
+### 7.1.2.7.2 Domain Validated (DV)
+
+For a Subscriber Certificate to be **Domain Validated**, it **MUST** meet the following profile:
+
+| Field                | Requirements  |
+|----------------------|--------------|
+| **subject**         | See following table. |
+| **certificatePolicies** | **MUST** be present. **MUST** assert the Reserved Certificate Policy Identifier of `2.23.140.1.2.1` as a `policyIdentifier`. See Section 7.1.2.7.9. |
+| **All other extensions** | See Section 7.1.2.7.6 |
+
+All subject names **MUST** be encoded as specified in Section 7.1.4.
+
+The following table details the acceptable `AttributeTypes` that may appear within the `type` field of an `AttributeTypeAndValue`, as well as the contents permitted within the `value` field.
+
+#### Table: Domain Validated Subject Attributes
+
+| Attribute Name  | Presence | Value | Verification |
+|----------------|----------|--------|-------------|
+| **countryName** | MAY      | The two-letter ISO 3166-1 country code for the country associated with the Subject. | Section 3.2.2.3 |
+| **commonName**  | NOT RECOMMENDED | If present, **MUST** contain a value derived from the `subjectAltName` extension according to Section 7.1.4.3. | |
+| **Any other attribute** | MUST NOT | - | - |
+
+---
+
+### 7.1.2.7.3 Individual Validated (IV)
+
+For a Subscriber Certificate to be **Individual Validated**, it **MUST** meet the following profile:
+
+| Field                | Requirements  |
+|----------------------|--------------|
+| **subject**         | See following table. |
+| **certificatePolicies** | **MUST** be present. **MUST** assert the Reserved Certificate Policy Identifier of `2.23.140.1.2.3` as a `policyIdentifier`. See Section 7.1.2.7.9. |
+| **All other extensions** | See Section 7.1.2.7.6 |
+
+All subject names **MUST** be encoded as specified in Section 7.1.4.
+
+The following table details the acceptable `AttributeTypes` that may appear within the `type` field of an `AttributeTypeAndValue`, as well as the contents permitted within the `value` field.
+
+#### Table: Individual Validated Subject Attributes
+
+| Attribute Name          | Presence   | Value | Verification |
+|------------------------|------------|--------|-------------|
+| **countryName**        | MUST       | The two-letter ISO 3166-1 country code for the country associated with the Subject. If a country is not represented by an official ISO 3166-1 country code, the CA **MUST** specify the ISO 3166-1 user-assigned code `XX`, indicating that an official ISO 3166-1 alpha-2 code has not been assigned. | Section 3.2.3 |
+| **stateOrProvinceName** | MUST / MAY | **MUST** be present if `localityName` is absent, **MAY** be present otherwise. If present, **MUST** contain the Subject's state or province information. | Section 3.2.3 |
+| **localityName**        | MUST / MAY | **MUST** be present if `stateOrProvinceName` is absent, **MAY** be present otherwise. If present, **MUST** contain the Subject's locality information. | Section 3.2.3 |
+| **postalCode**          | NOT RECOMMENDED | If present, **MUST** contain the Subject's zip or postal information. | Section 3.2.3 |
+| **streetAddress**       | NOT RECOMMENDED | If present, **MUST** contain the Subject's street address information. Multiple instances **MAY** be present. | Section 3.2.3 |
+| **organizationName**    | NOT RECOMMENDED | If present, **MUST** contain the Subject's name or DBA. | Section 3.2.3 |
+| **surname**            | MUST       | The Subject's surname. | Section 3.2.3 |
+| **givenName**          | MUST       | The Subject's given name. | Section 3.2.3 |
+| **organizationalUnitName** | MUST NOT  | - | - |
+| **commonName**         | NOT RECOMMENDED | If present, **MUST** contain a value derived from the `subjectAltName` extension according to Section 7.1.4.3. | |
+| **Any other attribute** | NOT RECOMMENDED | - | See Section 7.1.4.4 |
+
+---
+
+Additionally, `subject` Attributes **MUST NOT** contain only metadata such as `.` (dot), `-` (hyphen), and `' '` (space) characters,  
+or any other indication that the value is absent, incomplete, or not applicable.
+
+### 7.1.2.7.4 Organization Validated (OV)
+
+For a Subscriber Certificate to be **Organization Validated**, it **MUST** meet the following profile:
+
+| Field                | Requirements  |
+|----------------------|--------------|
+| **subject**         | See following table. |
+| **certificatePolicies** | **MUST** be present. **MUST** assert the Reserved Certificate Policy Identifier of `2.23.140.1.2.2` as a `policyIdentifier`. See Section 7.1.2.7.9. |
+| **All other extensions** | See Section 7.1.2.7.6 |
+
+All subject names **MUST** be encoded as specified in Section 7.1.4.
+
+---
+
+#### Table: Organization Validated Subject Attributes
+
+| Attribute Name         | Presence  | Value | Verification |
+|-----------------------|----------|--------|-------------|
+| **domainComponent**   | MAY      | If present, this field **MUST** contain a Domain Label from a Domain Name. The `domainComponent` fields for the Domain Name **MUST** be in a single ordered sequence containing all Domain Labels from the Domain Name. The Domain Labels **MUST** be encoded in the reverse order to the on-wire representation of domain names in the DNS protocol, so that the Domain Label closest to the root is encoded first. Multiple instances **MAY** be present. | Section 3.2 |
+| **countryName**       | MUST     | The two-letter ISO 3166-1 country code for the country associated with the Subject. If a Country is not represented by an official ISO 3166-1 country code, the CA **MUST** specify the ISO 3166-1 user-assigned code of `XX`, indicating that an official ISO 3166-1 alpha-2 code has not been assigned. | Section 3.2.2.1 |
+| **stateOrProvinceName** | MUST / MAY | **MUST** be present if `localityName` is absent, **MAY** be present otherwise. If present, **MUST** contain the Subject's state or province information. | Section 3.2.2.1 |
+| **localityName**      | MUST / MAY | **MUST** be present if `stateOrProvinceName` is absent, **MAY** be present otherwise. If present, **MUST** contain the Subject's locality information. | Section 3.2.2.1 |
+| **postalCode**        | NOT RECOMMENDED | If present, **MUST** contain the Subject's zip or postal information. | Section 3.2.2.1 |
+| **streetAddress**     | NOT RECOMMENDED | If present, **MUST** contain the Subject's street address information. Multiple instances **MAY** be present. | Section 3.2.2.1 |
+| **organizationName**  | MUST     | The Subject's name or DBA. The CA **MAY** include information in this field that differs slightly from the verified name, such as common variations or abbreviations, provided that the CA documents the difference and any abbreviations used are locally accepted abbreviations; e.g. if the official record shows "Company Name Incorporated", the CA **MAY** use "Company Name Inc." or "Company Name". | Section 3.2.2.2 |
+| **surname**          | MUST NOT  | - | - |
+| **givenName**        | MUST NOT  | - | - |
+| **organizationalUnitName** | MUST NOT | - | - |
+| **commonName**       | NOT RECOMMENDED | If present, **MUST** contain a value derived from the `subjectAltName` extension according to Section 7.1.4.3. | |
+| **Any other attribute** | NOT RECOMMENDED | - | See Section 7.1.4.4 |
+
+---
+
+Additionally, `subject` Attributes **MUST NOT** contain only metadata such as `.` (dot), `-` (hyphen), and `' '` (space) characters,  
+or any other indication that the value is absent, incomplete, or not applicable.
+
+### 7.1.2.7.5 Extended Validation (EV)
+
+For a Subscriber Certificate to be **Extended Validation**, it **MUST** comply with the Certificate Profile specified in the  
+then-current version of the **Guidelines for the Issuance and Management of Extended Validation Certificates**.  
+In addition, it **MUST** meet the following profile:
+
+| Field                | Requirements  |
+|----------------------|--------------|
+| **subject**         | See Guidelines for the Issuance and Management of Extended Validation Certificates, Section 7.1.4.2. |
+| **certificatePolicies** | **MUST** be present. **MUST** assert the Reserved Certificate Policy Identifier of `2.23.140.1.1` as a `policyIdentifier`. See Section 7.1.2.7.9. |
+| **All other extensions** | See Section 7.1.2.7.6 and the Guidelines for the Issuance and Management of Extended Validation Certificates. |
+
+Additionally, `subject` Attributes **MUST NOT** contain only metadata such as `.` (dot), `-` (hyphen), and `' '` (space) characters,  
+or any other indication that the value is absent, incomplete, or not applicable.
+
+---
+
+### 7.1.2.7.6 Subscriber Certificate Extensions
+
+| Extension                              | Presence       | Critical | Description                      |
+|----------------------------------------|---------------|----------|----------------------------------|
+| **authorityInformationAccess**         | MUST          | N        | See Section 7.1.2.7.7           |
+| **authorityKeyIdentifier**             | MUST          | N        | See Section 7.1.2.11.1          |
+| **certificatePolicies**                | MUST          | N        | See Section 7.1.2.7.9           |
+| **extKeyUsage**                        | MUST          | N        | See Section 7.1.2.7.10          |
+| **subjectAltName**                     | MUST          | *        | See Section 7.1.2.7.12          |
+| **nameConstraints**                    | MUST NOT      | -        | -                                |
+| **keyUsage**                           | SHOULD        | Y        | See Section 7.1.2.7.11          |
+| **basicConstraints**                   | MAY           | Y        | See Section 7.1.2.7.8           |
+| **crlDistributionPoints**              | *             | N        | See Section 7.1.2.11.2          |
+| **Signed Certificate Timestamp List**  | MAY           | N        | See Section 7.1.2.11.3          |
+| **subjectKeyIdentifier**               | NOT RECOMMENDED | N      | See Section 7.1.2.11.4          |
+| **Any other extension**                | NOT RECOMMENDED | -      | See Section 7.1.2.11.5          |
+
+---
+
+#### Notes:
+- Whether or not the `subjectAltName` extension should be marked **Critical** depends on the contents of the  
+  Certificate's `subject` field, as detailed in Section 7.1.2.7.12.
+- Whether or not the `CRL Distribution Points` extension must be present depends on  
+  1) whether the Certificate includes an **Authority Information Access** extension with an `id-ad-ocsp` accessMethod, and  
+  2) the Certificate's validity period, as detailed in Section 7.1.2.11.2.
+
+---
+
+### 7.1.2.7.7 Subscriber Certificate Authority Information Access
+
+The `AuthorityInfoAccessSyntax` **MUST** contain one or more `AccessDescriptions`. Each `AccessDescription` **MUST** only  
+contain a permitted `accessMethod`, as detailed below, and each `accessLocation` **MUST** be encoded as the specified `GeneralName` type.
+
+The `AuthorityInfoAccessSyntax` **MAY** contain multiple `AccessDescriptions` with the same `accessMethod`, if permitted for that method.  
+When multiple `AccessDescriptions` are present with the same `accessMethod`, each `accessLocation` **MUST** be unique, and each  
+`AccessDescription` **MUST** be ordered in priority for that `accessMethod`, with the most-preferred `accessLocation` being the first entry.  
+No ordering requirements exist for `AccessDescriptions` containing different `accessMethods`, provided the previous requirement is satisfied.
+
+#### Table: Authority Information Access
+
+| Access Method  | OID                  | Access Location | Presence | Maximum | Description  |
+|---------------|----------------------|----------------|----------|---------|--------------|
+| **id-ad-ocsp** | `1.3.6.1.5.5.7.48.1` | `uniformResourceIdentifier` | MAY * | - | A HTTP URL of the Issuing CA's OCSP responder. |
+| **id-ad-caIssuers** | `1.3.6.1.5.5.7.48.2` | `uniformResourceIdentifier` | SHOULD * | - | A HTTP URL of the Issuing CA's certificate. |
+| **Any other value** | - | - | MUST NOT | - | No other `accessMethods` may be used. |
+
+---
+
+### 7.1.2.7.8 Subscriber Certificate Basic Constraints
+
+| Field | Description  |
+|-------|-------------|
+| **cA** | **MUST** be `FALSE` |
+| **pathLenConstraint** | **MUST NOT** be present |
+
+---
+
+### 7.1.2.7.9 Subscriber Certificate Certificate Policies
+
+If present, the `Certificate Policies` extension **MUST** contain at least one `PolicyInformation`.  
+Each `PolicyInformation` **MUST** match the following profile:
+
+| Field                  | Presence | Contents  |
+|------------------------|----------|-----------|
+| **policyIdentifier**   | MUST     | One of the following policy identifiers: |
+| **A Reserved Certificate Policy Identifier** | MUST | The Reserved Certificate Policy Identifier (see Section 7.1.6.1) associated with the given Subscriber Certificate type (see Section 7.1.2.7.1). |
+| **anyPolicy**         | MUST NOT | The `anyPolicy` Policy Identifier **MUST NOT** be present. |
+| **Any other identifier** | MAY     | If present, **MUST** be defined and documented in the CA's Certificate Policy and/or Certification Practice Statement. |
+| **policyQualifiers**  | NOT RECOMMENDED | If present, **MUST** contain only permitted `policyQualifiers` from the table below. |
+
+This Profile **RECOMMENDS** that the first `PolicyInformation` value within the `Certificate Policies` extension contains  
+the Reserved Certificate Policy Identifier (see Section 7.1.6.1).  
+Regardless of the order of `PolicyInformation` values, the `Certificate Policies` extension **MUST** contain exactly one Reserved Certificate Policy Identifier.
+
+### Table: Permitted policyQualifiers
+
+| Qualifier ID                           | Presence | Field Type | Contents  |
+|----------------------------------------|----------|------------|-----------|
+| **id-qt-cps** (OID: `1.3.6.1.5.5.7.2.1`) | MAY      | IA5String  | The HTTP or HTTPS URL for the Issuing CA's Certificate Policies, Certification Practice Statement, Relying Party Agreement, or other pointer to online policy information provided by the Issuing CA. |
+| **Any other qualifier**                | MUST NOT | -          | -         |
+
+---
+
+### 7.1.2.7.10 Subscriber Certificate Extended Key Usage
+
+| Key Purpose                         | OID                            | Presence  |
+|--------------------------------------|--------------------------------|-----------|
+| **id-kp-serverAuth**                 | `1.3.6.1.5.5.7.3.1`           | MUST      |
+| **id-kp-clientAuth**                 | `1.3.6.1.5.5.7.3.2`           | MAY       |
+| **id-kp-codeSigning**                | `1.3.6.1.5.5.7.3.3`           | MUST NOT  |
+| **id-kp-emailProtection**            | `1.3.6.1.5.5.7.3.4`           | MUST NOT  |
+| **id-kp-timeStamping**               | `1.3.6.1.5.5.7.3.8`           | MUST NOT  |
+| **id-kp-OCSPSigning**                | `1.3.6.1.5.5.7.3.9`           | MUST NOT  |
+| **anyExtendedKeyUsage**              | `2.5.29.37.0`                 | MUST NOT  |
+| **Precertificate Signing Certificate** | `1.3.6.1.4.1.11129.2.4.4`     | MUST NOT  |
+| **Any other value**                  | -                              | NOT RECOMMENDED |
+
+---
+
+### 7.1.2.7.11 Subscriber Certificate Key Usage
+
+CAs **MUST** ensure the `Key Usage` is appropriate for the Certificate's `Public Key`.
+
+#### Table: Key Usage for RSA Public Keys
+
+| Key Usage        | Permitted | Required  |
+|------------------|-----------|-----------|
+| **digitalSignature** | Y         | SHOULD    |
+| **nonRepudiation**   | N         | --        |
+| **keyEncipherment**  | Y         | MAY       |
+| **dataEncipherment** | Y         | NOT RECOMMENDED |
+| **keyAgreement**     | N         | --        |
+| **keyCertSign**      | N         | --        |
+| **cRLSign**         | N         | --        |
+| **encipherOnly**    | N         | --        |
+| **decipherOnly**    | N         | --        |
+
+**Note:** At least one `Key Usage` **MUST** be set for RSA Public Keys.  
+- The `digitalSignature` bit is **REQUIRED** for use with modern protocols, such as **TLS 1.3**, and secure ciphersuites.  
+- The `keyEncipherment` bit **MAY** be asserted to support older protocols, such as **TLS 1.2**, when using insecure ciphersuites.  
+- Subscribers **MAY** use key separation to limit risks from legacy protocols.  
+
+For most Subscribers, the `digitalSignature` bit is sufficient, while those using mixed secure/insecure ciphersuites  
+**MAY** assert both `digitalSignature` and `keyEncipherment`, though this is **NOT RECOMMENDED**.  
+The `dataEncipherment` bit is currently permitted but **NOT RECOMMENDED**, as it is a **Pending Prohibition (#384)**.
+
+---
+
+#### Table: Key Usage for ECC Public Keys
+
+| Key Usage        | Permitted | Required  |
+|------------------|-----------|-----------|
+| **digitalSignature** | Y         | MUST      |
+| **nonRepudiation**   | N         | --        |
+| **keyEncipherment**  | N         | --        |
+| **dataEncipherment** | N         | --        |
+| **keyAgreement**     | Y         | NOT RECOMMENDED |
+| **keyCertSign**      | N         | --        |
+| **cRLSign**         | N         | --        |
+| **encipherOnly**    | N         | --        |
+| **decipherOnly**    | N         | --        |
+
+**Note:** The `keyAgreement` bit is currently permitted, but setting it is **NOT RECOMMENDED**, as it is a **Pending Prohibition (#384)**.
+
+---
+
+### 7.1.2.7.12 Subscriber Certificate Subject Alternative Name
+
+For **Subscriber Certificates**, the `Subject Alternative Name` **MUST** be present and **MUST** contain at least  
+one `dNSName` or `iPAddress` GeneralName.  
+
+- If the `subject` field of the certificate is an **empty SEQUENCE**, this extension **MUST** be marked **critical**, as specified  
+  in RFC 5280, Section 4.2.1.6.
+- Otherwise, this extension **MUST NOT** be marked critical.
+
+#### Table: GeneralName within a subjectAltName extension
+
+| Name Type                 | Permitted | Validation  |
+|---------------------------|-----------|------------|
+| **otherName**             | N         | -          |
+| **rfc822Name**            | N         | -          |
+| **dNSName**               | Y         | The entry **MUST** contain either a Fully-Qualified Domain Name (FQDN) or Wildcard Domain Name that the CA has validated in accordance with Section 3.2.2.4. Wildcard Domain Names **MUST** be validated for consistency with Section 3.2.2.6. The entry **MUST NOT** contain an Internal Name. The FQDN or the FQDN portion of the Wildcard Domain Name **MUST** be composed entirely of P-Labels or Non-Reserved LDH Labels joined together by a `U+002E FULL STOP (".")` character. The zero-length Domain Label representing the root zone **MUST NOT** be included (e.g., `"example.com"` **MUST** be encoded as `"example.com"` and **MUST NOT** be encoded as `"example.com."`). |
+| **x400Address**           | N         | -          |
+| **directoryName**         | N         | -          |
+| **ediPartyName**          | N         | -          |
+| **uniformResourceIdentifier** | N    | -          |
+| **iPAddress**             | Y         | The entry **MUST** contain the IPv4 or IPv6 address that the CA has confirmed the Applicant controls or has been granted the right to use through a method specified in Section 3.2.2.5. The entry **MUST NOT** contain a Reserved IP Address. |
+| **registeredID**          | N         | -          |
+
+---
+
+### 7.1.2.8 OCSP Responder Certificate Profile
+### 7.1.2.8 OCSP Responder Certificate Profile
+
+If the Issuing CA does not directly sign OCSP responses, it **MAY** make use of an **OCSP Authorized Responder**,  
+as defined by RFC 6960. The Issuing CA of the Responder **MUST** be the same as the Issuing CA for the Certificates  
+it provides responses for.
+
+| Field                  | Description  |
+|------------------------|-------------|
+| **tbsCertificate**     |             |
+| **version**           | MUST be v3(2) |
+| **serialNumber**      | MUST be a non-sequential number greater than zero (0) and less than 2¹⁵⁹ containing at least 64 bits of output from a CSPRNG. |
+| **signature**         | See Section 7.1.3.2 |
+| **issuer**           | MUST be byte-for-byte identical to the subject field of the Issuing CA. See Section 7.1.4.1 |
+| **validity**         | See Section 7.1.2.8.1 |
+| **subject**          | See Section 7.1.2.10.2 |
+| **subjectPublicKeyInfo** | See Section 7.1.3.1 |
+| **issuerUniqueID**   | MUST NOT be present |
+| **subjectUniqueID**  | MUST NOT be present |
+| **extensions**       | See Section 7.1.2.8.2 |
+| **signatureAlgorithm** | Encoded value MUST be byte-for-byte identical to the `tbsCertificate.signature`. |
+| **signature**        |             |
+
+---
+
+### 7.1.2.8.1 OCSP Responder Validity
+
+| Field      | Minimum | Maximum |
+|------------|---------|---------|
+| **notBefore** | One day prior to the time of signing | The time of signing |
+| **notAfter**  | The time of signing | Unspecified |
+
+---
+
+### 7.1.2.8.2 OCSP Responder Extensions
+
+| Extension                              | Presence       | Critical | Description                      |
+|----------------------------------------|---------------|----------|----------------------------------|
+| **authorityKeyIdentifier**             | MUST          | N        | See Section 7.1.2.11.1          |
+| **extKeyUsage**                        | MUST          | -        | See Section 7.1.2.8.5           |
+| **id-pkix-ocsp-nocheck**               | MUST          | N        | See Section 7.1.2.8.6           |
+| **keyUsage**                           | MUST          | Y        | See Section 7.1.2.8.7           |
+| **basicConstraints**                   | MAY           | Y        | See Section 7.1.2.8.4           |
+| **nameConstraints**                    | MUST NOT      | -        | -                                |
+| **subjectAltName**                     | MUST NOT      | -        | -                                |
+| **subjectKeyIdentifier**               | SHOULD        | N        | See Section 7.1.2.11.4          |
+| **authorityInformationAccess**         | NOT RECOMMENDED | N      | See Section 7.1.2.8.3           |
+| **certificatePolicies**                | MUST NOT      | N        | See Section 7.1.2.8.8           |
+| **crlDistributionPoints**              | MUST NOT      | N        | See Section 7.1.2.11.2          |
+| **Signed Certificate Timestamp List**  | MAY           | N        | See Section 7.1.2.11.3          |
+| **Any other extension**                | NOT RECOMMENDED | -      | See Section 7.1.2.11.5          |
+
+---
+
+### 7.1.2.8.3 OCSP Responder Authority Information Access
+
+For OCSP Responder certificates, this extension is **NOT RECOMMENDED**, as the **Relying Party** should already  
+possess the necessary information. To validate the given **Responder certificate**, the **Relying Party** must have  
+access to the Issuing CA's certificate, eliminating the need to provide `id-ad-caIssuers`.  
+
+Additionally, because an OCSP Responder certificate must include the `id-pkix-ocsp-nocheck` extension,  
+it is not necessary to provide `id-ad-ocsp`, as such responses will not be checked by **Relying Parties**.
+
+#### Table: Authority Information Access for OCSP Responder
+
+| Access Method | OID                  | Access Location | Presence | Maximum | Description  |
+|--------------|----------------------|----------------|----------|---------|--------------|
+| **id-ad-ocsp** | `1.3.6.1.5.5.7.48.1` | `uniformResourceIdentifier` | NOT RECOMMENDED | * | A HTTP URL of the Issuing CA's OCSP responder. |
+| **Any other value** | - | - | MUST NOT | - | No other `accessMethods` may be used. |
+
+---
+
+### 7.1.2.8.4 OCSP Responder Basic Constraints
+
+OCSP Responder certificates **MUST NOT** be CA certificates. The issuing CA **MAY** indicate this one of two ways:
+1. By **omission** of the `basicConstraints` extension, or  
+2. By **inclusion** of a `basicConstraints` extension that sets the `cA` boolean to `FALSE`.
+
+| Field                  | Description  |
+|------------------------|-------------|
+| **cA**                | **MUST** be `FALSE` |
+| **pathLenConstraint** | **MUST NOT** be present |
+
+**Note:**  
+Due to **DER encoding rules**, a `basicConstraints` extension that sets `cA` boolean to `FALSE` **MUST** have an  
+`extnValue OCTET STRING` exactly equal to the hex-encoded bytes `3000`, the encoded representation of an  
+empty ASN.1 **SEQUENCE** value.
+
+---
+
+### 7.1.2.8.5 OCSP Responder Extended Key Usage
+
+| Key Purpose            | OID                    | Presence  |
+|------------------------|-----------------------|-----------|
+| **id-kp-OCSPSigning**  | `1.3.6.1.5.5.7.3.9`   | MUST      |
+| **Any other value**    | -                     | MUST NOT  |
+
+### 7.1.2.8.6 OCSP Responder id-pkix-ocsp-nocheck
+
+The CA **MUST** include the `id-pkix-ocsp-nocheck` extension (OID: `1.3.6.1.5.5.7.48.1.5`).  
+This extension **MUST** have an `extnValue` OCTET STRING that is exactly the hex-encoded bytes `0500`,  
+the encoded representation of the ASN.1 `NULL` value, as specified in **RFC 6960, Section 4.2.2.2.1**.
+
+---
+
+### 7.1.2.8.7 OCSP Responder Key Usage
+
+| Key Usage        | Permitted | Required  |
+|------------------|-----------|-----------|
+| **digitalSignature** | Y         | Y         |
+| **nonRepudiation**   | N         | --        |
+| **keyEncipherment**  | N         | --        |
+| **dataEncipherment** | N         | --        |
+| **keyAgreement**     | N         | --        |
+| **keyCertSign**      | N         | --        |
+| **cRLSign**         | N         | --        |
+| **encipherOnly**    | N         | --        |
+| **decipherOnly**    | N         | --        |
+
+---
+
+### 7.1.2.8.8 OCSP Responder Certificate Policies
+
+If present, the `Certificate Policies` extension **MUST** contain at least one `PolicyInformation`.  
+Each `PolicyInformation` **MUST** match the following profile:
+
+| Field                  | Presence | Contents  |
+|------------------------|----------|-----------|
+| **policyIdentifier**   | MUST     | One of the following policy identifiers: |
+| **A Reserved Certificate Policy Identifier** | NOT RECOMMENDED | - |
+| **anyPolicy**         | NOT RECOMMENDED | - |
+| **Any other identifier** | NOT RECOMMENDED | If present, **MUST** be defined and documented in the CA's Certificate Policy and/or Certification Practice Statement. |
+| **policyQualifiers**  | NOT RECOMMENDED | If present, **MUST** contain only permitted `policyQualifiers` from the table below. |
+
+---
+
+#### Table: Permitted policyQualifiers
+
+| Qualifier ID                           | Presence | Field Type | Contents  |
+|----------------------------------------|----------|------------|-----------|
+| **id-qt-cps** (OID: `1.3.6.1.5.5.7.2.1`) | MAY      | IA5String  | The HTTP or HTTPS URL for the Issuing CA's Certificate Policies, Certification Practice Statement, Relying Party Agreement, or other pointer to online policy information provided by the Issuing CA. |
+| **Any other qualifier**                | MUST NOT | -          | -         |
+
+**Notes:**
+- See Section **7.1.2.8.2** for applicable effective dates when this extension may be included.
+- Because the `Certificate Policies` extension may be used to restrict applicable usages for a certificate,  
+  incorrect policies may result in **OCSP Responder Certificates** that fail to validate, leading to invalid OCSP Responses.  
+  Including the `anyPolicy` policy can reduce this risk but may introduce client processing complexity and interoperability issues.
+
+---
+
+### 7.1.2.9 Precertificate Profile
+
+A **Precertificate** is a signed data structure that can be submitted to a **Certificate Transparency (CT) log**, as defined by **RFC 6962**.  
+A **Precertificate** appears structurally identical to a **Certificate**, except for a special **critical poison extension**  
+in the `extensions` field with the OID of `1.3.6.1.4.1.11129.2.4.3`.  
+
+This extension ensures that the **Precertificate** will not be accepted as a Certificate by clients conforming to **RFC 5280**.  
+The existence of a signed **Precertificate** serves as evidence of a corresponding **Certificate**, as its signature represents a binding  
+commitment by the **CA** that it **may issue** such a Certificate.
+
+A **Precertificate** is created **after** a CA has decided to issue a **Certificate**, but **before** actually signing it.  
+- The **CA MAY** construct and sign a **Precertificate** corresponding to the Certificate for submission to **Certificate Transparency Logs**.
+- The **CA MAY** use the returned **Signed Certificate Timestamps (SCTs)** to modify the `extensions` field of the actual Certificate  
+  before signing it, by adding a **Signed Certificate Timestamp List**, as defined in **Section 7.1.2.11.3**.
+
+Once a **Precertificate** is signed, **relying parties** may treat this as a binding commitment from the **CA** that a corresponding  
+Certificate either exists or will be issued.
+
+A Certificate is considered **corresponding** to a **Precertificate** based on the value of the `tbsCertificate` contents,  
+as transformed by the process defined in **RFC 6962, Section 3.2**.
+
+**Requirements:**
+- A **CA MUST NOT** issue a **Precertificate** unless it is willing to issue a **corresponding Certificate**, whether or not it has done so.
+- A **CA MUST NOT** issue a **Precertificate** unless the **corresponding Certificate** conforms to these **Baseline Requirements**,  
+  whether or not the CA signs the **corresponding Certificate**.
+
+A **Precertificate** may be issued:
+- **Directly** by the **Issuing CA**, or  
+- **By a Technically Constrained Precertificate Signing CA**, as defined in **Section 7.1.2.4**.
+
+If issued by a **Precertificate Signing CA**, then, in addition to the **precertificate poison** and **signed certificate timestamp list**  
+extensions, the **Precertificate issuer** field and, if present, the **authorityKeyIdentifier** extension **MAY** differ from the **Certificate**.
+
+---
+
+#### Table: When the Precertificate is issued directly by the Issuing CA
+
+| Field                  | Description  |
+|------------------------|-------------|
+| **tbsCertificate**     |             |
+| **version**           | Encoded value **MUST** be byte-for-byte identical to the `version` field of the Certificate. |
+| **serialNumber**      | Encoded value **MUST** be byte-for-byte identical to the `serialNumber` field of the Certificate. |
+| **signature**         | Encoded value **MUST** be byte-for-byte identical to the `signature` field of the Certificate. |
+| **issuer**           | Encoded value **MUST** be byte-for-byte identical to the `issuer` field of the Certificate. |
+| **validity**         | Encoded value **MUST** be byte-for-byte identical to the `validity` field of the Certificate. |
+| **subject**          | Encoded value **MUST** be byte-for-byte identical to the `subject` field of the Certificate. |
+| **subjectPublicKeyInfo** | Encoded value **MUST** be byte-for-byte identical to the `subjectPublicKeyInfo` field of the Certificate. |
+| **issuerUniqueID**   | Encoded value **MUST** be byte-for-byte identical to the `issuerUniqueID` field of the Certificate, or omitted if absent. |
+| **subjectUniqueID**  | Encoded value **MUST** be byte-for-byte identical to the `subjectUniqueID` field of the Certificate, or omitted if absent. |
+| **extensions**       | See Section 7.1.2.9.1 |
+| **signatureAlgorithm** | Encoded value **MUST** be byte-for-byte identical to the `tbsCertificate.signature`. |
+| **signature**        |             |
+
+---
+
+**Note:**  
+- This profile **requires** that the `serialNumber` field of the **Precertificate** be identical to that of the corresponding **Certificate**.  
+- RFC 5280, Section 4.1.2.2 **requires** that the `serialNumber` of certificates be **unique**.  
+- For the purposes of this document, a **Precertificate** is **not considered a Certificate** under that requirement,  
+  so it **MAY** have the same `serialNumber` as the corresponding **Certificate**.  
+- However, two **Precertificates** **MUST NOT** share the same `serialNumber`, unless they correspond to the same **Certificate**,  
+  to prevent multiple **Certificates** from sharing an identical `serialNumber`.
+
+### 7.1.2.9.1 Precertificate Profile Extensions - Directly Issued
+
+These extensions apply to a **Precertificate** directly issued from a **CA**, and not from a **Precertificate Signing CA Certificate**,  
+as defined in **Section 7.1.2.4**.
+
+| Extension | Presence | Critical | Description |
+|-----------|----------|----------|-------------|
+| **Precertificate Poison** (OID: `1.3.6.1.4.1.11129.2.4.3`) | MUST | Y | See Section 7.1.2.9.3 |
+| **Signed Certificate Timestamp List** | MUST NOT | - | - |
+| **Any other extension** | * | * | The order, criticality, and encoded values of all other extensions **MUST** be byte-for-byte identical to the `extensions` field of the **Certificate**. |
+
+**Note:**  
+This requirement ensures that if the **Precertificate Poison** extension is removed from the **Precertificate**,  
+and the **Signed Certificate Timestamp List** is removed from the **Certificate**,  
+the contents of the `extensions` field **MUST** be byte-for-byte identical.
+
+---
+
+### 7.1.2.9.2 Precertificate Profile Extensions - Precertificate CA Issued
+
+These extensions apply when a **Precertificate** is issued from a **Precertificate Signing CA Certificate**,  
+as defined in **Section 7.1.2.4**.  
+
+For such **Precertificates**, the `authorityKeyIdentifier`, if present in the **Certificate**, is modified in the **Precertificate**,  
+as described in **RFC 6962, Section 3.2**.
+
+| Extension | Presence | Critical | Description |
+|-----------|----------|----------|-------------|
+| **Precertificate Poison** (OID: `1.3.6.1.4.1.11129.2.4.3`) | MUST | Y | See Section 7.1.2.9.3 |
+| **authorityKeyIdentifier** | * | * | See Section 7.1.2.9.4 |
+| **Signed Certificate Timestamp List** | MUST NOT | - | - |
+| **Any other extension** | * | * | The order, criticality, and encoded values of all other extensions **MUST** be byte-for-byte identical to the `extensions` field of the **Certificate**. |
+
+---
+
+### 7.1.2.9.3 Precertificate Poison
+
+The **Precertificate** **MUST** contain the **Precertificate Poison** extension (OID: `1.3.6.1.4.1.11129.2.4.3`).  
+This extension **MUST** have an `extnValue` **OCTET STRING** that is exactly the **hex-encoded bytes `0500`**,  
+the encoded representation of the **ASN.1 NULL** value, as specified in **RFC 6962, Section 3.1**.
+
+---
+
+### 7.1.2.9.4 Precertificate Authority Key Identifier
+
+For **Precertificates** issued by a **Precertificate Signing CA**, the contents of the `authorityKeyIdentifier` extension **MUST**  
+be one of the following:
+1. **SHOULD** be as defined in the profile below, or;
+2. **MAY** be byte-for-byte identical with the contents of the `authorityKeyIdentifier` extension of the corresponding **Certificate**.
+
+| Field | Description |
+|--------|-------------|
+| **keyIdentifier** | **MUST** be present. **MUST** be identical to the `subjectKeyIdentifier` field of the **Precertificate Signing CA Certificate**. |
+| **authorityCertIssuer** | **MUST NOT** be present. |
+| **authorityCertSerialNumber** | **MUST NOT** be present. |
+
+**Note:**  
+**RFC 6962** describes how the `authorityKeyIdentifier` present on a **Precertificate** is transformed to contain the value  
+of the **Precertificate Signing CA's authorityKeyIdentifier** extension (i.e., reflecting the actual issuer certificate's `keyIdentifier`),  
+thus matching the **corresponding Certificate** when verified by clients.  
+
+These **Baseline Requirements** **RECOMMEND** using the **Precertificate Signing CA's keyIdentifier** in **Precertificates** issued by it  
+to ensure consistency between the `subjectKeyIdentifier` and `authorityKeyIdentifier` of all certificates in the chain.  
+
+Although **RFC 5280** does not strictly require such consistency, some client implementations enforce it for **Certificates**,  
+and this helps avoid potential issues with **Certificate Transparency Logs** incorrectly implementing such checks.
+
+---
+
+### 7.1.2.10 Common CA Fields
+
+This section defines fields that are common among multiple **CA Certificate** profiles.  
+However, these fields **may not be common** to all **CA Certificate** profiles.  
+
+Before issuing a certificate, the **CA MUST** ensure that the certificate contents, including each field,  
+fully comply with at least one **Certificate Profile** documented in **Section 7.1.2**.
+
+---
+
+### 7.1.2.10.1 CA Certificate Validity
+
+| Field      | Minimum | Maximum |
+|------------|---------|---------|
+| **notBefore** | One day prior to the time of signing | The time of signing |
+| **notAfter**  | The time of signing | Unspecified |
+
+---
+
+### 7.1.2.10.2 CA Certificate Naming
+
+All `subject` names **MUST** be encoded as specified in **Section 7.1.4**.
+
+#### Table: Acceptable Subject Attributes for CA Certificates
+
+| Attribute Name         | Presence | Value | Verification |
+|-----------------------|----------|--------|-------------|
+| **countryName**       | MUST     | The two-letter **ISO 3166-1** country code for the country in which the CA's place of business is located. | Section 3.2.2.3 |
+| **stateOrProvinceName** | MAY    | If present, the CA's **state or province** information. | Section 3.2.2.1 |
+| **localityName**      | MAY      | If present, the CA's **locality**. | Section 3.2.2.1 |
+| **postalCode**        | MAY      | If present, the CA's **zip or postal code**. | Section 3.2.2.1 |
+| **streetAddress**     | MAY      | If present, the CA's **street address**. Multiple instances **MAY** be present. | Section 3.2.2.1 |
+| **organizationName**  | MUST     | The CA's **name or DBA**. The CA **MAY** include minor variations (e.g., abbreviations), provided they are documented and commonly accepted (e.g., `"Company Name Inc."` instead of `"Company Name Incorporated"`). | Section 3.2.2.2 |
+| **organizationalUnitName** | NOT RECOMMENDED | This attribute **MUST NOT** be included in **Root CA Certificates**, **TLS Subordinate CA Certificates**, or **Technically-Constrained TLS Subordinate CA Certificates**. It **SHOULD NOT** be included in other **CA Certificates**. | - |
+| **commonName**       | MUST     | **SHOULD** be a unique identifier for the certificate within the issuing CA's records. | - |
+| **Any other attribute** | NOT RECOMMENDED | - | See Section 7.1.4.4 |
+
+---
+
+### 7.1.2.10.3 CA Certificate Authority Information Access
+
+If present, the `AuthorityInfoAccessSyntax` **MUST** contain one or more `AccessDescriptions`.  
+Each `AccessDescription` **MUST** only contain a permitted `accessMethod`, as detailed below,  
+and each `accessLocation` **MUST** be encoded as the specified `GeneralName` type.
+
+### 7.1.2.10.3 CA Certificate Authority Information Access
+
+The `AuthorityInfoAccessSyntax` **MAY** contain multiple `AccessDescriptions` with the same `accessMethod`,  
+if permitted for that `accessMethod`. When multiple `AccessDescriptions` are present with the same `accessMethod`:  
+- Each `accessLocation` **MUST** be unique.
+- Each `AccessDescription` **MUST** be ordered in priority for that `accessMethod`, with the most-preferred `accessLocation` being the first.
+- No ordering requirements are imposed for `AccessDescriptions` containing different `accessMethods`, provided the above requirements are met.
+
+#### Table: Authority Information Access for CA Certificates
+
+| Access Method | OID                  | Access Location | Presence | Maximum | Description  |
+|--------------|----------------------|----------------|----------|---------|--------------|
+| **id-ad-ocsp** | `1.3.6.1.5.5.7.48.1` | `uniformResourceIdentifier` | MAY | * | A HTTP URL of the Issuing CA's OCSP responder. |
+| **id-ad-caIssuers** | `1.3.6.1.5.5.7.48.2` | `uniformResourceIdentifier` | MAY | * | A HTTP URL of the Issuing CA's certificate. |
+| **Any other value** | - | - | MUST NOT | - | No other `accessMethods` may be used. |
+
+---
+
+### 7.1.2.10.4 CA Certificate Basic Constraints
+
+| Field                  | Description  |
+|------------------------|-------------|
+| **cA**                | **MUST** be set to `TRUE`. |
+| **pathLenConstraint** | **MAY** be present. |
+
+---
+
+### 7.1.2.10.5 CA Certificate Certificate Policies
+
+If present, the `Certificate Policies` extension **MUST** contain at least one `PolicyInformation`.  
+Each `PolicyInformation` **MUST** match the following profile:
+
+#### Table: No Policy Restrictions (Affiliated CA)
+
+| Field | Presence | Contents  |
+|-------|----------|-----------|
+| **policyIdentifier** | MUST | When the Issuing CA wishes to express that there are no policy restrictions, the Subordinate CA **MUST** be an **Affiliate** of the Issuing CA. The `Certificate Policies` extension **MUST** contain only a **single** `PolicyInformation` value, which **MUST** contain the `anyPolicy` Policy Identifier. |
+| **anyPolicy** | MUST | - |
+| **policyQualifiers** | NOT RECOMMENDED | If present, **MUST** contain only permitted `policyQualifiers` from the table below. |
+
+#### Table: Policy Restricted
+
+| Field | Presence | Contents  |
+|-------|----------|-----------|
+| **policyIdentifier** | MUST | One of the following policy identifiers: |
+| **A Reserved Certificate Policy Identifier** | MUST | The CA **MUST** include at least one **Reserved Certificate Policy Identifier** (see Section 7.1.6.1) associated with the given **Subscriber Certificate type** (see Section 7.1.2.7.1) directly or transitively issued by this Certificate. |
+| **anyPolicy** | MUST NOT | The `anyPolicy` Policy Identifier **MUST NOT** be present. |
+| **Any other identifier** | MAY | If present, **MUST** be defined by the CA and documented in its **Certificate Policy and/or Certification Practice Statement**. |
+| **policyQualifiers** | NOT RECOMMENDED | If present, **MUST** contain only permitted `policyQualifiers` from the table below. |
+
+**Note:**  
+- This Profile **RECOMMENDS** that the **first** `PolicyInformation` value within the `Certificate Policies` extension contains  
+  the **Reserved Certificate Policy Identifier** (see Section **7.1.6.1**).  
+- Regardless of the order of `PolicyInformation` values, the `Certificate Policies` extension **MUST** contain exactly **one**  
+  **Reserved Certificate Policy Identifier**.
+- The `policyQualifiers` field **is NOT RECOMMENDED** because it increases the size of the certificate without providing additional  
+  value to a typical **Relying Party**.
+
+---
+
+#### Table: Permitted policyQualifiers
+
+| Qualifier ID                           | Presence | Field Type | Contents  |
+|----------------------------------------|----------|------------|-----------|
+| **id-qt-cps** (OID: `1.3.6.1.5.5.7.2.1`) | MAY      | IA5String  | The HTTP or HTTPS URL for the Issuing CA's Certificate Policies, Certification Practice Statement, Relying Party Agreement, or other pointer to online policy information provided by the Issuing CA. |
+| **Any other qualifier**                | MUST NOT | -          | -         |
+
+---
+
+### 7.1.2.10.6 CA Certificate Extended Key Usage
+
+| Key Purpose                         | OID                            | Presence  |
+|--------------------------------------|--------------------------------|-----------|
+| **id-kp-serverAuth**                 | `1.3.6.1.5.5.7.3.1`           | MUST      |
+| **id-kp-clientAuth**                 | `1.3.6.1.5.5.7.3.2`           | MAY       |
+| **id-kp-codeSigning**                | `1.3.6.1.5.5.7.3.3`           | MUST NOT  |
+| **id-kp-emailProtection**            | `1.3.6.1.5.5.7.3.4`           | MUST NOT  |
+| **id-kp-timeStamping**               | `1.3.6.1.5.5.7.3.8`           | MUST NOT  |
+| **id-kp-OCSPSigning**                | `1.3.6.1.5.5.7.3.9`           | MUST NOT  |
+| **anyExtendedKeyUsage**              | `2.5.29.37.0`                 | MUST NOT  |
+| **Precertificate Signing Certificate** | `1.3.6.1.4.1.11129.2.4.4`     | MUST NOT  |
+| **Any other value**                  | -                              | NOT RECOMMENDED |
+
+---
+
+### 7.1.2.10.7 CA Certificate Key Usage
+
+| Key Usage        | Permitted | Required  |
+|------------------|-----------|-----------|
+| **digitalSignature** | Y         | N         |
+| **nonRepudiation**   | N         | --        |
+| **keyEncipherment**  | N         | --        |
+| **dataEncipherment** | N         | --        |
+| **keyAgreement**     | N         | --        |
+| **keyCertSign**      | Y         | Y         |
+| **cRLSign**         | Y         | Y         |
+| **encipherOnly**    | N         | --        |
+| **decipherOnly**    | N         | --        |
+
+**Note:**  
+- If a **CA Certificate** **does not assert** the `digitalSignature` bit, the **CA Private Key MUST NOT** be used to sign an **OCSP Response**.  
+  See **Section 7.3** for more information.
+
+### 7.1.2.10.8 CA Certificate Name Constraints
+
+If present, the **Name Constraints** extension **MUST** be encoded as follows:  
+- As an explicit exception from **RFC 5280**, this extension **SHOULD** be marked **critical**,  
+  but **MAY** be marked **non-critical** if compatibility with legacy applications that do not support **Name Constraints** is necessary.
+
+#### Table: nameConstraints requirements
+
+| Field | Description |
+|--------|-------------|
+| **permittedSubtrees** | The requirements for a `GeneralSubtree` that appears within a `permittedSubtrees`. |
+| **GeneralSubtree** | |
+| **base** | See following table. |
+| **minimum** | **MUST NOT** be present. |
+| **maximum** | **MUST NOT** be present. |
+| **excludedSubtrees** | The requirements for a `GeneralSubtree` that appears within an `excludedSubtrees`. |
+| **GeneralSubtree** | |
+| **base** | See following table. |
+| **minimum** | **MUST NOT** be present. |
+| **maximum** | **MUST NOT** be present. |
+
+---
+
+#### Table: GeneralName requirements for the base field
+
+| Name Type | Presence | Permitted Subtrees | Excluded Subtrees |
+|------------|----------|--------------------|--------------------|
+| **dNSName** | MAY | The CA **MUST** confirm that the Applicant has registered the `dNSName` or has been authorized by the domain registrant to act on their behalf. See **Section 3.2.2.4**. | If at least one `dNSName` instance is present in the `permittedSubtrees`, the CA **MAY** indicate one or more subordinate domains to be excluded. |
+| **iPAddress** | MAY | The CA **MUST** confirm that the Applicant has been assigned the `iPAddress` range or has been authorized by the assigner to act on the assignee's behalf. See **Section 3.2.2.5**. | If at least one `iPAddress` instance is present in the `permittedSubtrees`, the CA **MAY** indicate one or more subdivisions of those ranges to be excluded. |
+| **directoryName** | MAY | The CA **MUST** confirm the Applicant's and/or Subsidiary's name attributes such that all certificates issued will comply with the relevant Certificate Profile (see **Section 7.1.2**), including **Name Forms** (See **Section 7.1.4**). | It is **NOT RECOMMENDED** to include values within `excludedSubtrees`. |
+| **rfc822Name** | NOT RECOMMENDED | The CA **MAY** constrain to a mailbox, a particular host, or any address within a domain, as specified in **RFC 5280, Section 4.2.1.10**. The CA **MUST** confirm that the Applicant has registered the domain or has been authorized by the domain registrant. See **Section 3.2.2.4**. | If at least one `rfc822Name` instance is present in the `permittedSubtrees`, the CA **MAY** indicate one or more mailboxes, hosts, or domains to be excluded. |
+| **otherName** | NOT RECOMMENDED | See below | See below |
+| **Any other value** | NOT RECOMMENDED | - | - |
+
+**Requirements for `otherName` fields:**
+1. **MUST** apply in the context of the public Internet, unless:
+   - The `type-id` falls within an **OID arc** for which the Applicant demonstrates ownership, or
+   - The Applicant can otherwise demonstrate the right to assert the data in a public context.
+2. **MUST NOT** include semantics that mislead the **Relying Party** about certificate information verified by the **CA**.
+3. **MUST** be **DER encoded** according to the relevant **ASN.1 module** defining the `otherName` `type-id` and `value`.
+
+**CAs SHALL NOT** include additional names unless there is a **specific reason** to do so.
+
+---
+
+### 7.1.2.11 Common Certificate Fields
+
+This section contains fields that are **common among multiple certificate profiles**.  
+However, these fields **may not be common** to all certificate profiles.  
+
+Before issuing a certificate, the **CA MUST** ensure that the certificate contents, including each field,  
+fully comply with at least **one Certificate Profile** documented in **Section 7.1.2**.
+
+---
+
+### 7.1.2.11.1 Authority Key Identifier
+
+| Field | Description |
+|--------|-------------|
+| **keyIdentifier** | **MUST** be present. **MUST** be identical to the `subjectKeyIdentifier` field of the **Issuing CA**. |
+| **authorityCertIssuer** | **MUST NOT** be present. |
+| **authorityCertSerialNumber** | **MUST NOT** be present. |
+
+---
+
+### 7.1.2.11.2 CRL Distribution Points
+
+The `CRL Distribution Points` extension **MUST** be present in:
+- **Subordinate CA Certificates**.
+- **Subscriber Certificates** that:
+  1. **Do not qualify as** "Short-lived Subscriber Certificates", and
+  2. **Do not include** an **Authority Information Access** extension with an `id-ad-ocsp` `accessMethod`.
+
+The `CRL Distribution Points` extension **SHOULD NOT** be present in:
+- **Root CA Certificates**.
+
+The `CRL Distribution Points` extension is **OPTIONAL** in:
+- **Short-lived Subscriber Certificates**.
+
+The `CRL Distribution Points` extension **MUST NOT** be present in:
+- **OCSP Responder Certificates**.
+
+#### Table: DistributionPoint profile
+
+| Field | Presence | Description |
+|--------|----------|-------------|
+| **distributionPoint** | MUST | The `DistributionPointName` **MUST** be a `fullName` formatted as described below. |
+| **reasons** | MUST NOT | - |
+| **cRLIssuer** | MUST NOT | - |
+
+A `fullName` **MUST** contain at least one `GeneralName`; it **MAY** contain more than one.  
+All `GeneralNames` **MUST** be of type `uniformResourceIdentifier`, and the **scheme** **MUST** be `"http"`.  
+The **first GeneralName** **MUST** contain the **HTTP URL** of the Issuing CA's **CRL service** for this certificate.
+
+---
+
+### 7.1.2.11.3 Signed Certificate Timestamp List
+
+If present, the **Signed Certificate Timestamp List** extension contents **MUST** be an **OCTET STRING**  
+containing the encoded **SignedCertificateTimestampList**, as specified in **RFC 6962, Section 3.3**.
+
+Each **SignedCertificateTimestamp** included within the **SignedCertificateTimestampList** **MUST** be  
+for a **PreCert LogEntryType** that corresponds to the **current certificate**.
+
+---
+
+### 7.1.2.11.4 Subject Key Identifier
+
+If present, the **subjectKeyIdentifier** **MUST** be set as defined in **RFC 5280, Section 4.2.1.2**.  
+The **CA MUST** generate a `subjectKeyIdentifier` that is **unique** within the scope of all **Certificates** it has issued for each unique public key.  
+
+For example, **CAs MAY**:
+- Generate the **subject key identifier** using an algorithm derived from the public key, or
+- Generate a sufficiently-large **unique number**, such as by using a **CSPRNG**.
+
+---
+
+### 7.1.2.11.5 Other Extensions
+
+All extensions and extension values **not directly addressed** by the applicable certificate profile:
+
+1. **MUST apply** in the context of the **public Internet**, unless:
+   - The **extension OID** falls within an **OID arc** for which the **Applicant** demonstrates **ownership**, or
+   - The **Applicant** can otherwise demonstrate the right to assert the data in a **public context**.
+2. **MUST NOT** include semantics that mislead the **Relying Party** about certificate information verified by the **CA**.
+3. **MUST** be **DER encoded** according to the relevant **ASN.1 module** defining the **extension** and **extension values**.
+
+**CAs SHALL NOT** include additional extensions or values unless there is a **specific reason** to do so.
+
+
+
+
+
+
+
+
+
+
 
   
 
