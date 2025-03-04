@@ -1,9 +1,9 @@
 # **NAVER Cloud Trust Services**  
 # **Certificate Policy / Certificate Practices Statement**
 
-## Version 1.0.4
+## Version 1.0.5
 
-### 26 November 2024
+### 05 March 2025
 
 ## Table of Contents
 
@@ -235,7 +235,7 @@ decrypts an encrypted document or a message.
 
 ### 1.3.5 Other Participants
 
-Not applicable.
+No Stipulation
 
 ## 1.4 Certificate Usage
 
@@ -1565,7 +1565,7 @@ if neither of the previous conditions are met.
 
 ### 4.9.11 Other Forms of Revocation Advertisements Available
 
-Not applicable.
+No Stipulation
 
 ### 4.9.12 Special Requirements re Key Compromise
 
@@ -1592,19 +1592,19 @@ will be revoked in time.
 
 ### 4.9.13 Circumstances for Suspension
 
-Not applicable.
+No Stipulation
 
 ### 4.9.14 Who Can Request Suspension
 
-Not applicable.
+No Stipulation
 
 ### 4.9.15 Procedure for Suspension Request
 
-Not applicable.
+No Stipulation
 
 ### 4.9.16 Limits on Suspension Period
 
-Not applicable.
+No Stipulation
 
 ## 4.10 Certificate Status Services
 
@@ -1641,11 +1641,11 @@ keys.
 
 ### 4.12.1 Key Escrow and Recovery Policy and Practices
 
-Not applicable.
+No Stipulation
 
 ### 4.12.2 Session key encapsulation and recovery policy and practices
 
-Not applicable.
+No Stipulation
 
 # 5. FACILITY, MANAGEMENT, AND OPERATIONAL CONTROLS
 
@@ -2506,8 +2506,451 @@ X.509 version 3.
 
 ### 7.1.2 Certificate Extensions
 
-All certificate extensions follow RFC5280 and comply with the Applicable
-Requirements.
+If the CA asserts compliance with these Baseline Requirements, all certificates that it issues MUST comply with one
+of the following certificate profiles, which incorporate, and are derived from RFC 5280. Except as explicitly noted,
+all normative requirements imposed by RFC 5280 shall apply, in addition to the normative requirements imposed
+by this document. CAs SHOULD examine RFC 5280, Appendix B for further issues to be aware of.
+
+# CA Certificates
+
+- **Section 7.1.2.1** – Root CA Certificate Profile
+- **Subordinate CA Certificates**
+  - **Cross Certificates**
+    - **Section 7.1.2.2** – Cross-Certified Subordinate CA Certificate Profile
+  - **Technically Constrained CA Certificates**
+    - **Section 7.1.2.3** – Technically-Constrained Non-TLS Subordinate CA Certificate Profile
+    - **Section 7.1.2.4** – Technically-Constrained Precertificate Signing CA Certificate Profile
+    - **Section 7.1.2.5** – Technically-Constrained TLS Subordinate CA Certificate Profile
+  - **Section 7.1.2.6** – TLS Subordinate CA Certificate Profile
+- **Section 7.1.2.7** – Subscriber (End-Entity) Certificate Profile
+- **Section 7.1.2.8** – OCSP Responder Certificate Profile
+- **Section 7.1.2.9** – Precertificate Profile
+
+## 7.1.2.1 Root CA Certificate
+
+| **Field**               | **Description** |
+|-------------------------|---------------|
+| **tbsCertificate**      |               |
+| version                | MUST be v3(2) |
+| **serialNumber**        | MUST be a non-sequential number greater than zero (0) and less than 2¹⁵⁹ containing at least 64 bits of output from a CSPRNG. |
+| **signature**           | See Section 7.1.3.2 |
+| **issuer**             | Encoded value MUST be byte-for-byte identical to the encoded subject |
+| **validity**            | See Section 7.1.2.1.1 |
+| **subject**             | See Section 7.1.2.10.2 |
+| **subjectPublicKeyInfo** | See Section 7.1.3.1 |
+| **issuerUniqueID**      | MUST NOT be present |
+| **subjectUniqueID**     | MUST NOT be present |
+| **extensions**          | See Section 7.1.2.1.2 |
+| **signatureAlgorithm**  | Encoded value MUST be byte-for-byte identical to the tbsCertificate.signature. |
+| **signature**           |               |
+
+### 7.1.2.1.1 *Root CA Validity*
+
+| **Field**    | **Minimum**                              | **Maximum**                  |
+|-------------|-----------------------------------------|------------------------------|
+| `notBefore` | One day prior to the time of signing   | The time of signing          |
+| `notAfter`  | 2922 days (approx. 8 years)           | 9132 days (approx. 25 years) |
+
+### 7.1.2.1.2 *Root CA Extensions*
+
+| **Extension**                         | **Presence**      | **Critical** | **Description**                        |
+|---------------------------------------|------------------|-------------|----------------------------------------|
+| authorityKeyIdentifier                | RECOMMENDED      | N           | See Section 7.1.2.1.3                 |
+| basicConstraints                      | MUST            | Y           | See Section 7.1.2.1.4                 |
+| keyUsage                               | MUST            | Y           | See Section 7.1.2.10.7                |
+| subjectKeyIdentifier                   | MUST            | N           | See Section 7.1.2.11.4                |
+| extKeyUsage                            | MUST NOT        | N           | -                                      |
+| certificatePolicies                    | NOT RECOMMENDED | N           | See Section 7.1.2.10.5                |
+| Signed Certificate Timestamp List      | MAY             | N           | See Section 7.1.2.11.3                |
+| Any other extension                    | NOT RECOMMENDED | -           | See Section 7.1.2.11.5                |
+
+### 7.1.2.1.3 *Root CA Authority Key Identifier*
+
+| **Field**                    | **Description** |
+|------------------------------|---------------|
+| keyIdentifier                | MUST be present. MUST be identical to the subjectKeyIdentifier field. |
+| authorityCertIssuer          | MUST NOT be present |
+| authorityCertSerialNumber    | MUST NOT be present |
+
+### 7.1.2.1.4 *Root CA Basic Constraints*
+
+| **Field**            | **Description**           |
+|----------------------|-------------------------|
+| cA                  | MUST be set TRUE        |
+| pathLenConstraint   | NOT RECOMMENDED        |
+
+
+## 7.1.2.2 *Cross-Certified Subordinate CA Certificate Profile*
+
+This Certificate Profile *MAY* be used when issuing a CA Certificate using the same Subject Name and Subject Public Key Information as one or more existing CA Certificate(s), whether a Root CA Certificate or Subordinate CA Certificate.
+
+Before issuing a Cross-Certified Subordinate CA, the Issuing CA *MUST* confirm that the existing CA Certificate(s) are subject to these Baseline Requirements and were issued in compliance with the then-current version of the Baseline Requirements at the time of issuance.
+
+### Certificate Fields
+
+| **Field**                 | **Description** |
+|---------------------------|---------------|
+| **tbsCertificate**        |               |
+| version                   | MUST be v3(2) |
+| **serialNumber**          | MUST be a non-sequential number greater than zero (0) and less than 2¹⁵⁹ containing at least 64 bits of output from a CSPRNG. |
+| **signature**             | See Section 7.1.3.2 |
+| **issuer**                | MUST be byte-for-byte identical to the subject field of the Issuing CA. See Section 7.1.4.1 |
+| **validity**              | See Section 7.1.2.2.1 |
+| **subject**               | See Section 7.1.2.2.2 |
+| **subjectPublicKeyInfo**  | See Section 7.1.3.1 |
+| **issuerUniqueID**        | MUST NOT be present |
+| **subjectUniqueID**       | MUST NOT be present |
+| **extensions**            | See Section 7.1.2.2.3 |
+| **signatureAlgorithm**    | Encoded value MUST be byte-for-byte identical to the tbsCertificate.signature. |
+| **signature**             |               |
+
+### 7.1.2.2.1 *Cross-Certified Subordinate CA Validity*
+
+| **Field**    | **Minimum**                                                                 | **Maximum**            |
+|-------------|-----------------------------------------------------------------------------|------------------------|
+| **notBefore** | The earlier of one day prior to the time of signing or the earliest notBefore date of the existing CA Certificate(s) | The time of signing    |
+| **notAfter**  | The time of signing                                                       | Unspecified            |
+
+### 7.1.2.2.2 *Cross-Certified Subordinate CA Naming*
+
+The subject **MUST** comply with the requirements of Section 7.1.4, or, if the existing CA Certificate was issued in compliance with the then-current version of the Baseline Requirements, the encoded subject name **MUST** be byte-for-byte identical to the encoded subject name of the existing CA Certificate.
+
+**Note:** The above exception allows the CAs to issue Cross-Certified Subordinate CA Certificates, provided that the existing CA Certificate complied with the Baseline Requirements in force at the time of issuance. This allows the requirements of Section 7.1.4 to be improved over time while still permitting Cross-Certification. If the existing CA Certificate did not comply, issuing a Cross-Certificate is not permitted.
+
+### 7.1.2.2.3 *Cross-Certified Subordinate CA Extensions*
+
+| **Extension**                   | **Presence** | **Critical** | **Description**                    |
+|---------------------------------|-------------|-------------|------------------------------------|
+| authorityKeyIdentifier          | MUST        | N           | See Section 7.1.2.11.1            |
+| basicConstraints                | MUST        | Y           | See Section 7.1.2.10.4            |
+| certificatePolicies              | MUST        | N           | See Section 7.1.2.10.5            |
+| crlDistributionPoints           | MUST        | N           | See Section 7.1.2.11.2            |
+| keyUsage                        | MUST        | Y           | See Section 7.1.2.10.7            |
+| subjectKeyIdentifier            | MUST        | N           | See Section 7.1.2.11.4            |
+| authorityInformationAccess      | SHOULD      | N           | See Section 7.1.2.10.3            |
+| nameConstraints                    | MAY               | *¹          | See Section 7.1.2.10.8            |
+| Signed Certificate Timestamp List   | MAY               | N           | See Section 7.1.2.11.3            |
+| Any other extension                 | NOT RECOMMENDED   | -           | See Section 7.1.2.11.5            |
+
+In addition to the above, extKeyUsage extension requirements vary based on the relationship between the Issuer and Subject organizations represented in the Cross-Certificate.
+
+The extKeyUsage extension **MAY** be "unrestricted" as described in the following table if:
+
+- The `organizationName` represented in the Issuer and Subject names of the corresponding certificate are either:
+  - The same, or
+  - The `organizationName` represented in the Subject name is an affiliate of the `organizationName` represented in the Issuer name.
+- The corresponding CA represented by the Subject of the Cross-Certificate is operated by the same organization as the Issuing CA or an Affiliate of the Issuing CA organization.
+
+### Table: Cross-Certified Subordinate CA with Unrestricted EKU
+
+| **Extension**  | **Presence** | **Critical** | **Description**               |
+|--------------|-------------|-------------|-------------------------------|
+| extKeyUsage | SHOULD²     | N           | See Section 7.1.2.2.4         |
+
+In all other cases, the extKeyUsage extension **MUST** be "restricted" as described in the following table:
+
+### Table: Cross-Certified Subordinate CA with Restricted EKU
+
+| **Extension**  | **Presence** | **Critical** | **Description**               |
+|--------------|-------------|-------------|-------------------------------|
+| extKeyUsage | MUST³       | N           | See Section 7.1.2.2.5         |
+
+### 7.1.2.2.4 Cross-Certified Subordinate CA Extended Key Usage - Unrestricted
+
+#### Table: Unrestricted Extended Key Usage Purposes (Affiliated Cross-Certified CA)
+
+### 7.1.2.2.4 Cross-Certified Subordinate CA Extended Key Usage - Unrestricted
+
+#### Table: Unrestricted Extended Key Usage Purposes (Affiliated Cross-Certified CA)
+
+| Key Purpose             | Description |
+|-------------------------|-------------|
+| `anyExtendedKeyUsage`   | The special extended key usage to indicate there are no restrictions applied. If present, this MUST be the only key usage present. |
+| Any other value        | CAs MUST NOT include any other key usage with the `anyExtendedKeyUsage` key usage present. Alternatively, if the Issuing CA does not use this form, then the Extended Key Usage extension, if present, MUST be encoded as specified in Section 7.1.2.2.5. |
+
+---
+
+### 7.1.2.2.5 Cross-Certified Subordinate CA Extended Key Usage
+
+#### Table: Restricted TLS Cross-Certified Subordinate CA Extended Key Usage Purposes
+*(i.e., for restricted Cross-Certified Subordinate CAs issuing TLS certificates directly or transitively)*
+
+| Key Purpose              | Description |
+|--------------------------|-------------|
+| `id-kp-serverAuth`      | MUST be present. |
+| `id-kp-clientAuth`      | MAY be present. |
+| `id-kp-emailProtection` | MUST NOT be present. |
+| `id-kp-codeSigning`     | MUST NOT be present. |
+| `id-kp-timeStamping`    | MUST NOT be present. |
+| `anyExtendedKeyUsage`   | MUST NOT be present. |
+| Any other value         | NOT RECOMMENDED. |
+
+#### Restricted Non-TLS Cross-Certified Subordinate CA Extended Key Usage Purposes
+*(i.e., for restricted Cross-Certified Subordinate CAs not issuing TLS certificates directly or transitively)*
+
+| Key Purpose              | Description |
+|--------------------------|-------------|
+| `id-kp-serverAuth`      | MUST NOT be present. |
+| `anyExtendedKeyUsage`   | MUST NOT be present. |
+| Any other value         | MAY be present. |
+
+Each included Extended Key Usage key usage purpose:
+
+- **MUST** apply in the context of the public Internet, unless:
+  - (i.a) The key usage purpose falls within an OID arc for which the Applicant demonstrates ownership.
+  - (ii.b) The Applicant can otherwise demonstrate the right to assert the key usage purpose in a public context.
+- **MUST NOT** include semantics that mislead a Relying Party about the certificate information verified by the CA.
+- **MUST** be verified by the Issuing CA (i.e., the Issuing CA MUST verify the Cross-Certified Subordinate CA is authorized to assert the key usage purpose).
+- **CAs MUST NOT** include additional key usage purposes unless the CA is aware of a reason for including the key usage purpose in the Certificate.
+
+---
+
+### 7.1.2.2.6 Cross-Certified Subordinate CA Certificate Certificate Policies
+
+The Certificate Policies extension MUST contain at least one `PolicyInformation`. Each `PolicyInformation` MUST match the following profile:
+
+#### Table: No Policy Restrictions (Affiliated CA)
+
+| Field              | Presence | Contents |
+|-------------------|-----------|-------------|
+| `policyIdentifier` | MUST      | When the Issuing CA wishes to express that there are no policy restrictions, and if the Subordinate CA is an Affiliate of the Issuing CA, then the Issuing CA MAY use the `anyPolicy` Policy Identifier, which MUST be the only `PolicyInformation` value. |
+| `anyPolicy`       | MUST      |  |
+| `policyQualifiers` | NOT RECOMMENDED | If present, MUST contain only permitted `policyQualifiers` from the table below. |
+
+#### Table: Policy Restricted
+
+| Field              | Presence | Contents |
+|-------------------|-----------|-------------|
+| `policyIdentifier` | MUST      | One of the following policy identifiers: |
+| **A Reserved Certificate Policy Identifier** | MUST | The CA MUST include at least one Reserved Certificate Policy Identifier (see Section 7.1.6.1) associated with the given Subscriber Certificate type (see Section 7.1.2.7.1) transitively issued by this Certificate. |
+| `anyPolicy`       | MUST NOT | The `anyPolicy` Policy Identifier MUST NOT be present. |
+| Any other identifier | MAY | If present, MUST be defined by the CA and documented by the CA in its Certificate Policy and/or Certification Practice Statement. |
+| `policyQualifiers` | NOT RECOMMENDED | If present, MUST contain only permitted `policyQualifiers` from the table below. |
+
+This Profile **RECOMMENDS** that the first `PolicyInformation` value within the Certificate Policies extension contains the Reserved Certificate Policy Identifier (see 7.1.6.1). Regardless of the order of `PolicyInformation` values, the Certificate Policies extension **MUST** include at least one Reserved Certificate Policy Identifier.
+
+If `policyQualifiers` is permitted and present within a `PolicyInformation` field, it MUST be formatted as follows:
+
+#### Table: Permitted policyQualifiers
+
+| Qualifier ID                    | Presence | Field Type | Contents |
+|--------------------------------|-----------|-------------|-------------|
+| `id-qt-cps` (OID: 1.3.6.1.5.5.7.2.1) | MAY | IA5String | The HTTP or HTTPS URL for the Issuing CA's Certificate Policies, Certification Practice Statement, Relying Party Agreement, or other pointer to online policy information provided by the Issuing CA. |
+| Any other qualifier            | MUST NOT | - | - |
+
+### 7.1.2.7.10. Subscriber Certificate Extended Key Usage
+
+#### Table: Subscriber Certificate Extended Key Usage
+
+| Key Purpose                         | OID                           | Presence         |
+|-------------------------------------|------------------------------|-----------------|
+| `id-kp-serverAuth`                  | 1.3.6.1.5.5.7.3.1            | MUST           |
+| `id-kp-clientAuth`                  | 1.3.6.1.5.5.7.3.2            | MAY            |
+| `id-kp-codeSigning`                 | 1.3.6.1.5.5.7.3.3            | MUST NOT       |
+| `id-kp-emailProtection`             | 1.3.6.1.5.5.7.3.4            | MUST NOT       |
+| `id-kp-timeStamping`                | 1.3.6.1.5.5.7.3.8            | MUST NOT       |
+| `id-kp-OCSPSigning`                 | 1.3.6.1.5.5.7.3.9            | MUST NOT       |
+| `anyExtendedKeyUsage`               | 2.5.29.37.0                  | MUST NOT       |
+| `Precertificate Signing Certificate`| 1.3.6.1.4.1.11129.2.4.4      | MUST NOT       |
+| Any other value                     | -                            | NOT RECOMMENDED |
+
+---
+
+### 7.1.2.7.11. Subscriber Certificate Key Usage
+
+The acceptable Key Usage values vary based on whether the Certificate's `subjectPublicKeyInfo` identifies an RSA public key or an ECC public key. CAs MUST ensure the Key Usage is appropriate for the Certificate Public Key.
+
+#### **Key Usage for RSA Public Keys**
+
+| Key Usage        | Permitted | Required       |
+|-----------------|-----------|---------------|
+| `digitalSignature`  | Y         | SHOULD        |
+| `nonRepudiation`    | N         | --            |
+| `keyEncipherment`   | Y         | MAY           |
+| `dataEncipherment`  | Y         | NOT RECOMMENDED |
+| `keyAgreement`      | N         | --            |
+| `keyCertSign`       | N         | --            |
+| `cRLSign`          | N         | --            |
+| `encipherOnly`      | N         | --            |
+| `decipherOnly`      | N         | --            |
+
+#### **Key Usage for ECC Public Keys**
+
+| Key Usage        | Permitted | Required       |
+|-----------------|-----------|---------------|
+| `digitalSignature`  | Y         | MUST          |
+| `nonRepudiation`    | N         | --            |
+| `keyEncipherment`   | N         | --            |
+| `dataEncipherment`  | N         | --            |
+| `keyAgreement`      | Y         | NOT RECOMMENDED |
+| `keyCertSign`       | N         | --            |
+| `cRLSign`          | N         | --            |
+| `encipherOnly`      | N         | --            |
+| `decipherOnly`      | N         | --            |
+
+---
+
+### 7.1.2.7.12. Subscriber Certificate Subject Alternative Name
+
+For Subscriber Certificates, the `Subject Alternative Name` MUST be present and MUST contain at least one `dNSName` or `iPAddress` GeneralName.
+
+- If the `subject` field of the certificate is an empty SEQUENCE, this extension **MUST** be marked critical, as specified in RFC 5280, Section 4.2.1.6.
+- Otherwise, this extension **MUST NOT** be marked critical.
+
+#### **Table: GeneralName within a `subjectAltName` extension**
+
+| Name Type               | Permitted | Validation |
+|-------------------------|-----------|------------|
+| `otherName`            | N         | -          |
+| `rfc822Name`           | N         | -          |
+| `dNSName`              | Y         | The entry MUST contain either a Fully-Qualified Domain Name or Wildcard Domain Name that the CA has validated in accordance with Section 3.2.2.4. Wildcard Domain Names MUST be validated for consistency with Section 3.2.2.6. The entry MUST NOT contain an Internal Name. |
+| `x400Address`          | N         | -          |
+| `directoryName`        | N         | -          |
+| `ediPartyName`         | N         | -          |
+| `uniformResourceIdentifier` | N   | -          |
+| `iPAddress`           | Y         | The entry MUST contain the IPv4 or IPv6 address that the CA has confirmed the Applicant controls or has been granted the right to use. The entry MUST NOT contain a Reserved IP Address. |
+| `registeredID`         | N         | -          |
+
+---
+
+### 7.1.2.8. OCSP Responder Certificate Profile
+
+If the Issuing CA does not directly sign OCSP responses, it MAY use an OCSP Authorized Responder, as defined by RFC 6960. The Issuing CA of the Responder **MUST** be the same as the Issuing CA for the Certificates it provides responses for.
+
+#### **Table: OCSP Responder Certificate Profile**
+
+| Field               | Description |
+|---------------------|-------------|
+| `tbsCertificate`   | -           |
+| `version`          | MUST be v3(2) |
+| `serialNumber`     | MUST be a non-sequential number greater than zero (0) and less than 2¹⁵⁹ containing at least 64 bits of output from a CSPRNG. |
+| `signature`        | See Section 7.1.3.2 |
+| `issuer`          | MUST be byte-for-byte identical to the subject field of the Issuing CA. See Section 7.1.4.1 |
+| `validity`        | See Section 7.1.2.8.1 |
+| `subject`         | See Section 7.1.2.10.2 |
+| `subjectPublicKeyInfo` | See Section 7.1.3.1 |
+| `issuerUniqueID`   | MUST NOT be present |
+| `subjectUniqueID`  | MUST NOT be present |
+| `extensions`       | See Section 7.1.2.8.2 |
+| `signatureAlgorithm` | Encoded value MUST be byte-for-byte identical to the `tbsCertificate.signature`. |
+| `signature`       | - |
+
+---
+
+### 7.1.2.8.1. OCSP Responder Validity
+
+| Field     | Minimum | Maximum |
+|-----------|---------|---------|
+| `notBefore` | One day prior to the time of signing | The time of signing |
+| `notAfter`  | The time of signing | Unspecified |
+
+---
+
+### 7.1.2.8.5. OCSP Responder Extended Key Usage
+
+#### **Table: OCSP Responder Extended Key Usage**
+
+| Key Purpose         | OID                           | Presence  |
+|---------------------|------------------------------|-----------|
+| `id-kp-OCSPSigning` | 1.3.6.1.5.5.7.3.9            | MUST      |
+| Any other value    | -                            | MUST NOT |
+
+---
+
+### Any otherName, if present:
+
+- **MUST** apply in the context of the public Internet, unless:
+  1. The `type-id` falls within an OID arc for which the Applicant demonstrates ownership, or
+  2. The Applicant can otherwise demonstrate the right to assert the data in a public context.
+- **MUST NOT** include semantics that will mislead the Relying Party about certificate information verified by the CA.
+- **MUST** be DER encoded according to the relevant ASN.1 module defining the `otherName` `type-id` and value.
+- **CAs SHALL NOT** include additional names unless the CA is aware of a reason for including the data in the Certificate.
+
+---
+
+## 7.1.2.11. Common Certificate Fields
+
+This section contains several fields that are common among multiple certificate profiles. However, these fields may not be common among all certificate profiles. Before issuing a certificate, the CA **MUST** ensure the certificate contents, including the contents of each field, comply in whole with all of the requirements of at least one Certificate Profile documented in **Section 7.1.2**.
+
+---
+
+### 7.1.2.11.1. Authority Key Identifier
+
+| Field                      | Description  |
+|----------------------------|-------------|
+| `keyIdentifier`            | **MUST** be present. **MUST** be identical to the `subjectKeyIdentifier` field of the Issuing CA. |
+| `authorityCertIssuer`      | **MUST NOT** be present. |
+| `authorityCertSerialNumber` | **MUST NOT** be present. |
+
+---
+
+### 7.1.2.11.2. CRL Distribution Points
+
+The **CRL Distribution Points** extension **MUST** be present in:
+
+- Subordinate CA Certificates; and
+- Subscriber Certificates that:
+  1. Do **not** qualify as "Short-lived Subscriber Certificates" **AND**
+  2. Do **not** include an **Authority Information Access** extension with an `id-ad-ocsp` `accessMethod`.
+
+The **CRL Distribution Points** extension **SHOULD NOT** be present in:
+
+- Root CA Certificates.
+
+The **CRL Distribution Points** extension is **OPTIONAL** in:
+
+- Short-lived Subscriber Certificates.
+
+The **CRL Distribution Points** extension **MUST NOT** be present in:
+
+- OCSP Responder Certificates.
+
+When present, the **CRL Distribution Points** extension **MUST** contain at least one `DistributionPoint`; containing more than one is **NOT RECOMMENDED**. All `DistributionPoint` items **MUST** be formatted as follows:
+
+#### Table: DistributionPoint Profile
+
+| Field              | Presence  | Description  |
+|--------------------|----------|-------------|
+| `distributionPoint` | MUST      | The `DistributionPointName` **MUST** be a `fullName` formatted as described below. |
+| `reasons`          | MUST NOT  | - |
+| `cRLIssuer`       | MUST NOT  | - |
+
+A `fullName` **MUST** contain at least one `GeneralName`; it **MAY** contain more than one.  
+All `GeneralNames` **MUST** be of type `uniformResourceIdentifier`, and the scheme of each **MUST** be `"http"`.  
+The first `GeneralName` **MUST** contain the HTTP URL of the Issuing CA's CRL service for this certificate.
+
+---
+
+### 7.1.2.11.3. Signed Certificate Timestamp List
+
+If present, the **Signed Certificate Timestamp List** extension contents **MUST** be an `OCTET STRING` containing the encoded `SignedCertificateTimestampList`, as specified in **RFC 6962, Section 3.3**.
+
+Each `SignedCertificateTimestamp` included within the `SignedCertificateTimestampList` **MUST** be for a `PreCert LogEntryType` that corresponds to the current certificate.
+
+---
+
+### 7.1.2.11.4. Subject Key Identifier
+
+If present, the `subjectKeyIdentifier` **MUST** be set as defined within **RFC 5280, Section 4.2.1.2**.
+
+- The CA **MUST** generate a `subjectKeyIdentifier` that is unique within the scope of all Certificates it has issued for each unique public key (`subjectPublicKeyInfo` field of the `tbsCertificate`).
+- For example, CAs **may** generate the `subjectKeyIdentifier` using:
+  - An algorithm derived from the public key, or
+  - A sufficiently-large unique number, such as by using a **CSPRNG**.
+
+---
+
+### 7.1.2.11.5. Other Extensions
+
+All extensions and extension values **not directly addressed** by the applicable certificate profile:
+
+- **MUST** apply in the context of the public Internet, unless:
+  1. The extension OID falls within an OID arc for which the Applicant demonstrates ownership, or
+  2. The Applicant can otherwise demonstrate the right to assert the data in a public context.
+- **MUST NOT** include semantics that will mislead the Relying Party about certificate information verified by the CA.  
+  *(e.g., including an extension that indicates a Private Key is stored on a smart card when the CA is not able to verify that the corresponding Private Key is confined to such hardware due to remote issuance).*
+- **MUST** be **DER encoded** according to the relevant ASN.1 module defining the extension and extension values.
+- **CAs SHALL NOT** include additional extensions or values unless the CA is aware of a reason for including the data in the Certificate.
 
 ### 7.1.3 Algorithm Object Identifiers {#algorithm-object-identifiers-1}
 
@@ -2689,7 +3132,7 @@ attributes must be verified in accordance with Section 3.2.2.1.
 
 Subject attributes must not contain only metadata such as \'.\', \'-\',
 and \' \' (i.e. space) characters, and/or any other indication that the
-value is absent, incomplete, or not applicable.
+value is absent, incomplete, or No Stipulation
 
 Wildcard FQDNs are permitted.
 
