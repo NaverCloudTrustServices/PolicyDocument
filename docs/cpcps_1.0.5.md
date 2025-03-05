@@ -2641,7 +2641,7 @@ The extKeyUsage extension **MAY** be "unrestricted" as described in the followin
   - The `organizationName` represented in the Subject name is an affiliate of the `organizationName` represented in the Issuer name.
 - The corresponding CA represented by the Subject of the Cross-Certificate is operated by the same organization as the Issuing CA or an Affiliate of the Issuing CA organization.
 
-### Table: Cross-Certified Subordinate CA with Unrestricted EKU
+#### Table: Cross-Certified Subordinate CA with Unrestricted EKU
 
 | **Extension**  | **Presence** | **Critical** | **Description**               |
 |--------------|-------------|-------------|-------------------------------|
@@ -2649,7 +2649,7 @@ The extKeyUsage extension **MAY** be "unrestricted" as described in the followin
 
 In all other cases, the extKeyUsage extension **MUST** be "restricted" as described in the following table:
 
-### Table: Cross-Certified Subordinate CA with Restricted EKU
+#### Table: Cross-Certified Subordinate CA with Restricted EKU
 
 | **Extension**  | **Presence** | **Critical** | **Description**               |
 |--------------|-------------|-------------|-------------------------------|
@@ -2853,7 +2853,7 @@ This Certificate Profile **MAY** be used when issuing a CA Certificate that will
 For a TLS Subordinate CA to be Technically Constrained, Name Constraints extension **MUST** be encoded as follows.  
 As an explicit exception from RFC 5280, this extension **SHOULD** be marked critical, but **MAY** be marked non-critical if compatibility with certain legacy applications that do not support Name Constraints is necessary.
 
-### Table: nameConstraints requirements
+#### Table: nameConstraints requirements
 
 | Field               | Description  |
 |--------------------|-------------|
@@ -2871,7 +2871,7 @@ As an explicit exception from RFC 5280, this extension **SHOULD** be marked crit
 The following table contains the requirements for the `GeneralName` that appears within the `base` of  
 a `GeneralSubtree` in either the `permittedSubtrees` or `excludedSubtrees`.
 
-### Table: GeneralName requirements for the base field
+#### Table: GeneralName requirements for the base field
 
 | Name Type      | Presence | Permitted Subtrees | Excluded Subtrees | Entire Namespace Exclusion |
 |---------------|----------|--------------------|--------------------|----------------------------|
@@ -2973,7 +2973,7 @@ All subject names **MUST** be encoded as specified in Section 7.1.4.
 
 The following table details the acceptable `AttributeTypes` that may appear within the `type` field of an `AttributeTypeAndValue`, as well as the contents permitted within the `value` field.
 
-### Table: Domain Validated Subject Attributes
+#### Table: Domain Validated Subject Attributes
 
 | Attribute Name  | Presence | Value | Verification |
 |----------------|----------|--------|-------------|
@@ -2996,7 +2996,7 @@ All subject names **MUST** be encoded as specified in Section 7.1.4.
 
 The following table details the acceptable `AttributeTypes` that may appear within the `type` field of an `AttributeTypeAndValue`, as well as the contents permitted within the `value` field.
 
-### Table: Individual Validated Subject Attributes
+#### Table: Individual Validated Subject Attributes
 
 | Attribute Name          | Presence   | Value | Verification |
 |------------------------|------------|--------|-------------|
@@ -3028,7 +3028,7 @@ All subject names **MUST** be encoded as specified in Section 7.1.4.
 
 The following table details the acceptable AttributeTypes that may appear within the type field of an AttributeTypeAndValue, as well as the contents permitted within the value field.
 
-### Table: Organization Validated Subject Attributes
+#### Table: Organization Validated Subject Attributes
 
 | Attribute Name         | Presence  | Value | Verification |
 |-----------------------|----------|--------|-------------|
@@ -3095,7 +3095,7 @@ When multiple `AccessDescriptions` are present with the same `accessMethod`, eac
 `AccessDescription` **MUST** be ordered in priority for that `accessMethod`, with the most-preferred `accessLocation` being the first entry.  
 No ordering requirements exist for `AccessDescriptions` containing different `accessMethods`, provided the previous requirement is satisfied.
 
-### Table: Authority Information Access
+#### Table: Authority Information Access
 
 | Access Method  | OID                  | Access Location | Presence | Maximum | Description  |
 |---------------|----------------------|----------------|----------|---------|--------------|
@@ -3129,7 +3129,7 @@ This Profile **RECOMMENDS** that the first `PolicyInformation` value within the 
 the Reserved Certificate Policy Identifier (see Section 7.1.6.1).  
 Regardless of the order of `PolicyInformation` values, the `Certificate Policies` extension **MUST** contain exactly one Reserved Certificate Policy Identifier.
 
-### Table: Permitted policyQualifiers
+#### Table: Permitted policyQualifiers
 
 | Qualifier ID                           | Presence | Field Type | Contents  |
 |----------------------------------------|----------|------------|-----------|
@@ -3156,7 +3156,7 @@ Regardless of the order of `PolicyInformation` values, the `Certificate Policies
 
 CAs **MUST** ensure the `Key Usage` is appropriate for the Certificate's `Public Key`.
 
-### Table: Key Usage for RSA Public Keys
+#### Table: Key Usage for RSA Public Keys
 
 | Key Usage        | Permitted | Required  |
 |------------------|-----------|-----------|
@@ -3179,7 +3179,7 @@ For most Subscribers, the `digitalSignature` bit is sufficient, while those usin
 **MAY** assert both `digitalSignature` and `keyEncipherment`, though this is **NOT RECOMMENDED**.  
 The `dataEncipherment` bit is currently permitted but **NOT RECOMMENDED**, as it is a **Pending Prohibition (#384)**.
 
-### Table: Key Usage for ECC Public Keys
+#### Table: Key Usage for ECC Public Keys
 
 | Key Usage        | Permitted | Required  |
 |------------------|-----------|-----------|
@@ -3204,7 +3204,7 @@ one `dNSName` or `iPAddress` GeneralName.
   in RFC 5280, Section 4.2.1.6.
 - Otherwise, this extension **MUST NOT** be marked critical.
 
-### Table: GeneralName within a subjectAltName extension
+#### Table: GeneralName within a subjectAltName extension
 
 | Name Type                 | Permitted | Validation  |
 |---------------------------|-----------|------------|
@@ -3277,7 +3277,7 @@ access to the Issuing CA's certificate, eliminating the need to provide `id-ad-c
 Additionally, because an OCSP Responder certificate must include the `id-pkix-ocsp-nocheck` extension,  
 it is not necessary to provide `id-ad-ocsp`, as such responses will not be checked by **Relying Parties**.
 
-### Table: Authority Information Access for OCSP Responder
+#### Table: Authority Information Access for OCSP Responder
 
 | Access Method | OID                  | Access Location | Presence | Maximum | Description  |
 |--------------|----------------------|----------------|----------|---------|--------------|
@@ -3342,7 +3342,7 @@ Each `PolicyInformation` **MUST** match the following profile:
 | **policyQualifiers**  | NOT RECOMMENDED | If present, **MUST** contain only permitted `policyQualifiers` from the table below. |
 
 
-### Table: Permitted policyQualifiers
+#### Table: Permitted policyQualifiers
 
 | Qualifier ID                           | Presence | Field Type | Contents  |
 |----------------------------------------|----------|------------|-----------|
@@ -3369,7 +3369,7 @@ This profile describes the transformations that are permitted to a Certificate t
 A Precertificate may be issued either directly by the **Issuing CA** or by a **Technically Constrained Precertificate Signing CA**, as defined in **Section 7.1.2.4**. If issued by a Precertificate Signing CA, then in addition to the **precertificate poison** and **signed certificate timestamp list** extensions, the **Precertificate issuer field** and, if present, **authorityKeyIdentifier** extension, may differ from the Certificate, as described below.
 
 
-### Table: When the Precertificate is issued directly by the Issuing CA
+#### Table: When the Precertificate is issued directly by the Issuing CA
 
 | Field                  | Description  |
 |------------------------|-------------|
@@ -3387,7 +3387,7 @@ A Precertificate may be issued either directly by the **Issuing CA** or by a **T
 | **signatureAlgorithm** | Encoded value **MUST** be byte-for-byte identical to the `tbsCertificate.signature`. |
 | **signature**        |             |
 
-### Table: When the Precertificate is issued by a Precertificate Signing CA on behalf of an Issuing CA
+#### Table: When the Precertificate is issued by a Precertificate Signing CA on behalf of an Issuing CA
 
 | **Field**                 | **Description** |
 |---------------------------|----------------|
@@ -3501,7 +3501,7 @@ fully comply with at least one **Certificate Profile** documented in **Section 7
 
 All `subject` names **MUST** be encoded as specified in **Section 7.1.4**.
 
-### Table: Acceptable Subject Attributes for CA Certificates
+#### Table: Acceptable Subject Attributes for CA Certificates
 
 | Attribute Name         | Presence | Value | Verification |
 |-----------------------|----------|--------|-------------|
@@ -3530,7 +3530,7 @@ if permitted for that `accessMethod`. When multiple `AccessDescriptions` are pre
 - Each `AccessDescription` **MUST** be ordered in priority for that `accessMethod`, with the most-preferred `accessLocation` being the first.
 - No ordering requirements are imposed for `AccessDescriptions` containing different `accessMethods`, provided the above requirements are met.
 
-### Table: Authority Information Access for CA Certificates
+#### Table: Authority Information Access for CA Certificates
 
 | Access Method | OID                  | Access Location | Presence | Maximum | Description  |
 |--------------|----------------------|----------------|----------|---------|--------------|
@@ -3552,7 +3552,7 @@ if permitted for that `accessMethod`. When multiple `AccessDescriptions` are pre
 If present, the `Certificate Policies` extension **MUST** contain at least one `PolicyInformation`.  
 Each `PolicyInformation` **MUST** match the following profile:
 
-### Table: No Policy Restrictions (Affiliated CA)
+#### Table: No Policy Restrictions (Affiliated CA)
 
 | Field | Presence | Contents  |
 |-------|----------|-----------|
@@ -3560,7 +3560,7 @@ Each `PolicyInformation` **MUST** match the following profile:
 | **anyPolicy** | MUST | - |
 | **policyQualifiers** | NOT RECOMMENDED | If present, **MUST** contain only permitted `policyQualifiers` from the table below. |
 
-### Table: Policy Restricted
+#### Table: Policy Restricted
 
 | Field | Presence | Contents  |
 |-------|----------|-----------|
@@ -3581,7 +3581,7 @@ Regardless of the order of **PolicyInformation** values, the **Certificate Polic
 
 If the **policyQualifiers** is permitted and present within a **PolicyInformation** field, it **MUST** be formatted as follows:
 
-### Table: Permitted policyQualifiers
+#### Table: Permitted policyQualifiers
 
 | Qualifier ID                           | Presence | Field Type | Contents  |
 |----------------------------------------|----------|------------|-----------|
@@ -3625,7 +3625,7 @@ If present, the **Name Constraints** extension **MUST** be encoded as follows:
 - As an explicit exception from **RFC 5280**, this extension **SHOULD** be marked **critical**,  
   but **MAY** be marked **non-critical** if compatibility with legacy applications that do not support **Name Constraints** is necessary.
 
-### Table: nameConstraints requirements
+#### Table: nameConstraints requirements
 
 | Field | Description |
 |--------|-------------|
@@ -3642,7 +3642,7 @@ If present, the **Name Constraints** extension **MUST** be encoded as follows:
 
 The following table contains the requirements for the GeneralName that appears within the base of a GeneralSubtree in either the permittedSubtrees or excludedSubtrees.
 
-### Table: GeneralName requirements for the base field
+#### Table: GeneralName requirements for the base field
 
 | Name Type | Presence | Permitted Subtrees | Excluded Subtrees |
 |------------|----------|--------------------|--------------------|
