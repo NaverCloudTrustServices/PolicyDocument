@@ -7,7 +7,7 @@
 
 # Table of Contents
 
-### [1. INTRODUCTION](#1-introduction)
+### [1.  INTRODUCTION](#1-introduction)
 - [1.1 Overview](#11-overview)
 - [1.2 Document Name and Identification](#12-document-name-and-identification)
   - [1.2.1 Revisions](#121-revisions)
