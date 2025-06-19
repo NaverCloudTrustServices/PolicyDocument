@@ -1,9 +1,9 @@
 # **NAVER Cloud Trust Services**  
 # **Certificate Policy / Certificate Practices Statement**
 
-## Version 1.0.5
+## Version 1.0.6
 
-### 05 March 2025
+### 19 June 2025
 
 # Table of Contents
 
@@ -1056,8 +1056,6 @@ Prior to issuing a Certificate, NAVER Cloud Trust Services validates
 that the Applicant has control over each FQDN listed in the Certificate
 by using at least one of the following approved methods as defined in
 the BR at the time of validation:
-
--   3.2.2.4.2 Email, Fax, SMS, or Postal Mail to Domain Contact
 
 -   3.2.2.4.4 Constructed Email to Domain Contact
 
@@ -4990,4 +4988,5 @@ The following revisions have been made to the original document.
 | 1.0.3 | 17 October 2024 | Revised to reflect updates based on CABF BR Version 2.0.7. Change of company address. Typo correction. |
 | 1.0.4 | 26 November 2024 | This document replaces the NAVER Cloud Trust Services CPS v1.0.3. Updated Section 7.1.2. |
 | 1.0.5 | 05 March 2025 | Changed "Not Application" to "No Stipulation." Revised Section 7.1.2 Certificate Extensions to provide a more detailed specification of RFC 5280. |
+| 1.0.6 | 19 June 2025 | Removed the method “3.2.2.4.2 Email, Fax, SMS, or Postal Mail to Domain Contact” from section 3.2.2.4 Validation of Domain Authorization or Control. |
 
