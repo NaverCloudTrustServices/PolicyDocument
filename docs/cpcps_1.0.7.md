@@ -922,7 +922,7 @@ The quorum requirements are as follows:
 
 •	With 2–5 remote Network Perspectives: up to 1 non-corroboration allowed
 •	With 6 or more remote Network Perspectives: up to 2 non-corroborations allowed
-
+Remote Network Perspectives performing Multi-Perspective Issuance Corroboration must rely upon networks (e.g., Internet Service Providers or Cloud Provider Networks) implementing measures to mitigate BGP routing incidents in the global Internet routing system for providing internet connectivity to the Network Perspective.
 Accordingly, NAVER Cloud Trust Services must comply with the allowed number of non-corroborations based on the number of remote Network Perspectives employed during Multi-Perspective Issuance Corroboration, as well as the effective date-based requirements.
 As of September 15, 2025: NAVER Cloud Trust Services MUST perform Multi-Perspective Issuance Corroboration using at least two (2) remote Network Perspectives, and Quorum Requirements MUST be satisfied. Certificate issuance MUST NOT proceed if the number of non-corroborations exceeds the allowed threshold.
 As of March 15, 2026: NAVER Cloud Trust Services MUST perform Multi-Perspective Issuance Corroboration using at least three (3) remote Network Perspectives. In addition, at least two (2) of the Perspectives supporting the Primary MUST be distributed across distinct Regional Internet Registry (RIR) regions.
@@ -2533,6 +2533,13 @@ policy:
     documents that the security patch would introduce additional
     vulnerabilities or instabilities that outweigh the benefits of
     applying the security patch.
+
+For NAVER Cloud Trust Services, the vulnerability response timeline is determined by the Common Vulnerability Scoring System (CVSS) score assigned to each vulnerability as follows:
+- 9.0 ~ 10.0 : immediate
+- 7.0 ~ 8.9 : 30 days 
+- 4.0 ~ 6.9 : 90 days
+- 0.1 ~ 3.9 : 180 days
+Exceptions are assessed for risk and documented.
 
 For NAVER Cloud Trust Services, the vulnerability response timeframe SHALL be established based on a documented risk assessment in accordance with CABF Network and Certificate System Security Requirements v2.0.5. 
 The assessment SHOULD take into account the CVSS score, criticality of assets, and potential impact. Identified vulnerabilities are remediated in a timely manner appropriate to their severity, with urgent cases addressed immediately. Exceptions may be documented and justified through a risk-based process.
