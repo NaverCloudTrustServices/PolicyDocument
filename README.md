@@ -1,33 +1,19 @@
 # **NAVER Cloud Trust Services**  
 # **Certificate Policy / Certificate Practices Statement**
 
-## Version 1.0.6
+## Version 1.0.8
 
-### 19 June 2025
+### 27 November 2025
 
 # Table of Contents
 
 ### [1. INTRODUCTION](#1-introduction)
 - [1.1 Overview](#11-overview)
 - [1.2 Document Name and Identification](#12-document-name-and-identification)
-  - [1.2.1 Revisions](#121-revisions)
 - [1.3 PKI Participants](#13-pki-participants)
-  - [1.3.1 Certification Authorities](#131-certification-authorities)
-  - [1.3.2 Registration Authorities](#132-registration-authorities)
-  - [1.3.3 Subscribers](#133-subscribers)
-  - [1.3.4 Relying Parties](#134-relying-parties)
-  - [1.3.5 Other Participants](#135-other-participants)
 - [1.4 Certificate Usage](#14-certificate-usage)
-  - [1.4.1 Appropriate Certificate Uses](#141-appropriate-certificate-uses)
-  - [1.4.2 Prohibited Certificate Uses](#142-prohibited-certificate-uses)
 - [1.5 Policy Administration](#15-policy-administration)
-  - [1.5.1 Organization Administering the Document](#151-organization-administering-the-document)
-  - [1.5.2 Contact Person](#152-contact-person)
-  - [1.5.3 Person Determining CPS Suitability for the Policy](#153-person-determining-cps-suitability-for-the-policy)
-  - [1.5.4 CP/CPS Approval Procedures](#154-cp-cps-approval-procedures)
 - [1.6 Definitions and Acronyms](#16-definitions-and-acronyms)
-  - [1.6.1 Definitions](#161-definitions)
-  - [1.6.2 Acronyms](#162-acronyms)
 
 ### [2. PUBLICATION AND REPOSITORY RESPONSIBILITIES](#2-publication-and-repository-responsibilities)
 - [2.1 Repositories](#21-repositories)
@@ -37,261 +23,78 @@
 
 ### [3. IDENTIFICATION AND AUTHENTICATION](#3-identification-and-authentication)
 - [3.1 Naming](#31-naming)
-  - [3.1.1 Type of Names](#311-type-of-names)
-  - [3.1.2 Need for Names to be Meaningful](#312-need-for-names-to-be-meaningful)
-  - [3.1.3 Anonymity or Pseudonymity of Subscribers](#313-anonymity-or-pseudonymity-of-subscribers)
-  - [3.1.4 Rules for Interpreting Various Name Forms](#314-rules-for-interpreting-various-name-forms)
-  - [3.1.5 Uniqueness of Name](#315-uniqueness-of-name)
-  - [3.1.6 Recognition, Authentication, and Role of Trademarks](#316-recognition-authentication-and-role-of-trademarks)
+- [3.2 Initial Identity Validation](#32-initial-identity-validation)
+- [3.3 Identification and Authentication for Re-Key Requests](#33-identification-and-authentication-for-re-key-requests)
+- [3.4 Identification and Authentication for Revocation Request](#34-identification-and-authentication-for-revocation-request)
 
 ### [4. CERTIFICATE LIFE-CYCLE OPERATIONAL REQUIREMENTS](#4-certificate-life-cycle-operational-requirements)
 - [4.1 Certificate Application](#41-certificate-application)
-  - [4.1.1 Who Can Submit a Certificate Application](#411-who-can-submit-a-certificate-application)
-  - [4.1.2 Enrollment Process and Responsibilities](#412-enrollment-process-and-responsibilities)
 - [4.2 Certificate Application Processing](#42-certificate-application-processing)
-  - [4.2.1 Performing Identification and Authentication Functions](#421-performing-identification-and-authentication-functions)
-  - [4.2.2 Approval or Rejection of Certificate Applications](#422-approval-or-rejection-of-certificate-applications)
-  - [4.2.3 Time to Process Certificate Applications](#423-time-to-process-certificate-applications)
-  - [4.2.4 Certificate Authority Authorization (CAA) Records](#424-certificate-authority-authorization-caa-records)
 - [4.3 Certificate Issuance](#43-certificate-issuance)
-  - [4.3.1 CA Actions During Certificate Issuance](#431-ca-actions-during-certificate-issuance)
-  - [4.3.2 Notifications to Subscriber by the CA of Issuance of Certificate](#432-notifications-to-subscriber-by-the-ca-of-issuance-of-certificate)
 - [4.4 Certificate Acceptance](#44-certificate-acceptance)
-  - [4.4.1 Conduct Constituting Certificate Acceptance](#441-conduct-constituting-certificate-acceptance)
-  - [4.4.2 Publication of the Certificate by the CA](#442-publication-of-the-certificate-by-the-ca)
-  - [4.4.3 Notification of Certificate Issuance by the CA to Other Entities](#443-notification-of-certificate-issuance-by-the-ca-to-other-entities)
 - [4.5 Key Pair and Certificate Usage](#45-key-pair-and-certificate-usage)
-  - [4.5.1 Subscriber Private Key and Certificate Usage](#451-subscriber-private-key-and-certificate-usage)
-  - [4.5.2 Relying Party Public Key and Certificate Usage](#452-relying-party-public-key-and-certificate-usage)
 - [4.6 Certificate Renewal](#46-certificate-renewal)
-  - [4.6.1 Circumstances for Certificate Renewal](#461-circumstances-for-certificate-renewal)
-  - [4.6.2 Who May Request Renewal](#462-who-may-request-renewal)
-  - [4.6.3 Processing Certificate Renewal Requests](#463-processing-certificate-renewal-requests)
-  - [4.6.4 Notification of New Certificate Issuance to Subscriber](#464-notification-of-new-certificate-issuance-to-subscriber)
-  - [4.6.5 Conduct Constituting Acceptance of a Renewal Certificate](#465-conduct-constituting-acceptance-of-a-renewal-certificate)
-  - [4.6.6 Publication of the Renewal Certificate by the CA](#466-publication-of-the-renewal-certificate-by-the-ca)
-  - [4.6.7 Notification of Certificate Issuance by the CA to Other Entities](#467-notification-of-certificate-issuance-by-the-ca-to-other-entities)
 - [4.7 Certificate Re-Key](#47-certificate-re-key)
-  - [4.7.1 Circumstances for Certificate Re-Key](#471-circumstances-for-certificate-re-key)
-  - [4.7.2 Who May Request Certification of a New Public Key](#472-who-may-request-certification-of-a-new-public-key)
-  - [4.7.3 Processing Certificate Re-Keying Requests](#473-processing-certificate-re-keying-requests)
-  - [4.7.4 Notification of New Certificate Issuance to Subscriber](#474-notification-of-new-certificate-issuance-to-subscriber)
-  - [4.7.5 Conduct Constituting Acceptance of a Re-Keyed Certificate](#475-conduct-constituting-acceptance-of-a-re-keyed-certificate)
-  - [4.7.6 Publication of the Re-Keyed Certificate by the CA](#476-publication-of-the-re-keyed-certificate-by-the-ca)
-  - [4.7.7 Notification of Certificate Issuance by the CA to Other Entities](#477-notification-of-certificate-issuance-by-the-ca-to-other-entities)
 - [4.8 Certificate Modification](#48-certificate-modification)
-  - [4.8.1 Circumstances for Certificate Modification](#481-circumstances-for-certificate-modification)
-  - [4.8.2 Who May Request Certificate Modification](#482-who-may-request-certificate-modification)
-  - [4.8.3 Processing Certificate Modification Requests](#483-processing-certificate-modification-requests)
-  - [4.8.4 Notification of New Certificate Issuance to Subscriber](#484-notification-of-new-certificate-issuance-to-subscriber)
-  - [4.8.5 Conduct Constituting Acceptance of Modified Certificate](#485-conduct-constituting-acceptance-of-modified-certificate)
-  - [4.8.6 Publication of the Modified Certificate by the CA](#486-publication-of-the-modified-certificate-by-the-ca)
-  - [4.8.7 Notification of Certificate Issuance by the CA to Other Entities](#487-notification-of-certificate-issuance-by-the-ca-to-other-entities)
 - [4.9 Certificate Revocation and Suspension](#49-certificate-revocation-and-suspension)
-  - [4.9.1 Circumstances for Revocation](#491-circumstances-for-revocation)
-  - [4.9.2 Who Can Request Revocation](#492-who-can-request-revocation)
-  - [4.9.3 Procedure for Revocation Request](#493-procedure-for-revocation-request)
-  - [4.9.4 Revocation Request Grace Period](#494-revocation-request-grace-period)
-  - [4.9.5 Time Within Which CA Must Process the Revocation Request](#495-time-within-which-ca-must-process-the-revocation-request)
-  - [4.9.6 Revocation Checking Requirements for Relying Parties](#496-revocation-checking-requirements-for-relying-parties)
-  - [4.9.7 CRL Issuance Frequency](#497-crl-issuance-frequency)
-  - [4.9.8 Maximum Latency for CRLs](#498-maximum-latency-for-crls)
-  - [4.9.9 On-Line Revocation/Status Checking Availability](#499-on-line-revocation-status-checking-availability)
-  - [4.9.10 On-Line Revocation Checking Requirements](#4910-on-line-revocation-checking-requirements)
-  - [4.9.11 Other Forms of Revocation Advertisements Available](#4911-other-forms-of-revocation-advertisements-available)
-  - [4.9.12 Special Requirements re Key Compromise](#4912-special-requirements-re-key-compromise)
-  - [4.9.13 Circumstances for Suspension](#4913-circumstances-for-suspension)
-  - [4.9.14 Who Can Request Suspension](#4914-who-can-request-suspension)
-  - [4.9.15 Procedure for Suspension Request](#4915-procedure-for-suspension-request)
-  - [4.9.16 Limits on Suspension Period](#4916-limits-on-suspension-period)
 - [4.10 Certificate Status Services](#410-certificate-status-services)
-  - [4.10.1 Operational Characteristics](#4101-operational-characteristics)
-  - [4.10.2 Service Availability](#4102-service-availability)
-  - [4.10.3 Optional Features](#4103-optional-features)
 - [4.11 End of Subscription](#411-end-of-subscription)
 - [4.12 Key Escrow and Recovery](#412-key-escrow-and-recovery)
-  - [4.12.1 Key Escrow and Recovery Policy and Practices](#4121-key-escrow-and-recovery-policy-and-practices)
-  - [4.12.2 Session key encapsulation and recovery policy and practices](#4122-session-key-encapsulation-and-recovery-policy-and-practices)
- 
-  
+
 ### [5. FACILITY, MANAGEMENT, AND OPERATIONAL CONTROLS](#5-facility-management-and-operational-controls)
 - [5.1 Physical Security Controls](#51-physical-security-controls)
-  - [5.1.1 Site Location and Construction](#511-site-location-and-construction)
-  - [5.1.2 Physical Access](#512-physical-access)
-  - [5.1.3 Power and Air Conditioning](#513-power-and-air-conditioning)
-  - [5.1.4 Water Exposures](#514-water-exposures)
-  - [5.1.5 Fire Prevention and Protection](#515-fire-prevention-and-protection)
-  - [5.1.6 Media Storage](#516-media-storage)
-  - [5.1.7 Waste Disposal](#517-waste-disposal)
-  - [5.1.8 Off-Site Backup](#518-off-site-backup)
 - [5.2 Procedural Controls](#52-procedural-controls)
-  - [5.2.1 Trusted Roles](#521-trusted-roles)
-  - [5.2.2 Number of Individuals Required per Task](#522-number-of-individuals-required-per-task)
-  - [5.2.3 Identification and Authentication for Each Role](#523-identification-and-authentication-for-each-role)
-  - [5.2.4 Roles Requiring Separation of Duties](#524-roles-requiring-separation-of-duties)
 - [5.3 Personnel Controls](#53-personnel-controls)
-  - [5.3.1 Qualifications, Experience, and Clearance Requirements](#531-qualifications-experience-and-clearance-requirements)
-  - [5.3.2 Background Check Procedures](#532-background-check-procedures)
-  - [5.3.3 Training Requirements and Procedures](#533-training-requirements-and-procedures)
-  - [5.3.4 Retraining Frequency and Requirements](#534-retraining-frequency-and-requirements)
-  - [5.3.5 Job Rotation Frequency and Sequence](#535-job-rotation-frequency-and-sequence)
-  - [5.3.6 Sanctions for Unauthorized Actions](#536-sanctions-for-unauthorized-actions)
-  - [5.3.7 Independent Contractor Requirements](#537-independent-contractor-requirements)
-  - [5.3.8 Documentation Supplied to Personnel](#538-documentation-supplied-to-personnel)
 - [5.4 Audit Logging Procedures](#54-audit-logging-procedures)
-  - [5.4.1 Types of Events Recorded](#541-types-of-events-recorded)
-    - [5.4.1.1 Router and firewall activities logs](#5411-router-and-firewall-activities-logs)
-  - [5.4.2 Frequency of Processing Log](#542-frequency-of-processing-log)
-  - [5.4.3 Retention Period for Audit Log](#543-retention-period-for-audit-log)
-  - [5.4.4 Protection of Audit Log](#544-protection-of-audit-log)
-  - [5.4.5 Audit Log Backup Procedures](#545-audit-log-backup-procedures)
-  - [5.4.6 Audit Log Accumulation System (internal vs. external)](#546-audit-log-accumulation-system-internal-vs-external)
-  - [5.4.7 Notification to Event-Causing Subject](#547-notification-to-event-causing-subject)
-  - [5.4.8 Vulnerability Assessments](#548-vulnerability-assessments)
 - [5.5 Records Archival](#55-records-archival)
-  - [5.5.1 Types of Records Archived](#551-types-of-records-archived)
-  - [5.5.2 Retention Period for Archive](#552-retention-period-for-archive)
-  - [5.5.3 Protection of Archive](#553-protection-of-archive)
-  - [5.5.4 Archive Backup Procedures](#554-archive-backup-procedures)
-  - [5.5.5 Requirements for Time-Stamping of Records](#555-requirements-for-time-stamping-of-records)
-  - [5.5.6 Archive Collection System (Internal or External)](#556-archive-collection-system-internal-or-external)
-  - [5.5.7 Procedures to Obtain and Verify Archive Information](#557-procedures-to-obtain-and-verify-archive-information)
 - [5.6 Key Changeover](#56-key-changeover)
 - [5.7 Compromise and Disaster Recovery](#57-compromise-and-disaster-recovery)
-  - [5.7.1 Incident and Compromise Handling Procedures](#571-incident-and-compromise-handling-procedures)
-  - [5.7.2 Computing Resources, Software, and/or Data Are Corrupted](#572-computing-resources-software-and-data-are-corrupted)
-  - [5.7.3 Entity Private Key Compromise Procedures](#573-entity-private-key-compromise-procedures)
-  - [5.7.4 Business Continuity Capabilities After a Disaster](#574-business-continuity-capabilities-after-a-disaster)
 - [5.8 CA or RA Termination](#58-ca-or-ra-termination)
-
 
 ### [6. TECHNICAL SECURITY CONTROLS](#6-technical-security-controls)
 - [6.1 Key Pair Generation and Installation](#61-key-pair-generation-and-installation)
-  - [6.1.1 Key Pair Generation](#611-key-pair-generation)
-  - [6.1.2 Private Key Delivery to Subscriber](#612-private-key-delivery-to-subscriber)
-  - [6.1.3 Public Key Delivery to Certificate Issuer](#613-public-key-delivery-to-certificate-issuer)
-  - [6.1.4 CA Public Key Delivery to Relying Parties](#614-ca-public-key-delivery-to-relying-parties)
-  - [6.1.5 Key Sizes](#615-key-sizes)
-  - [6.1.6 Public Key Parameters Generation and Quality Checking](#616-public-key-parameters-generation-and-quality-checking)
-  - [6.1.7 Key Usage Purposes (as per X.509 v3 Key Usage Field)](#617-key-usage-purposes-as-per-x509-v3-key-usage-field)
 - [6.2 Private Key Protection and Cryptographic Module Engineering Controls](#62-private-key-protection-and-cryptographic-module-engineering-controls)
-  - [6.2.1 Cryptographic Module Standards and Controls](#621-cryptographic-module-standards-and-controls)
-  - [6.2.2 Private Key (n out of m) Multi-Person Control](#622-private-key-n-out-of-m-multi-person-control)
-  - [6.2.3 Private Key Escrow](#623-private-key-escrow)
-  - [6.2.4 Private Key Backup](#624-private-key-backup)
-  - [6.2.5 Private Key Archival](#625-private-key-archival)
-  - [6.2.6 Private Key Transfer Into or From a Cryptographic Module](#626-private-key-transfer-into-or-from-a-cryptographic-module)
-  - [6.2.7 Private Key Storage on Cryptographic Module](#627-private-key-storage-on-cryptographic-module)
-  - [6.2.8 Method of Activating Private Key](#628-method-of-activating-private-key)
-  - [6.2.9 Method of Deactivating Private Key](#629-method-of-deactivating-private-key)
-  - [6.2.10 Method of Destroying Private Key](#6210-method-of-destroying-private-key)
-  - [6.2.11 Cryptographic Module Rating](#6211-cryptographic-module-rating)
 - [6.3 Other Aspects of Key Pair Management](#63-other-aspects-of-key-pair-management)
-  - [6.3.1 Public Key Archival](#631-public-key-archival)
-  - [6.3.2 Certificate Operational Periods and Key Pair Usage Periods](#632-certificate-operational-periods-and-key-pair-usage-periods)
 - [6.4 Activation Data](#64-activation-data)
-  - [6.4.1 Activation Data Generation and Installation](#641-activation-data-generation-and-installation)
-  - [6.4.2 Activation Data Protection](#642-activation-data-protection)
-  - [6.4.3 Other Aspects of Activation Data](#643-other-aspects-of-activation-data)
 - [6.5 Computer Security Controls](#65-computer-security-controls)
-  - [6.5.1 Specific Computer Security Technical Requirements](#651-specific-computer-security-technical-requirements)
-  - [6.5.2 Computer Security Rating](#652-computer-security-rating)
 - [6.6 Life Cycle Technical Controls](#66-life-cycle-technical-controls)
-  - [6.6.1 System Development Controls](#661-system-development-controls)
-  - [6.6.2 Security Management Controls](#662-security-management-controls)
-  - [6.6.3 Life Cycle Security Controls](#663-life-cycle-security-controls)
 - [6.7 Network Security Controls](#67-network-security-controls)
 - [6.8 Time-Stamping](#68-time-stamping)
 
 ### [7. CERTIFICATE, CRL, AND OCSP PROFILES](#7-certificate-crl-and-ocsp-profiles)
 - [7.1 Certificate Profile](#71-certificate-profile)
-  - [7.1.1 Version Number(s)](#711-version-numbers)
-  - [7.1.2 Certificate Extensions](#712-certificate-extensions)
-  - [7.1.3 Algorithm Object Identifiers](#713-algorithm-object-identifiers)
-  - [7.1.4 Name Forms](#714-name-forms)
-  - [7.1.5 Name Constraints](#715-name-constraints)
-  - [7.1.6 Certificate Policy Object Identifier](#716-certificate-policy-object-identifier)
-  - [7.1.7 Usage of Policy Constraints Extension](#717-usage-of-policy-constraints-extension)
-  - [7.1.8 Policy Qualifiers Syntax and Semantics](#718-policy-qualifiers-syntax-and-semantics)
-  - [7.1.9 Processing Semantics for the Critical Certificate Policies Extension](#719-processing-semantics-for-the-critical-certificate-policies-extension)
 - [7.2 CRL Profile](#72-crl-profile)
-  - [7.2.1 Version Number(s)](#721-version-numbers)
-  - [7.2.2 CRL and CRL Entry Extensions](#722-crl-and-crl-entry-extensions)
-    - [7.2.2.1 CRL Issuing Distribution Point](#7221-crl-issuing-distribution-point)
 - [7.3 OCSP Profile](#73-ocsp-profile)
-  - [7.3.1 Version Number(s)](#731-version-numbers)
-  - [7.3.2 OCSP Extensions](#732-ocsp-extensions)
 
 ### [8. COMPLIANCE AUDIT AND OTHER ASSESSMENTS](#8-compliance-audit-and-other-assessments)
 - [8.1 Frequency and Circumstances of Assessment](#81-frequency-and-circumstances-of-assessment)
-- [8.2 Identity/Qualifications of Assessor](#82-identity-qualifications-of-assessor)
-- [8.3 Assessor's Relationship to Assessed Entity](#83-assessors-relationship-to-assessed-entity)
+- [8.2 Identity/Qualifications of Assessor](#82-identityqualifications-of-assessor)
+- [8.3 Assessor’s Relationship to Assessed Entity](#83-assessors-relationship-to-assessed-entity)
 - [8.4 Topics Covered by Assessment](#84-topics-covered-by-assessment)
 - [8.5 Actions Taken as a Result of Deficiency](#85-actions-taken-as-a-result-of-deficiency)
 - [8.6 Communications of Results](#86-communications-of-results)
 - [8.7 Self-Audits](#87-self-audits)
 
 ### [9. OTHER BUSINESS AND LEGAL MATTERS](#9-other-business-and-legal-matters)
-  - [9.1.1 Certificate Issuance or Renewal Fees](#911-certificate-issuance-or-renewal-fees)
-  - [9.1.2 Certificate Access Fees](#912-certificate-access-fees)
-  - [9.1.3 Revocation or Status Information Access Fees](#913-revocation-or-status-information-access-fees)
-  - [9.1.4 Fees for Other Services](#914-fees-for-other-services)
-  - [9.1.5 Refund Policy](#915-refund-policy)
+- [9.1 Fees](#91-fees)
 - [9.2 Financial Responsibility](#92-financial-responsibility)
-  - [9.2.1 Insurance Coverage](#921-insurance-coverage)
-  - [9.2.2 Other Assets](#922-other-assets)
-  - [9.2.3 Insurance or Warranty Coverage for End-Entities](#923-insurance-or-warranty-coverage-for-end-entities)
 - [9.3 Confidentiality of Business Information](#93-confidentiality-of-business-information)
-  - [9.3.1 Scope of Confidential Information](#931-scope-of-confidential-information)
-  - [9.3.2 Information Not Within the Scope of Confidential Information](#932-information-not-within-the-scope-of-confidential-information)
-  - [9.3.3 Responsibility to Protect Confidential Information](#933-responsibility-to-protect-confidential-information)
 - [9.4 Privacy of Personal Information](#94-privacy-of-personal-information)
-  - [9.4.1 Privacy Plan](#941-privacy-plan)
-  - [9.4.2 Information Treated as Private](#942-information-treated-as-private)
-  - [9.4.3 Information Not Deemed Private](#943-information-not-deemed-private)
-  - [9.4.4 Responsibility to Protect Private Information](#944-responsibility-to-protect-private-information)
-  - [9.4.5 Notice and Consent to Use Private Information](#945-notice-and-consent-to-use-private-information)
-  - [9.4.6 Disclosure Pursuant to Judicial or Administrative Process](#946-disclosure-pursuant-to-judicial-or-administrative-process)
-  - [9.4.7 Other Information Disclosure Circumstances](#947-other-information-disclosure-circumstances)
-- [9.5 Intellectual Property rights](#95-intellectual-property-rights)
-  - [9.5.1 Property Rights in Certificates and Revocation Information](#951-property-rights-in-certificates-and-revocation-information)
-  - [9.5.2 Property Rights in the Agreement](#952-property-rights-in-the-agreement)
-  - [9.5.3 Property Rights of Names](#953-property-rights-of-names)
-  - [9.5.4 Property Rights in Key Pairs](#954-property-rights-in-key-pairs)
+- [9.5 Intellectual Property Rights](#95-intellectual-property-rights)
 - [9.6 Representations and Warranties](#96-representations-and-warranties)
-  - [9.6.1 CA Representations and Warranties](#961-ca-representations-and-warranties)
-  - [9.6.2 RA Representations and Warranties](#962-ra-representations-and-warranties)
-  - [9.6.3 Subscriber Representations and Warranties](#963-subscriber-representations-and-warranties)
-  - [9.6.4 Relying Party Representations and Warranties](#964-relying-party-representations-and-warranties)
-  - [9.6.5 Representations and Warranties of Other Participants](#965-representations-and-warranties-of-other-participants)
 - [9.7 Disclaimers of Warranties](#97-disclaimers-of-warranties)
 - [9.8 Limitations of Liability](#98-limitations-of-liability)
 - [9.9 Indemnities](#99-indemnities)
-  - [9.9.1 By Subscriber](#991-by-subscriber)
-  - [9.9.2 By Relying Parties](#992-by-relying-parties)
 - [9.10 Term and Termination](#910-term-and-termination)
-  - [9.10.1 Term](#9101-term)
-  - [9.10.2 Termination](#9102-termination)
-  - [9.10.3 Effect of Termination and Survival](#9103-effect-of-termination-and-survival)
 - [9.11 Individual Notices and Communications with Participants](#911-individual-notices-and-communications-with-participants)
 - [9.12 Amendments](#912-amendments)
-  - [9.12.1 Procedure for Amendment](#9121-procedure-for-amendment)
-  - [9.12.2 Notification Mechanism and Period](#9122-notification-mechanism-and-period)
-  - [9.12.3 Circumstances Under Which OID Must be Changed](#9123-circumstances-under-which-oid-must-be-changed)
 - [9.13 Dispute Resolution Provisions](#913-dispute-resolution-provisions)
 - [9.14 Governing Law](#914-governing-law)
 - [9.15 Compliance with Applicable Law](#915-compliance-with-applicable-law)
 - [9.16 Miscellaneous Provisions](#916-miscellaneous-provisions)
-  - [9.16.1 Entire Agreement](#9161-entire-agreement)
-  - [9.16.2 Assignment](#9162-assignment)
-  - [9.16.3 Severability](#9163-severability)
-  - [9.16.4 Enforcement (Attorneys' Fees and Waiver of Rights)](#9164-enforcement-attorneys-fees-and-waiver-of-rights)
-  - [9.16.5 Force Majeure](#9165-force-majeure)
 - [9.17 Other Provisions](#917-other-provisions)
 
-
-[APPENDIX A: CHANGE HISTORY](#appendix-a-change-history)
-
+### [APPENDIX A: CHANGE HISTORY](#appendix-a-change-history)
 
 # 1. INTRODUCTION
 
@@ -408,9 +211,20 @@ Intermediate CAs
 
     -   Valid Until: 2027-08-19
 
+-   NAVER Secure Certification Authority 2
+
+    -   Public Key: RSA 4096
+
+    -   Serial Number: 149E7FC617A0789B17D776FD45C60B69754F5300
+
+    -   Fingerprint (SHA256):
+        571E521E5E22810D33BB1A39991143E9E64CD8DAE97D65931B194E19AEE81E86
+
+    -   Valid Until: 2035-11-19
+
 -   NAVER Cloud Trust Services G1 RSA CA1
 
-    -   Public Key: RSA 2048
+    -   Public Key: RSA 4096
 
     -   Serial Number: 04A10F19A216DCBBF6088447D8F371ADCEE7D249
 
@@ -418,6 +232,28 @@ Intermediate CAs
         17832DBB48F609B722A27507F1D327DE062D7F7B85B71325D8DD99B19FB5BAD4
 
     -   Valid Until: 2033-06-06
+
+-   NAVER Cloud Trust Services G1 RSA CA2
+
+    -   Public Key: RSA 4096
+
+    -   Serial Number: 0931F2A391E433A99DFA9089B18EE56368893650
+
+    -   Fingerprint (SHA256):
+        45B3942959D74F8B546A6AB47404AFC4A583AD5FA6FFD89A827A2A78522F66FD
+
+    -   Valid Until: 2035-11-19
+
+-   NAVER Cloud Trust Services G1 RSA CA3
+
+    -   Public Key: RSA 4096
+
+    -   Serial Number: 0AE4F1A43970EF427243F96A66F9C83E8B8D6224
+
+    -   Fingerprint (SHA256):
+        027B4EEC38B46BFD6B5C3E028F0922D268D367698BD15E01F7BD081EC36C8369
+
+    -   Valid Until: 2028-10-19
 
 -   NAVER Cloud Trust Services G1 ECC CA1
 
@@ -429,6 +265,28 @@ Intermediate CAs
         882D9924FC69A00574D54C2BB4014825A1C1C71FA1D0238CAC865FE0AA4AD60B
 
     -   Valid Until: 2033-06-06
+
+-   NAVER Cloud Trust Services G1 ECC CA2
+
+    -   Public Key: EC secp384r1
+
+    -   Serial Number: 0CD7EB1228062E6BF76156A65CE67D86CE0671ED
+
+    -   Fingerprint (SHA256):
+        BBA98FFC6A2D5AD251B34BC6632D3DA88955CB46F4A1F4DF443980A4BF92845F
+
+    -   Valid Until: 2035-11-19
+
+-   NAVER Cloud Trust Services G1 ECC CA3
+
+    -   Public Key: EC secp384r1
+
+    -   Serial Number: 0DF5B9C54699D6873F46C53B13D980E0A7A0F466
+
+    -   Fingerprint (SHA256):
+        41C587A6BAC0143297D0EDC5D522B57CD8B2D1A0D4913A1B534A9F9A86668536
+
+    -   Valid Until: 2028-10-19
 
 Between 11 September 2017 and 4 June 2023, NAVER Cloud Corp. (former
 NAVER BUSINESS PLATFORM) operated NAVER Global Root Certification
@@ -863,6 +721,8 @@ to any person at any time.
 
 3.  By mail addressed to: NAVER Green Factory, 6, Buljeong-ro,
     Jeongja-dong, Bundang-gu, Seongnam-si, Gyeonggi-do, Korea (13561)
+    
+ Web pages for Application Software Suppliers to test their software with Subscriber Certificates that chain up to each publicly trusted Root Certificate are listed at https://navercloudtrust.com/.
 
 ## 2.3 Time or Frequency of Publication
 
@@ -1061,6 +921,12 @@ the BR at the time of validation:
 
 -   3.2.2.4.7 DNS Change
 
+-   3.2.2.4.19 Agreed-Upon Change to Website – ACME
+-   
+-   3.2.2.4.21 DNS Labeled with Account ID – ACME
+  
+NAVER Cloud Trust Services implements Multi-Perspective Issuance Corroboration as specified in Section 3.2.2.9 when using the 3.2.2.4.7, 3.2.2.4.19, 3.2.2.4.21. Network Perspectives observe the same challenge information (i.e. Random Value or Request Token) as the Primary Network Perspective.
+
 ### 3.2.2.5 Authentication of an IP Address {#authentication-of-an-ip-address-1}
 
 NAVER Cloud Trust Services does not issue a Certificate using IP
@@ -1094,6 +960,28 @@ Data sources are revalidated in accordance with the following terms.
 
 NAVER Cloud Trust Services\'s policy on checking CAA records is stated
 in Section 4.2.4.
+
+### 3.2.2.9 Multi-perspective Issuance Corroboration
+
+Multi-Perspective Issuance Corroboration attempts to corroborate the determinations (i.e., domain validation pass/fail, CAA permission/prohibition) made by the Primary Network Perspective from multiple remote Network Perspectives before Certificate issuance. This process can improve protection against equally-specific prefix Border Gateway Protocol (BGP) attacks or hijacks.
+NAVER Cloud Trust Services MAY use either the same set, or different sets of Network Perspectives when performing Multi-Perspective Issuance Corroboration for the required
+
+1) Domain Authorization or Control and
+2) CAA Record checks.
+
+NAVER Cloud Trust Services does not reuse or cached the information obtained from one Network Perspective when performing validation through subsequent Network Perspectives (e.g., different Network Perspectives cannot rely on a shared DNS cache to prevent an adversary with control of traffic from one Network Perspective from poisoning the DNS cache used by other Network Perspectives). All communications between a remote Network Perspective and the NAVER Cloud Trust Services take place over an authenticated and encrypted channel relying on modern protocols (e.g., over HTTPS).
+A Network Perspective MAY use a recursive DNS resolver that is NOT co-located with the Network Perspective. However, the DNS resolver used by the Network Perspective MUST fall within the same Regional Internet Registry service region as the Network Perspective relying upon it. Furthermore, for any pair of DNS resolvers used on a Multi-Perspective Issuance Corroboration attempt, the straight-line distance between the two States, Provinces, or Countries the DNS resolvers reside in MUST be at least 500 km. The location of a DNS resolver is determined by the point where unencapsulated outbound DNS queries are typically first handed off to the network infrastructure providing Internet connectivity to that DNS resolver.
+NAVER Cloud Trust Services does not rely on corroborations from previous attempts. There is no stipulation regarding the maximum number of validation attempts that may be performed in any period of time.
+The ""Quorum Requirements"" Table describes quorum requirements related to Multi-Perspective Issuance Corroboration. If NAVER Cloud Trust Services does not rely on the same set of Network Perspectives for both Domain Authorization or Control and CAA Record checks, the quorum requirements will be met for both sets of Network Perspectives (i.e.,the Domain Authorization or Control set and the CAA record check set). Network Perspectives are considered distinct when the straight-line distance between them is at least 500 km. Network Perspectives are considered ""remote"" when they are distinct from the Primary Network Perspective and the other Network Perspectives represented in a quorum.
+The quorum requirements are as follows:
+
+•	With 2–5 remote Network Perspectives: up to 1 non-corroboration allowed
+•	With 6 or more remote Network Perspectives: up to 2 non-corroborations allowed
+Remote Network Perspectives performing Multi-Perspective Issuance Corroboration must rely upon networks (e.g., Internet Service Providers or Cloud Provider Networks) implementing measures to mitigate BGP routing incidents in the global Internet routing system for providing internet connectivity to the Network Perspective.
+Accordingly, NAVER Cloud Trust Services must comply with the allowed number of non-corroborations based on the number of remote Network Perspectives employed during Multi-Perspective Issuance Corroboration, as well as the effective date-based requirements.
+As of September 15, 2025: NAVER Cloud Trust Services MUST perform Multi-Perspective Issuance Corroboration using at least two (2) remote Network Perspectives, and Quorum Requirements MUST be satisfied. Certificate issuance MUST NOT proceed if the number of non-corroborations exceeds the allowed threshold.
+As of March 15, 2026: NAVER Cloud Trust Services MUST perform Multi-Perspective Issuance Corroboration using at least three (3) remote Network Perspectives. In addition, at least two (2) of the Perspectives supporting the Primary MUST be distributed across distinct Regional Internet Registry (RIR) regions.
+Certificate issuance must not proceed if any of these requirements are not met.
 
 ### 3.2.3 Authentication of Individual Identity
 
@@ -1736,65 +1624,33 @@ generation.
 
 ### 4.9.9 On-Line Revocation/Status Checking Availability
 
-The following only applies for communicating the status of Certificates
-which include an Authority Information Access extension with an
-id-ad-ocsp accessMethod.
-
+The following only applies for communicating the status of Certificates and Precertificates which include an Authority Information Access extension with an id-ad-ocsp accessMethod.
+The following applies for communicating the status of all Certificates for which an OCSP responder is willing or required to respond.
 OCSP responses conform to RFC 6960 and/or RFC 5019. They are either:
 
-> 1\. Signed by the CA that issued the Certificates whose revocation
-> status they indicate, or
->
-> 2\. Signed by an OCSP Responder whose Certificate is signed by the CA
-> that issued the Certificate whose revocation status is indicated. The
-> OCSP Responder\'s signing Certificate contains an extension of type
-> id-pkix-ocsp-nocheck, as defined by RFC 6960.
+1. Signed by the CA that issued the Certificates whose revocation status they indicate, or
+2. Signed by an OCSP Responder whose Certificate is signed by the CA that issued the Certificate whose revocation status is indicated. The OCSP Responder's signing Certificate contains an extension of type id-pkix-ocsp-nocheck, as defined by RFC 6960.
+
+OCSP responders operated by NAVER Cloud Trust Services SHALL support the HTTP GET method, as described in RFC 6960 and/or RFC 5019. NAVER Cloud Trust Services processes the Nonce extension (1.3.6.1.5.5.7.48.1.2) in accordance with RFC 8954.
+For the status of a Subscriber Certificate or its corresponding Precertificate:
+
+•	An authoritative OCSP response be available (i.e. the responder does not respond with the “unknown” status) starting no more than 15 minutes after the Certificate or Precertificate is first published or otherwise made available.
+•	For OCSP responses with validity intervals less than sixteen hours, NAVER Cloud Trust Services provides an updated OCSP response prior to one-half of the validity period before the nextUpdate.
+•	For OCSP responses with validity intervals greater than or equal to sixteen hours, NAVER Cloud Trust Services provides an updated OCSP response at least eight hours prior to the nextUpdate, and no later than four days after the thisUpdate.
+
+For the status of a Subordinate CA Certificate, NAVER Cloud Trust Services provides an updated OCSP response at least every twelve months, and within 24 hours after revoking the Certificate.
+OCSP responses for Subscriber Certificates have a validity interval greater than or equal to eight hours and less than or equal to ten days.
+The validity interval of an OCSP response is the difference in time between the thisUpdate and nextUpdate field, inclusive. For purposes of computing differences, a difference of 3,600 seconds shall be equal to one hour, and a difference of 86,400 seconds shall be equal to one day, ignoring leap-seconds.
+A certificate serial is “assigned” if:
+•	a Certificate or Precertificate with that serial number has been issued by the Issuing CA; or
+•	a Precertificate with that serial number has been issued by a Precertificate Signing Certificate, as defined in Section 7.1.2.4, associated with the Issuing CA.
+A certificate serial is “unassigned” if it is not “assigned”.
+If the OCSP responder receives a request for the status of a certificate serial number that is “unassigned”, then the responder does not respond with a “good” status. If the OCSP responder is for a CA that is not Technically Constrained in line with Section 7.1.2.3 or Section 7.1.2.5, the responder does not respond with a “good” status for such requests.
+
 
 ### 4.9.10 On-Line Revocation Checking Requirements {#on-line-revocation-checking-requirements-1}
 
-The following only applies for communicating the status of Certificates
-which include an Authority Information Access extension with an
-id-ad-ocsp accessMethod.
-
-OCSP responders operated by NAVER Cloud Trust Services SHALL support the
-HTTP GET method, as described in RFC 6960 and/or RFC 5019.
-
-For the status of Subscriber Certificates1. OCSP responses have a
-validity interval greater than or equal to eight hours; 2. OCSP
-responses have a validity interval less than or equal to ten days; 3.
-For OCSP responses with validity intervals less than sixteen hours, then
-the NAVER Cloud Trust Services update the information provided via an
-Online Certificate Status Protocol prior to one‐half of the validity
-period before the nextUpdate. 4. For OCSP responses with validity
-intervals greater than or equal to sixteen hours, then NAVER Cloud Trust
-Services update the information provided via an Online Certificate
-Status Protocol at least eight hours prior to the nextUpdate, and no
-later than four days after the thisUpdate.
-
-For the status of Subordinate CA Certificates: • NAVER Cloud Trust
-Services SHALL update information provided via an Online Certificate
-Status Protocol i. at least every twelve months; and ii. within 24 hours
-after revoking a Subordinate CA Certificate.
-
-If the OCSP responder receives a request for the status of a certificate
-serial number that is "unused", then the responder should not respond
-with a "good" status. If the OCSP responder is for a CA that is not
-Technically Constrained in line with Section 7.1.5 of the Baseline
-Requirements, this CP/CPS, the responder must not respond with a "good"
-status for such requests.
-
-NAVER Cloud Trust Services may monitor the OCSP responder for requests
-for "unused" serial numbers as part of its security response procedures.
-
-The OCSP responder may provide definitive responses about "reserved"
-certificate serial numbers, as if there was a corresponding Certificate
-that matches the Precertificate \[RFC6962\]. 1. "assigned" if a
-Certificate with that serial number has been issued by the Issuing CA,
-using any current or previous key associated with that CA subject; or 2.
-"reserved" if a Precertificate \[RFC6962\] with that serial number has
-been issued by a. the Issuing CA; or b. a Precertificate Signing
-Certificate \[RFC6962\] associated with the Issuing CA; or 3. "unused"
-if neither of the previous conditions are met.
+No Stipulation.
 
 ### 4.9.11 Other Forms of Revocation Advertisements Available
 
@@ -1825,7 +1681,7 @@ will be revoked in time.
 
 ### 4.9.13 Circumstances for Suspension
 
-No Stipulation
+NAVER Cloud Trust Services does not suspend certificates.
 
 ### 4.9.14 Who Can Request Suspension
 
@@ -2336,6 +2192,8 @@ specified herein.
 
 ### 5.7.1 Incident and Compromise Handling Procedures
 
+#### 5.7.1.1 Incident Response and Disaster Recovery Plans
+
 NAVER Cloud Trust Services maintains controls to provide reasonable
 assurance that damage from security incidents and malfunctions is
 minimized through the use of incident reporting and response procedures.
@@ -2389,6 +2247,23 @@ The business continuity plan at least include:
 15. Procedures for securing its facility to the extent possible during
     the period of time following a disaster and prior to restoring a
     secure environment either at the original or a remote site.
+
+#### 5.7.1.2 Mass Revocation Plans
+
+NAVER Cloud Trust Services has a mass revocation plan, and asserts in section 5.7.1 of this CPS that it maintains a comprehensive and actionable plan for mass revocation events, that it performs annual testing of the mass revocation plan, and that it incorporates lessons learned into such plan in order to continually improve its preparedness for mass revocation events over time.
+NAVER Cloud Trust Services's mass revocation plan includes clearly defined, actionable, and comprehensive procedures designed to ensure a rapid, consistent, and reliable response to large-scale certificate revocation scenarios. NAVER Cloud Trust Services is not required to publicly disclose its mass revocation plan or procedures but must make them available to its auditors upon request. NAVER Cloud Trust Services annually tests, reviews, and updates its plan and such procedures. The mass revocation plan may be integrated into NAVER Cloud Trust Services's incident response, business continuity, disaster recovery, or other similar plans or procedures, provided that provisions governing mass revocation events remain clearly identifiable and satisfy these requirements.
+
+Mass revocation provisions include:
+
+1. Activation criteria – specific, objective, and measurable thresholds at which the mass revocation plan is triggered based on the NAVER Cloud Trust Services's risk profile, issuance volumes, and operational capabilities;
+2. Customer contact information – how subscriber and customer contact details are stored, maintained, and kept up to date;
+3. Automation points – processes that are automated or could be automated, and those processes that require manual intervention;
+4. Targets and timelines – for incident triage, revocation initiation, certificate replacement, and post-event review;
+5. Subscriber notification methods – mechanisms for notifying impacted Subscribers;
+6. Role assignments – roles and responsibilities of personnel responsible for initiating, coordinating, and executing the plan;
+7. Training and education – training, awareness, and readiness activities for personnel responsible for, or supporting, the plan;
+8. Plan testing – annual operational testing to assess readiness and demonstrate implementation feasibility, using one or more of tabletop exercises, simulations, parallel testing, or controlled test environments that do not involve the revocation of active Subscriber Certificates; and
+9. Post-test analysis and update schedule – how lessons learned from testing or live incidents are incorporated into the plan, and how often it is reviewed and updated.
 
 ### 5.7.2 Computing Resources, Software, and/or Data Are Corrupted
 
@@ -2713,6 +2588,16 @@ policy:
     documents that the security patch would introduce additional
     vulnerabilities or instabilities that outweigh the benefits of
     applying the security patch.
+
+For NAVER Cloud Trust Services, the vulnerability response timeline is determined by the Common Vulnerability Scoring System (CVSS) score assigned to each vulnerability as follows:
+- 9.0 ~ 10.0 : immediate
+- 7.0 ~ 8.9 : 30 days 
+- 4.0 ~ 6.9 : 90 days
+- 0.1 ~ 3.9 : 180 days
+Exceptions are assessed for risk and documented.
+
+For NAVER Cloud Trust Services, the vulnerability response timeframe SHALL be established based on a documented risk assessment in accordance with CABF Network and Certificate System Security Requirements v2.0.5. 
+The assessment SHOULD take into account the CVSS score, criticality of assets, and potential impact. Identified vulnerabilities are remediated in a timely manner appropriate to their severity, with urgent cases addressed immediately. Exceptions may be documented and justified through a risk-based process.
 
 ## 6.8 Time-Stamping
 
@@ -3238,7 +3123,7 @@ The following table details the acceptable `AttributeTypes` that may appear with
 | **localityName**        | MUST / MAY | **MUST** be present if `stateOrProvinceName` is absent, **MAY** be present otherwise. If present, **MUST** contain the Subject's locality information. | Section 3.2.3 |
 | **postalCode**          | NOT RECOMMENDED | If present, **MUST** contain the Subject's zip or postal information. | Section 3.2.3 |
 | **streetAddress**       | NOT RECOMMENDED | If present, **MUST** contain the Subject's street address information. Multiple instances **MAY** be present. | Section 3.2.3 |
-| **organizationName**    | NOT RECOMMENDED | If present, **MUST** contain the Subject's name or DBA. | Section 3.2.3 |
+| **organizationName**    | NOT RECOMMENDED | If present, **MUST** contain the Subject’s name and/or DBA/tradename. The CA MAY include information in this field that differs slightly from the verified name, such as common variations or abbreviations, provided that the CA documents the difference and any abbreviations used are locally accepted abbreviations. If both are included, the DBA/tradename SHALL appear first, followed by the Subject’s name in parentheses. |
 | **surname**            | MUST       | The Subject's surname. | Section 3.2.3 |
 | **givenName**          | MUST       | The Subject's given name. | Section 3.2.3 |
 | **organizationalUnitName** | MUST NOT  | - | - |
@@ -3271,7 +3156,7 @@ The following table details the acceptable AttributeTypes that may appear within
 | **localityName**      | MUST / MAY | **MUST** be present if `stateOrProvinceName` is absent, **MAY** be present otherwise. If present, **MUST** contain the Subject's locality information. | Section 3.2.2.1 |
 | **postalCode**        | NOT RECOMMENDED | If present, **MUST** contain the Subject's zip or postal information. | Section 3.2.2.1 |
 | **streetAddress**     | NOT RECOMMENDED | If present, **MUST** contain the Subject's street address information. Multiple instances **MAY** be present. | Section 3.2.2.1 |
-| **organizationName**  | MUST     | The Subject's name or DBA. The CA **MAY** include information in this field that differs slightly from the verified name, such as common variations or abbreviations, provided that the CA documents the difference and any abbreviations used are locally accepted abbreviations; e.g. if the official record shows "Company Name Incorporated", the CA **MAY** use "Company Name Inc." or "Company Name". | Section 3.2.2.2 |
+| **organizationName**  | MUST     | The Subject’s name and/or DBA/tradename. The CA **MAY** include information in this field that differs slightly from the verified name, such as common variations or abbreviations, provided that the CA documents the difference and any abbreviations used are locally accepted abbreviations; e.g. if the official record shows “Company Name Incorporated”, the CA **MAY** use “Company Name Inc.” or “Company Name”. If both are included, the DBA/tradename SHALL appear first, followed by the Subject’s name in parentheses. | Section 3.2.2.2 |
 | **surname**          | MUST NOT  | - | - |
 | **givenName**        | MUST NOT  | - | - |
 | **organizationalUnitName** | MUST NOT | - | - |
@@ -4200,6 +4085,7 @@ by NAVER Cloud Trust Services, independent of the Applicant.
 No stipulation.
 
 ### 7.1.6 Certificate Policy Object Identifier
+#### 7.1.6.2 Reserved Certificate Policy Identifiers
 
 The certificates issued under NAVER Cloud Trust Services use this CP/CPS
 as a certificate policy, and the related policy identifiers are
@@ -4989,4 +4875,5 @@ The following revisions have been made to the original document.
 | 1.0.4 | 26 November 2024 | This document replaces the NAVER Cloud Trust Services CPS v1.0.3. Updated Section 7.1.2. |
 | 1.0.5 | 05 March 2025 | Changed "Not Application" to "No Stipulation." Revised Section 7.1.2 Certificate Extensions to provide a more detailed specification of RFC 5280. |
 | 1.0.6 | 19 June 2025 | Removed the method “3.2.2.4.2 Email, Fax, SMS, or Postal Mail to Domain Contact” from section 3.2.2.4 Validation of Domain Authorization or Control. |
-
+| 1.0.7 | 20 October 2025 | Domain Validation: Added ACME methods (3.2.2.4) Multi-Perspective Issuance: New MPIC requirements (3.2.2.9) Revocation/OCSP: Updated per CABF BR 2.1.0 (4.9.9) Security Controls: Updated per CABF NETSEC v2.0.5 (6.7) Subscriber/Org Naming: Clarified DBA/tradename rules per CABF BR 2.0.9 & 2.1.1 Incident Handling: Added Mass Revocation Plan (5.7.1) |
+| 1.0.8 | 27 November 2025 | Added New Intermediate CAs (1.3.1) |
