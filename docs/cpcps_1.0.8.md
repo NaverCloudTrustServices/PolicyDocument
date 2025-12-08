@@ -922,12 +922,12 @@ the BR at the time of validation:
 -   3.2.2.4.7 DNS Change
 
 -   3.2.2.4.19 Agreed-Upon Change to Website – ACME
--   
+  
 -   3.2.2.4.21 DNS Labeled with Account ID – ACME
   
 NAVER Cloud Trust Services implements Multi-Perspective Issuance Corroboration as specified in Section 3.2.2.9 when using the 3.2.2.4.7, 3.2.2.4.19, 3.2.2.4.21. Network Perspectives observe the same challenge information (i.e. Random Value or Request Token) as the Primary Network Perspective.
 
-### 3.2.2.5 Authentication of an IP Address {#authentication-of-an-ip-address-1}
+### 3.2.2.5 Authentication of an IP Address
 
 NAVER Cloud Trust Services does not issue a Certificate using IP
 Address.
