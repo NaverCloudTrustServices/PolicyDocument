@@ -1,5 +1,5 @@
 # **NAVER Cloud Trust Services**  
-# **Certificate Policy / Certificate Practices Statement**
+# **Certificate Policy / Certificate Practices Statement** 
 
 ## Version 1.1.1
 
