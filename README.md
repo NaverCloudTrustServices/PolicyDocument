@@ -1,9 +1,9 @@
 # **NAVER Cloud Trust Services**  
 # **Certificate Policy / Certificate Practices Statement**
 
-## Version 1.0.8
+## Version 1.1.1
 
-### 27 November 2025
+### 11 June 2026
 
 # Table of Contents
 
@@ -127,6 +127,10 @@ In the event of any inconsistency between this CP/CPS and the Baseline
 Requirements, the Baseline Requirements take precedence over this
 document.
 
+NAVER Cloud Trust Services adheres to the latest published versions of the CA/Browser Forum Baseline Requirements, the Chrome Root Program Policy, and the CCADB Policy.
+
+In the event of any inconsistency between this CP/CPS and the CA/Browser Forum Baseline Requirements, the Chrome Root Program Policy, or the CCADB Policy, those requirements take precedence over this document.
+
 ## 1.2 Document Name and Identification
 
 This document is NAVER Cloud Trust Services Certificate
@@ -200,17 +204,6 @@ Root CAs
 
 Intermediate CAs
 
--   NAVER Secure Certification Authority 1
-
-    -   Public Key: RSA 2048
-
-    -   Serial Number: 06046233A5825576A48272694718A8000F2F000D
-
-    -   Fingerprint (SHA256):
-        C5EB1A7639B9D8D70B4F82ADD80794175EE4B6A3DB1861B38717C96FC1914927
-
-    -   Valid Until: 2027-08-19
-
 -   NAVER Secure Certification Authority 2
 
     -   Public Key: RSA 4096
@@ -219,28 +212,6 @@ Intermediate CAs
 
     -   Fingerprint (SHA256):
         571E521E5E22810D33BB1A39991143E9E64CD8DAE97D65931B194E19AEE81E86
-
-    -   Valid Until: 2035-11-19
-
--   NAVER Cloud Trust Services G1 RSA CA1
-
-    -   Public Key: RSA 4096
-
-    -   Serial Number: 04A10F19A216DCBBF6088447D8F371ADCEE7D249
-
-    -   Fingerprint (SHA256):
-        17832DBB48F609B722A27507F1D327DE062D7F7B85B71325D8DD99B19FB5BAD4
-
-    -   Valid Until: 2033-06-06
-
--   NAVER Cloud Trust Services G1 RSA CA2
-
-    -   Public Key: RSA 4096
-
-    -   Serial Number: 0931F2A391E433A99DFA9089B18EE56368893650
-
-    -   Fingerprint (SHA256):
-        45B3942959D74F8B546A6AB47404AFC4A583AD5FA6FFD89A827A2A78522F66FD
 
     -   Valid Until: 2035-11-19
 
@@ -255,27 +226,16 @@ Intermediate CAs
 
     -   Valid Until: 2028-10-19
 
--   NAVER Cloud Trust Services G1 ECC CA1
+-   NAVER Cloud Trust Services G1 RSA CA4
 
-    -   Public Key: EC secp384r1
+    -   Public Key: RSA 4096
 
-    -   Serial Number: 05FAD6522186F62AE88BCB51D545F41EA4A35736
-
-    -   Fingerprint (SHA256):
-        882D9924FC69A00574D54C2BB4014825A1C1C71FA1D0238CAC865FE0AA4AD60B
-
-    -   Valid Until: 2033-06-06
-
--   NAVER Cloud Trust Services G1 ECC CA2
-
-    -   Public Key: EC secp384r1
-
-    -   Serial Number: 0CD7EB1228062E6BF76156A65CE67D86CE0671ED
+    -   Serial Number: 0B449EE955637827A99ECC363CECE34A911E4A4D
 
     -   Fingerprint (SHA256):
-        BBA98FFC6A2D5AD251B34BC6632D3DA88955CB46F4A1F4DF443980A4BF92845F
+        8BC478A581DE657A86C2E8A4CE0A30CA9D7ABDAEF931E590D84DB235B2A5291C
 
-    -   Valid Until: 2035-11-19
+    -   Valid Until: 2029-05-03
 
 -   NAVER Cloud Trust Services G1 ECC CA3
 
@@ -287,6 +247,17 @@ Intermediate CAs
         41C587A6BAC0143297D0EDC5D522B57CD8B2D1A0D4913A1B534A9F9A86668536
 
     -   Valid Until: 2028-10-19
+
+-   NAVER Cloud Trust Services G1 ECC CA4
+
+    -   Public Key: EC secp384r1
+
+    -   Serial Number: 0E37C199673DD94A27F4F83BA63D688C3DBD5A40
+
+    -   Fingerprint (SHA256):
+        1D795B49C4C1AE2EB90393A07D97582077780FE8A838E802919EABC9B32E54AEA
+
+    -   Valid Until: 2029-05-03
 
 Between 11 September 2017 and 4 June 2023, NAVER Cloud Corp. (former
 NAVER BUSINESS PLATFORM) operated NAVER Global Root Certification
@@ -399,7 +370,7 @@ parties, but if NAVER Cloud Trust Services determines that the changes
 have a significant impact, it may notify the affected parties in
 advance.
 
-## 1.6 Definitions and Acronyms {#definitions-and-acronyms-1}
+## 1.6 Definitions and Acronyms {#definitions-and-acronyms}
 
 ### 1.6.1 Definitions
 
@@ -911,23 +882,88 @@ DBA/tradename using at least one of the following:
 See Section 3.2.2.1
 
 ### 3.2.2.4 Validation of Domain Authorization or Control
+NAVER Cloud Trust Services validates each Fully-Qualified Domain Name (FQDN) listed in the Certificate using only the approved methods defined in this section (3.2.2.4.7, 3.2.2.4.19, 3.2.2.4.21, and 3.2.2.4.22). All other methods defined in the Baseline Requirements are not used or have been retired.
 
-Prior to issuing a Certificate, NAVER Cloud Trust Services validates
-that the Applicant has control over each FQDN listed in the Certificate
-by using at least one of the following approved methods as defined in
-the BR at the time of validation:
+This section defines the permitted processes and procedures for validating the Applicant’s ownership or control of the domain. NAVER Cloud Trust Services SHALL confirm that prior to issuance, it has validated each Fully-Qualified Domain Name (FQDN) listed in the Certificate as follows:
 
--   3.2.2.4.4 Constructed Email to Domain Contact
+When the FQDN is not an Onion Domain Name, NAVER Cloud Trust Services SHALL validate the FQDN using at least one of the methods listed below; and
 
--   3.2.2.4.7 DNS Change
+When the FQDN is an Onion Domain Name, NAVER Cloud Trust Services SHALL validate the FQDN in accordance with Appendix B of the Baseline Requirements.
 
--   3.2.2.4.19 Agreed-Upon Change to Website – ACME
--   
--   3.2.2.4.21 DNS Labeled with Account ID – ACME
-  
-NAVER Cloud Trust Services implements Multi-Perspective Issuance Corroboration as specified in Section 3.2.2.9 when using the 3.2.2.4.7, 3.2.2.4.19, 3.2.2.4.21. Network Perspectives observe the same challenge information (i.e. Random Value or Request Token) as the Primary Network Perspective.
+Completed validations of Applicant authority may be valid for the issuance of multiple Certificates over time. In all cases, the validation must have been initiated within the time period specified in Section 4.2.1 of this document prior to Certificate issuance. For purposes of domain validation, the term Applicant includes the Applicant’s Parent Company, Subsidiary Company, or Affiliate.
 
-### 3.2.2.5 Authentication of an IP Address {#authentication-of-an-ip-address-1}
+Effective March 15th, 2026: DNSSEC validation back to the IANA DNSSEC root trust anchor MUST be performed on all DNS queries associated with the validation of domain authorization or control by the Primary Network Perspective. The DNS resolver used for all DNS queries associated with the validation of domain authorization or control by the Primary Network Perspective MUST:
+* perform DNSSEC validation using the algorithm defined in RFC 4035 Section 5; and
+* support NSEC3 as defined in RFC 5155; and
+* support SHA-2 as defined in RFC 4509 and RFC 5702; and
+* properly handle the security concerns enumerated in RFC 6840 Section 4.
+
+Effective March 15th, 2026: NAVER Cloud Trust Services MUST NOT use local policy to disable DNSSEC validation on any DNS query associated with the validation of domain authorization or control.
+
+DNSSEC validation back to the IANA DNSSEC root trust anchor MAY be performed on all DNS queries associated with the validation of domain authorization or control by Remote Network Perspectives used for Multi-Perspective Issuance Corroboration.
+
+DNSSEC validation back to the IANA DNSSEC root trust anchor is considered outside the scope of self-audits performed to fulfill the requirements in Section 8.7. NAVER Cloud Trust Services SHALL maintain a record of which domain validation method, including relevant BR version number, they used to validate every domain.
+
+Note: FQDNs may be listed in Subscriber Certificates using dNSNames in the subjectAltName extension or in Subordinate CA Certificates via dNSNames in permittedSubtrees within the Name Constraints extension.
+
+#### 3.2.2.4.7 DNS Change
+NAVER Cloud Trust Services confirms the Applicant’s control over the FQDN by confirming the presence of a Random Value or Request Token in a DNS CNAME, TXT, or CAA record for either:
+1. An Authorization Domain Name; or
+2. An Authorization Domain Name that is prefixed with a Domain Label that begins with an underscore character.
+
+If a Random Value is used, NAVER Cloud Trust Services SHALL provide a Random Value unique to the Certificate request and SHALL not use the Random Value after:
+1. 30 days; or
+2. The time frame permitted for reuse of validated information relevant to the Certificate as defined in Section 4.2.1.
+
+NAVER Cloud Trust Services implements Multi-Perspective Issuance Corroboration (MPIC) as specified in Section 3.2.2.9 when performing validations using this method. To count as corroborating, a Network Perspective MUST observe the same challenge information (i.e., Random Value or Request Token) as the Primary Network Perspective.
+
+If NAVER Cloud Trust Services or its Affiliate operates a DNS zone to which Applicants can delegate (via CNAME) their underscore-prefixed Domain Label, NAVER Cloud Trust Services MUST ensure that each Applicant delegates to a unique FQDN within that zone. NAVER Cloud Trust Services SHOULD NOT operate such a service and SHOULD direct any Applicants using such a service to use the method described in Section 3.2.2.4.22 instead.
+
+Note: Once the FQDN has been validated using this method, NAVER Cloud Trust Services MAY also issue Certificates for other FQDNs that end with all the Domain Labels of the validated FQDN. This method is suitable for validating Wildcard Domain Names.
+
+#### 3.2.2.4.19 Agreed-Upon Change to Website - ACME
+NAVER Cloud Trust Services confirms the Applicant’s control over an FQDN by validating domain control using the ACME HTTP Challenge method defined in Section 8.3 of RFC 8555. The following are additive requirements to RFC 8555:
+* NAVER Cloud Trust Services MUST receive a successful HTTP response from the request (meaning a 2xx HTTP status code must be received).
+* The token (as defined in RFC 8555, Section 8.3) MUST NOT be used for more than 30 days from its creation.
+* If NAVER Cloud Trust Services follows redirects, the following apply:
+  1. Redirects MUST be initiated at the HTTP protocol layer. a. Redirects MUST be the result of a 301, 302, or 307 HTTP status code response, as defined in RFC 7231, Section 6.4, or a 308 HTTP status code response, as defined in RFC 7538, Section 3. Redirects MUST be to the final value of the Location HTTP response header, as defined in RFC 7231, Section 7.1.2.
+  2. Redirects MUST be to resource URLs with either the “http” or “https” scheme.
+  3. Redirects MUST be to resource URLs accessed via Authorized Ports.
+
+Except for Onion Domain Names, NAVER Cloud Trust Services MUST implement Multi-Perspective Issuance Corroboration (MPIC) as specified in Section 3.2.2.9 when performing validations using this method. To count as corroborating, a Network Perspective MUST observe the same challenge information (i.e., token) as the Primary Network Perspective.
+
+Note: NAVER Cloud Trust Services MUST NOT issue Certificates for other FQDNs that end with all the labels of the validated FQDN unless separate validations are performed for each of those other FQDNs using authorized methods. This method is NOT suitable for validating Wildcard Domain Names.
+
+#### 3.2.2.4.21 DNS Labeled with Account ID - ACME
+NAVER Cloud Trust Services confirms the Applicant’s control over the FQDN by performing the procedure documented for a “dns-account-01” challenge in draft 00 of “Automated Certificate Management Environment (ACME) DNS Labeled With ACME Account ID Challenge,” available at https://datatracker.ietf.org/doc/draft-ietf-acme-dns-account-label/.
+
+The token (as defined in Section 3.1 of the aforementioned draft) MUST NOT be used for more than 30 days from its creation.
+
+NAVER Cloud Trust Services implements Multi-Perspective Issuance Corroboration (MPIC) as specified in Section 3.2.2.9 when performing validations using this method. To count as corroborating, a Network Perspective MUST observe the same token as the Primary Network Perspective.
+
+Note: Once the FQDN has been validated using this method, NAVER Cloud Trust Services MAY also issue Certificates for other FQDNs that end with all the Domain Labels of the validated FQDN. This method is suitable for validating Wildcard Domain Names.
+
+#### 3.2.2.4.22 DNS TXT Record with Persistent Value
+NAVER Cloud Trust Services confirms the Applicant’s control over a FQDN by verifying the presence of a Persistent DCV TXT Record identifying the Applicant. The record MUST be placed at the “_validation-persist” label prepended to the Authorization Domain Name being validated (i.e., “_validation-persist.[Authorization Domain Name]”).
+
+For this method, NAVER Cloud Trust Services MUST NOT use the FQDN returned from a DNS CNAME lookup as the FQDN for the purposes of domain validation. This prohibition overrides the Authorization Domain Name definition. CNAME records MAY be followed when resolving the Persistent DCV TXT Record.
+
+NAVER Cloud Trust Services MUST confirm the Persistent DCV TXT Record’s RDATA value fulfills the following requirements:
+1. The RDATA value MUST conform to the issue-value syntax as defined in RFC 8659, Section 4.2;
+2. The issuer-domain-name value MUST be an Issuer Domain Name disclosed by NAVER Cloud Trust Services in Section 4.2 of this CP/CPS;
+3. The issue-value MUST contain an accounturi parameter, where the parameter value is a unique URI (as described by RFC 8657, Section 3) identifying the account of the Applicant which requested validation for this FQDN;
+4. The issue-value MAY contain a persistUntil parameter. If present, the parameter value MUST be a base-10 encoded integer representing a UNIX timestamp; and
+5. The issue-value MAY contain additional parameters. NAVER Cloud Trust Services MUST ignore any unknown parameter keys.
+
+If the persistUntil parameter is present, NAVER Cloud Trust Services MUST evaluate its value. If the time of the check is after the time specified in the persistUntil parameter value, NAVER Cloud Trust Services MUST NOT use the record as evidence of the Applicant’s control over the FQDN.
+
+For the purposes of Section 4.2.1, NAVER Cloud Trust Services MUST consider 10 days as the maximum validation data reuse period for validations completed using this method.
+
+NAVER Cloud Trust Services implements Multi-Perspective Issuance Corroboration (MPIC) as specified in Section 3.2.2.9 when performing validations using this method. To count as corroborating, a Network Perspective MUST observe a Persistent DCV TXT Record that demonstrates the Applicant’s control over the domain and contains the same accounturi parameter as the Primary Network Perspective.
+
+Note: Once the FQDN has been validated using this method, NAVER Cloud Trust Services MAY also issue Certificates for other FQDNs that end with all the Domain Labels of the validated FQDN. This method is suitable for validating Wildcard Domain Names.
+
+### 3.2.2.5 Authentication of an IP Address
 
 NAVER Cloud Trust Services does not issue a Certificate using IP
 Address.
@@ -942,19 +978,15 @@ position to the left of a "registry-controlled" label or "public suffix"
 \"public suffix list\" of http://publicsuffix.org/ (PSL) as the judgment
 criterion, and periodically checks and reflects PSL updates.
 
-### 3.2.2.7 Data Source Accuracy and Validity Periods
+### 3.2.2.7 Data Source Accuracy
+Prior to using any data source as a Reliable Data Source, NAVER Cloud Trust Services SHALL evaluate the source for its reliability, accuracy, and resistance to alteration or falsification. NAVER Cloud Trust Services SHOULD consider the following during its evaluation:
+1. The age of the information provided;
+2. The frequency of updates to the information source;
+3. The data provider and purpose of the data collection;
+4. The public accessibility of the data availability; and
+5. The relative difficulty in falsifying or altering the data.
 
-All data sources are evaluated for reliability, accuracy, and for their
-protection from alteration and falsification before they are used for
-I&A purposes.
-
-Data sources are revalidated in accordance with the following terms.
-
-1.  Legal existence and identity of Applicant: 397 days
-
-<!-- -->
-
-2.  Domain Name: 397 days
+Databases maintained by NAVER Cloud Trust Services, its owner, or its affiliated companies do not qualify as a Reliable Data Source if the primary purpose of the database is to collect information for the purpose of fulfilling the validation requirements under this Section 3.2.
 
 ### 3.2.2.8 CAA Records
 
@@ -988,7 +1020,7 @@ Certificate issuance must not proceed if any of these requirements are not met.
 NAVER Cloud Trust Services does not issue individually validated
 Certificates to natural persons.
 
-### 3.2.4 Non-verified Subscriber Information {#non-verified-subscriber-information-1}
+### 3.2.4 Non-verified Subscriber Information {#non-verified-subscriber-information}
 
 Only verified information is contained in certificates. Optional
 subfields in the subject of an SSL Certificate must either contain
@@ -1107,13 +1139,37 @@ Cloud Trust Services CA and RAs in the form of a PKCS#10 Certificate
 Signing Request (CSR).
 
 ### 4.2.1 Performing Identification and Authentication Functions
+The RAs perform the identification and authentication of the information submitted by a Subscriber as specified in Section 3.2 of this document.
 
-The RAs perform the identification and authentication of the information
-submitted by a subscriber as specified in Section 3.2 of this document.
+The certificate request MAY include all factual information about the Applicant to be included in the Certificate, and such additional information as is necessary for NAVER Cloud Trust Services to obtain from the Applicant in order to comply with the CA/Browser Forum Baseline Requirements and this CP/CPS.
 
-NAVER Cloud Trust Services may request additional information to a
-subscriber in accordance with separate verification procedures for High
-Risk Certificate Requests.
+In cases where the certificate request does not contain all the necessary information about the Applicant, NAVER Cloud Trust Services SHALL obtain the remaining information from the Applicant or, having obtained it from a reliable, independent, third-party data source, confirm it with the Applicant. NAVER Cloud Trust Services SHALL establish and follow a documented procedure for verifying all data requested for inclusion in the Certificate by the Applicant.
+
+Applicant information MUST include at least one Fully-Qualified Domain Name (FQDN) to be included in the Certificate’s subjectAltName extension. Section 6.3.2 limits the validity period of Subscriber Certificates.
+
+NAVER Cloud Trust Services MAY use the documents and data provided in Section 3.2 to verify certificate information, or MAY reuse previous validations themselves, provided that NAVER Cloud Trust Services obtained the data or document from a source specified under Section 3.2 or completed the validation itself within the maximum number of days prior to issuing the Certificate, as defined in the following tables:
+
+**Table: Subject Identity Information validation data reuse periods**
+| Certificate issued on or after | Certificate issued before | Maximum data reuse period |
+| :--- | :--- | :--- |
+| - | March 15, 2026 | 825 days |
+| March 15, 2026 | - | 398 days |
+
+**Table: Domain Name and IP Address validation data reuse periods**
+| Certificate issued on or after | Certificate issued before | Maximum data reuse period |
+| :--- | :--- | :--- |
+| - | March 15, 2026 | 398 days |
+| March 15, 2026 | March 15, 2027 | 200 days |
+| March 15, 2027 | March 15, 2029 | 100 days |
+| March 15, 2029 | - | 10 days |
+
+In no case MAY a prior validation be reused if any data or document used in the prior validation was obtained more than the maximum time permitted for reuse of the data or document prior to issuing the Certificate.
+
+After the change to any validation method specified in the Baseline Requirements, NAVER Cloud Trust Services MAY continue to reuse validation data or documents collected prior to the change, or the validation itself, for the period stated in this Section 4.2.1 unless otherwise specifically provided in a CABF ballot.
+
+NAVER Cloud Trust Services SHALL develop, maintain, and implement documented procedures that identify and require additional verification activity for High Risk Certificate Requests prior to the Certificate’s approval, as reasonably necessary to ensure that such requests are properly verified under the Baseline Requirements. NAVER Cloud Trust Services may request additional information to a subscriber in accordance with separate verification procedures for High Risk Certificate Requests.
+
+As specified in Section 1.3.2, all RA functions are performed by NAVER Cloud Trust Services, and no Delegated Third Parties are used.
 
 ### 4.2.2 Approval or Rejection of Certificate Applications
 
@@ -1213,6 +1269,8 @@ are considered accepted on the earlier of
 NAVER Cloud Trust Services publishes the CA certificate in its
 repository and publishes end entity certificates by delivering them to
 the subscriber using email or an API.
+
+NAVER Cloud Trust Services logs every TLS server authentication Precertificate to at least one CT log recognized by Chrome as Usable or Qualified prior to issuing the corresponding Certificate.
 
 ### 4.4.3 Notification of Certificate Issuance by the CA to Other Entities
 
@@ -1335,7 +1393,7 @@ No stipulation
 
 No stipulation
 
-## 4.9 Certificate Revocation and Suspension {#certificate-revocation-and-suspension-1}
+## 4.9 Certificate Revocation and Suspension {#certificate-revocation-and-suspension}
 
 NAVER Cloud Trust Services supports revocation of certificates, but does
 not allow temporary suspension or recovery of certificates.
@@ -1617,7 +1675,7 @@ following is true:
 
 See Section 2.2 for CRL locations.
 
-### 4.9.8 Maximum Latency for CRLs {#maximum-latency-for-crls-1}
+### 4.9.8 Maximum Latency for CRLs {#maximum-latency-for-crls}
 
 The CRL is posted to the CRL repository within an hour following the CRL
 generation.
@@ -1648,7 +1706,7 @@ A certificate serial is “unassigned” if it is not “assigned”.
 If the OCSP responder receives a request for the status of a certificate serial number that is “unassigned”, then the responder does not respond with a “good” status. If the OCSP responder is for a CA that is not Technically Constrained in line with Section 7.1.2.3 or Section 7.1.2.5, the responder does not respond with a “good” status for such requests.
 
 
-### 4.9.10 On-Line Revocation Checking Requirements {#on-line-revocation-checking-requirements-1}
+### 4.9.10 On-Line Revocation Checking Requirements {#on-line-revocation-checking-requirements}
 
 No Stipulation.
 
@@ -2125,7 +2183,7 @@ Party Systems; and
 2\. Documentation related to their verification, issuance, and
 revocation of certificate requests and certificates.
 
-### 5.5.2 Retention Period for Archive {#retention-period-for-archive-1}
+### 5.5.2 Retention Period for Archive {#retention-period-for-archive}
 
 Archived audit logs as set forth in Section 5.5.1 are retained for a
 period of two (2) years from their record creation timestamp, or as long
@@ -2188,7 +2246,7 @@ Services obtains a new CA Public Key (PKCS#10) or new CA Certificate
 from the other CA and distributes a new CA Cross Certificate as
 specified herein.
 
-## 5.7 Compromise and Disaster Recovery {#compromise-and-disaster-recovery-1}
+## 5.7 Compromise and Disaster Recovery {#compromise-and-disaster-recovery}
 
 ### 5.7.1 Incident and Compromise Handling Procedures
 
@@ -2461,11 +2519,27 @@ NAVER Cloud Trust Services backup procedures.
 
 ### 6.3.2 Certificate Operational Periods and Key Pair Usage Periods
 
-Certificate validity expires at the time of certificate termination
-specified in the Certificate field. The maximum duration of an SSL/TLS
-end entity certificate is 398 days.
+Certificate validity expires at the time of certificate termination specified in the Certificate field.
 
-## 6.4 Activation Data {#activation-data-1}
+Subscriber Certificates issued before 15 March 2026 SHOULD NOT have a Validity Period greater than 397 days and MUST NOT have a Validity Period greater than 398 days.
+
+Subscriber Certificates issued on or after 15 March 2026 and before 15 March 2027 SHOULD NOT have a Validity Period greater than 199 days and MUST NOT have a Validity Period greater than 200 days.
+
+Subscriber Certificates issued on or after 15 March 2027 and before 15 March 2029 SHOULD NOT have a Validity Period greater than 99 days and MUST NOT have a Validity Period greater than 100 days.
+
+Subscriber Certificates issued on or after 15 March 2029 SHOULD NOT have a Validity Period greater than 46 days and MUST NOT have a Validity Period greater than 47 days.
+
+**Table: Maximum Validity Periods of Subscriber Certificates**
+
+| Certificate issued on or after | Certificate issued before | Maximum Validity Period |
+| :--- | :--- | :--- |
+| - | 15-Mar-26 | 398 days |
+| 15-Mar-26 | 15-Mar-27 | 200 days |
+| 15-Mar-27 | 15-Mar-29 | 100 days |
+| 15-Mar-29 | - | 47 days |
+
+For the purpose of calculations, a day is measured as 86,400 seconds. Any amount of time greater than this, including fractional seconds and/or leap seconds, shall represent an additional day. For this reason, Subscriber Certificates SHOULD NOT be issued for the maximum permissible time by default, in order to account for such adjustments.
+## 6.4 Activation Data {#activation-data}
 
 ### 6.4.1 Activation Data Generation and Installation
 
@@ -2476,12 +2550,12 @@ way that meets the same needs. It is then delivered to a holder of a
 share of the key who is a person in a trusted role. The delivery method
 maintains the confidentiality and the integrity of the activation data.
 
-### 6.4.2 Activation Data Protection {#activation-data-protection-1}
+### 6.4.2 Activation Data Protection {#activation-data-protection}
 
 CA activation data is protected from disclosure through a combination of
 cryptographic and physical access control mechanisms.
 
-### 6.4.3 Other Aspects of Activation Data {#other-aspects-of-activation-data-1}
+### 6.4.3 Other Aspects of Activation Data {#other-aspects-of-activation-data}
 
 No stipulation
 
@@ -2792,7 +2866,7 @@ Alternatively, if the Issuing CA does not use this form, then the Extended Key U
 | Key Purpose              | Description |
 |--------------------------|-------------|
 | `id-kp-serverAuth`      | MUST be present. |
-| `id-kp-clientAuth`      | MAY be present. |
+| `id-kp-clientAuth`      | MUST NOT be present. |
 | `id-kp-emailProtection` | MUST NOT be present. |
 | `id-kp-codeSigning`     | MUST NOT be present. |
 | `id-kp-timeStamping`    | MUST NOT be present. |
@@ -3260,7 +3334,7 @@ Regardless of the order of `PolicyInformation` values, the `Certificate Policies
 | Key Purpose                         | OID                            | Presence  |
 |--------------------------------------|--------------------------------|-----------|
 | **id-kp-serverAuth**                 | `1.3.6.1.5.5.7.3.1`           | MUST      |
-| **id-kp-clientAuth**                 | `1.3.6.1.5.5.7.3.2`           | MAY       |
+| **id-kp-clientAuth**                 | `1.3.6.1.5.5.7.3.2`           | MUST NOT  |
 | **id-kp-codeSigning**                | `1.3.6.1.5.5.7.3.3`           | MUST NOT  |
 | **id-kp-emailProtection**            | `1.3.6.1.5.5.7.3.4`           | MUST NOT  |
 | **id-kp-timeStamping**               | `1.3.6.1.5.5.7.3.8`           | MUST NOT  |
@@ -3712,7 +3786,7 @@ If the **policyQualifiers** is permitted and present within a **PolicyInformatio
 | Key Purpose                         | OID                            | Presence  |
 |--------------------------------------|--------------------------------|-----------|
 | **id-kp-serverAuth**                 | `1.3.6.1.5.5.7.3.1`           | MUST      |
-| **id-kp-clientAuth**                 | `1.3.6.1.5.5.7.3.2`           | MAY       |
+| **id-kp-clientAuth**                 | `1.3.6.1.5.5.7.3.2`           | MUST NOT  |
 | **id-kp-codeSigning**                | `1.3.6.1.5.5.7.3.3`           | MUST NOT  |
 | **id-kp-emailProtection**            | `1.3.6.1.5.5.7.3.4`           | MUST NOT  |
 | **id-kp-timeStamping**               | `1.3.6.1.5.5.7.3.8`           | MUST NOT  |
@@ -3860,7 +3934,7 @@ All extensions and extension values **not directly addressed** by the applicable
 
 **CAs SHALL NOT** include additional extensions or values unless there is a **specific reason** to do so.
 
-### 7.1.3 Algorithm Object Identifiers {#algorithm-object-identifiers-1}
+### 7.1.3 Algorithm Object Identifiers {#algorithm-object-identifiers}
 
 #### 7.1.3.1 SubjectPublicKeyInfo
 
@@ -4144,11 +4218,11 @@ set of Certificates issued by NAVER Cloud Trust Services. In other
 words, if issuing only partitioned CRLs, the combined scope of those
 CRLs is equivalent to that of a full and complete CRL.
 
-### 7.2.1 Version Number(s) {#version-numbers-2}
+### 7.2.1 Version Number(s) {#version-numbers-crl}
 
 Certificate Revocation Lists are of type X.509 v2.
 
-### 7.2.2 CRL and CRL Entry Extensions {#crl-and-crl-entry-extensions-1}
+### 7.2.2 CRL and CRL Entry Extensions {#crl-and-crl-entry-extensions}
 
 CRL Extensions
 
@@ -4250,11 +4324,11 @@ of the CertStatus is present.
 The CRLReason indicated contains a value permitted for CRLs, as
 specified in Section 7.2.2.
 
-### 7.3.1 Version Number(s) {#version-numbers-3}
+### 7.3.1 Version Number(s) {#version-numbers-ocsp}
 
 No stipulation
 
-### 7.3.2 OCSP Extensions {#ocsp-extensions-1}
+### 7.3.2 OCSP Extensions {#ocsp-extensions}
 
 The singleExtensions of an OCSP response does not contain the reasonCode
 (OID 2.5.29.21) CRL entry extension..
@@ -4488,6 +4562,8 @@ NAVER Cloud Trust Services and/or its business partners own the
 intellectual property rights in NAVER Cloud Trust Services\'s services,
 including the certificates, trademarks used in providing the services,
 and this CP/CPS.
+
+This CP/CPS is made available under the Creative Commons Attribution-NoDerivatives 4.0 International (CC-BY-ND 4.0) license.
 
 ### 9.5.1 Property Rights in Certificates and Revocation Information
 
@@ -4866,14 +4942,17 @@ No stipulation.
 
 The following revisions have been made to the original document.
 
-| Ver  | Date           | Description                                      |
-|------|--------------|--------------------------------------------------|
-| 1.0.0 | 05 June 2023  | Initial publication. **Note**: This CPS was published after an update based on NAVER Cloud CPS (version 1.6.0). |
+| Ver | Date | Description |
+|:---|:---|:---|
+| 1.0.0 | 05 June 2023 | Initial publication. **Note**: This CPS was published after an update based on NAVER Cloud CPS (version 1.6.0). |
 | 1.0.1 | 24 August 2023 | Added new root. Added the 3.2.2.4.7 DNS Change method to the section titled *3.2.2.4 Validation of Domain Authorization or Control*. |
 | 1.0.2 | 27 December 2023 | Updated CAA record domain name in Section 4.2.4. No longer offering certificate renewals in Section 4.6 and below. Treat certificate rekey requests as requests for the issuance of a new Certificate in Section 4.7 and below. Specified revocation request grace period in Section 4.9.4. Updated online revocation and status checking availability in Section 4.9.9. Updated a method for reporting key compromise in Section 4.9.12. Updated the activation data generation and installation in Section 6.4 and below. Typo correction. |
 | 1.0.3 | 17 October 2024 | Revised to reflect updates based on CABF BR Version 2.0.7. Change of company address. Typo correction. |
 | 1.0.4 | 26 November 2024 | This document replaces the NAVER Cloud Trust Services CPS v1.0.3. Updated Section 7.1.2. |
 | 1.0.5 | 05 March 2025 | Changed "Not Application" to "No Stipulation." Revised Section 7.1.2 Certificate Extensions to provide a more detailed specification of RFC 5280. |
 | 1.0.6 | 19 June 2025 | Removed the method “3.2.2.4.2 Email, Fax, SMS, or Postal Mail to Domain Contact” from section 3.2.2.4 Validation of Domain Authorization or Control. |
-| 1.0.7 | 20 October 2025 | Domain Validation: Added ACME methods (3.2.2.4) Multi-Perspective Issuance: New MPIC requirements (3.2.2.9) Revocation/OCSP: Updated per CABF BR 2.1.0 (4.9.9) Security Controls: Updated per CABF NETSEC v2.0.5 (6.7) Subscriber/Org Naming: Clarified DBA/tradename rules per CABF BR 2.0.9 & 2.1.1 Incident Handling: Added Mass Revocation Plan (5.7.1) |
-| 1.0.8 | 27 November 2025 | Added New Intermediate CAs (1.3.1) |
+| 1.0.7 | 20 October 2025 | Domain Validation: Added ACME methods (3.2.2.4). Multi-Perspective Issuance: New MPIC requirements (3.2.2.9). Revocation/OCSP: Updated per CABF BR 2.1.0 (4.9.9). Security Controls: Updated per CABF NETSEC v2.0.5 (6.7). Subscriber/Org Naming: Clarified DBA/tradename rules per CABF BR 2.0.9 & 2.1.1. Incident Handling: Added Mass Revocation Plan (5.7.1). |
+| 1.0.8 | 27 November 2025 | Added New Intermediate CAs (1.3.1). |
+| 1.0.9 | 12 February 2026 | **Domain Validation:** Updated Section 3.2.2.4 to limit approved methods to 3.2.2.4.7, .19, .21, and .22. Added mandatory DNSSEC validation requirements effective March 15, 2026. <br>**New Method:** Added Section 3.2.2.4.22 for Persistent DNS TXT validation with a 10-day reuse period. <br>**Validity & Reuse:** Revised Sections 4.2.1 and 6.3.2 to align with the industry roadmap for reducing certificate validity and data reuse periods to 199 days and below (2026-2029). <br>**Reliability:** Updated Section 3.2.2.7 to incorporate BR's 5-point evaluation criteria for Reliable Data Sources. |
+| 1.1.0 | 04 June 2026 | **Compliance:** Updated §1.1.3 to require conformance with current Chrome Root Program and CCADB policies; added §1.1 overview note (Chrome RP v1.8). <br>**CT Logging:** Revised §1.3.4.1 to require logging of all TLS server precertificates to ≥1 Chrome-recognized CT log before issuance, effective 2026-06-15. <br>**Document Licensing:** Updated §3.3 to provide public documents under CC-BY/BY-SA/BY-ND 4.0 or CC0 (Mozilla Root Store Policy v3.0). |
+| 1.1.1 | 11 June 2026 | **Subordinate CA Inventory (§1.3.1):** Added two newly-issued Subordinate CAs — NAVER Cloud Trust Services G1 ECC CA4 (Serial `0E37C199673DD94A27F4F83BA63D688C3DBD5A40`) and G1 RSA CA4 (Serial `0B449EE955637827A99ECC363CECE34A911E4A4D`), issued 4 June 2026, valid until 3 May 2029. Removed five revoked Subordinate CAs effective 4 June 2026 — NAVER Secure Certification Authority 1, G1 ECC CA1, and G1 RSA CA1 (superseded), and G1 ECC CA2 and G1 RSA CA2 (cessation of operation). <br>**Dedicated TLS Server Authentication (Chrome Root Program Policy v1.8 §1.3.2):** Restricted Subordinate CA Extended Key Usage to assert only `id-kp-serverAuth` (set `id-kp-clientAuth` to MUST NOT) for the TLS Subordinate CA / Technically-Constrained TLS Subordinate CA profiles (§7.1.2.10.6) and the Cross-Certified Subordinate CA profile (§7.1.2.2.5), aligning with the 15 June 2026 requirement. <br>Restricted Subscriber (Server) Certificate Extended Key Usage to assert only `id-kp-serverAuth` (§7.1.2.7.10). |
