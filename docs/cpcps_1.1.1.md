@@ -1,9 +1,9 @@
 # **NAVER Cloud Trust Services**  
 # **Certificate Policy / Certificate Practices Statement**
 
-## Version 1.1.0
+## Version 1.1.1
 
-### 04 June 2026
+### 11 June 2026
 
 # Table of Contents
 
@@ -2866,7 +2866,7 @@ Alternatively, if the Issuing CA does not use this form, then the Extended Key U
 | Key Purpose              | Description |
 |--------------------------|-------------|
 | `id-kp-serverAuth`      | MUST be present. |
-| `id-kp-clientAuth`      | MAY be present. |
+| `id-kp-clientAuth`      | MUST NOT be present. |
 | `id-kp-emailProtection` | MUST NOT be present. |
 | `id-kp-codeSigning`     | MUST NOT be present. |
 | `id-kp-timeStamping`    | MUST NOT be present. |
@@ -3334,7 +3334,7 @@ Regardless of the order of `PolicyInformation` values, the `Certificate Policies
 | Key Purpose                         | OID                            | Presence  |
 |--------------------------------------|--------------------------------|-----------|
 | **id-kp-serverAuth**                 | `1.3.6.1.5.5.7.3.1`           | MUST      |
-| **id-kp-clientAuth**                 | `1.3.6.1.5.5.7.3.2`           | MAY       |
+| **id-kp-clientAuth**                 | `1.3.6.1.5.5.7.3.2`           | MUST NOT  |
 | **id-kp-codeSigning**                | `1.3.6.1.5.5.7.3.3`           | MUST NOT  |
 | **id-kp-emailProtection**            | `1.3.6.1.5.5.7.3.4`           | MUST NOT  |
 | **id-kp-timeStamping**               | `1.3.6.1.5.5.7.3.8`           | MUST NOT  |
@@ -3786,7 +3786,7 @@ If the **policyQualifiers** is permitted and present within a **PolicyInformatio
 | Key Purpose                         | OID                            | Presence  |
 |--------------------------------------|--------------------------------|-----------|
 | **id-kp-serverAuth**                 | `1.3.6.1.5.5.7.3.1`           | MUST      |
-| **id-kp-clientAuth**                 | `1.3.6.1.5.5.7.3.2`           | MAY       |
+| **id-kp-clientAuth**                 | `1.3.6.1.5.5.7.3.2`           | MUST NOT  |
 | **id-kp-codeSigning**                | `1.3.6.1.5.5.7.3.3`           | MUST NOT  |
 | **id-kp-emailProtection**            | `1.3.6.1.5.5.7.3.4`           | MUST NOT  |
 | **id-kp-timeStamping**               | `1.3.6.1.5.5.7.3.8`           | MUST NOT  |
@@ -4955,3 +4955,4 @@ The following revisions have been made to the original document.
 | 1.0.8 | 27 November 2025 | Added New Intermediate CAs (1.3.1). |
 | 1.0.9 | 12 February 2026 | **Domain Validation:** Updated Section 3.2.2.4 to limit approved methods to 3.2.2.4.7, .19, .21, and .22. Added mandatory DNSSEC validation requirements effective March 15, 2026. <br>**New Method:** Added Section 3.2.2.4.22 for Persistent DNS TXT validation with a 10-day reuse period. <br>**Validity & Reuse:** Revised Sections 4.2.1 and 6.3.2 to align with the industry roadmap for reducing certificate validity and data reuse periods to 199 days and below (2026-2029). <br>**Reliability:** Updated Section 3.2.2.7 to incorporate BR's 5-point evaluation criteria for Reliable Data Sources. |
 | 1.1.0 | 04 June 2026 | **Compliance:** Updated §1.1.3 to require conformance with current Chrome Root Program and CCADB policies; added §1.1 overview note (Chrome RP v1.8). <br>**CT Logging:** Revised §1.3.4.1 to require logging of all TLS server precertificates to ≥1 Chrome-recognized CT log before issuance, effective 2026-06-15. <br>**Document Licensing:** Updated §3.3 to provide public documents under CC-BY/BY-SA/BY-ND 4.0 or CC0 (Mozilla Root Store Policy v3.0). |
+| 1.1.1 | 11 June 2026 | **Subordinate CA Inventory (§1.3.1):** Added two newly-issued Subordinate CAs — NAVER Cloud Trust Services G1 ECC CA4 (Serial `0E37C199673DD94A27F4F83BA63D688C3DBD5A40`) and G1 RSA CA4 (Serial `0B449EE955637827A99ECC363CECE34A911E4A4D`), issued 4 June 2026, valid until 3 May 2029. Removed five revoked Subordinate CAs effective 4 June 2026 — NAVER Secure Certification Authority 1, G1 ECC CA1, and G1 RSA CA1 (superseded), and G1 ECC CA2 and G1 RSA CA2 (cessation of operation). <br>**Dedicated TLS Server Authentication (Chrome Root Program Policy v1.8 §1.3.2):** Restricted Subordinate CA Extended Key Usage to assert only `id-kp-serverAuth` (set `id-kp-clientAuth` to MUST NOT) for the TLS Subordinate CA / Technically-Constrained TLS Subordinate CA profiles (§7.1.2.10.6) and the Cross-Certified Subordinate CA profile (§7.1.2.2.5), aligning with the 15 June 2026 requirement. <br>Restricted Subscriber (Server) Certificate Extended Key Usage to assert only `id-kp-serverAuth` (§7.1.2.7.10). |
