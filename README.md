@@ -661,7 +661,7 @@ Uniform Resource Locator
 
 Coordinated Universal Time
 
-# 2. PUBLICAION AND REPOSITORY RESPONSIBILITIES
+# 2. PUBLICATION AND REPOSITORY RESPONSIBILITIES
 
 ## 2.1 Repositories
 
@@ -2856,7 +2856,9 @@ In all other cases, the extKeyUsage extension **MUST** be "restricted" as descri
 | `anyExtendedKeyUsage`   | The special extended key usage to indicate there are no restrictions applied. If present, this MUST be the only key usage present. |
 | Any other value        | CAs MUST NOT include any other key usage with the `anyExtendedKeyUsage` key usage present. |
 
-Alternatively, if the Issuing CA does not use this form, then the Extended Key Usage extension, if present, MUST be encoded as specified in Section 7.1.2.2.5. 
+Alternatively, if the Issuing CA does not use this form, then the Extended Key Usage extension, if present, MUST be encoded as specified in Section 7.1.2.2.5.
+
+**Note:** This unrestricted form MUST NOT be used for any Cross-Certified Subordinate CA Certificate disclosed to the CCADB on or after 15 June 2026. Such certificates MUST use the restricted form specified in Section 7.1.2.2.5 (asserting only `id-kp-serverAuth`), in accordance with Chrome Root Program Policy §1.3.2.
 
 ##### 7.1.2.2.5 Cross-Certified Subordinate CA Extended Key Usage
 
@@ -4954,5 +4956,5 @@ The following revisions have been made to the original document.
 | 1.0.7 | 20 October 2025 | Domain Validation: Added ACME methods (3.2.2.4). Multi-Perspective Issuance: New MPIC requirements (3.2.2.9). Revocation/OCSP: Updated per CABF BR 2.1.0 (4.9.9). Security Controls: Updated per CABF NETSEC v2.0.5 (6.7). Subscriber/Org Naming: Clarified DBA/tradename rules per CABF BR 2.0.9 & 2.1.1. Incident Handling: Added Mass Revocation Plan (5.7.1). |
 | 1.0.8 | 27 November 2025 | Added New Intermediate CAs (1.3.1). |
 | 1.0.9 | 12 February 2026 | **Domain Validation:** Updated Section 3.2.2.4 to limit approved methods to 3.2.2.4.7, .19, .21, and .22. Added mandatory DNSSEC validation requirements effective March 15, 2026. <br>**New Method:** Added Section 3.2.2.4.22 for Persistent DNS TXT validation with a 10-day reuse period. <br>**Validity & Reuse:** Revised Sections 4.2.1 and 6.3.2 to align with the industry roadmap for reducing certificate validity and data reuse periods to 199 days and below (2026-2029). <br>**Reliability:** Updated Section 3.2.2.7 to incorporate BR's 5-point evaluation criteria for Reliable Data Sources. |
-| 1.1.0 | 04 June 2026 | **Compliance:** Updated §1.1.3 to require conformance with current Chrome Root Program and CCADB policies; added §1.1 overview note (Chrome RP v1.8). <br>**CT Logging:** Revised §1.3.4.1 to require logging of all TLS server precertificates to ≥1 Chrome-recognized CT log before issuance, effective 2026-06-15. <br>**Document Licensing:** Updated §3.3 to provide public documents under CC-BY/BY-SA/BY-ND 4.0 or CC0 (Mozilla Root Store Policy v3.0). |
+| 1.1.0 | 04 June 2026 | **Compliance:** Updated §1.1 (Overview) to require conformance with current Chrome Root Program and CCADB policies (Chrome RP v1.8).<br>**CT Logging:** Revised §1.3.4.1 to require logging of all TLS server precertificates to ≥1 Chrome-recognized CT log before issuance, effective 2026-06-15. <br>**Document Licensing:** Updated §3.3 to provide public documents under CC-BY/BY-SA/BY-ND 4.0 or CC0 (Mozilla Root Store Policy v3.0). |
 | 1.1.1 | 11 June 2026 | **Subordinate CA Inventory (§1.3.1):** Added two newly-issued Subordinate CAs — NAVER Cloud Trust Services G1 ECC CA4 (Serial `0E37C199673DD94A27F4F83BA63D688C3DBD5A40`) and G1 RSA CA4 (Serial `0B449EE955637827A99ECC363CECE34A911E4A4D`), issued 4 June 2026, valid until 3 May 2029. Removed five revoked Subordinate CAs effective 4 June 2026 — NAVER Secure Certification Authority 1, G1 ECC CA1, and G1 RSA CA1 (superseded), and G1 ECC CA2 and G1 RSA CA2 (cessation of operation). <br>**Dedicated TLS Server Authentication (Chrome Root Program Policy v1.8 §1.3.2):** Restricted Subordinate CA Extended Key Usage to assert only `id-kp-serverAuth` (set `id-kp-clientAuth` to MUST NOT) for the TLS Subordinate CA / Technically-Constrained TLS Subordinate CA profiles (§7.1.2.10.6) and the Cross-Certified Subordinate CA profile (§7.1.2.2.5), aligning with the 15 June 2026 requirement. <br>Restricted Subscriber (Server) Certificate Extended Key Usage to assert only `id-kp-serverAuth` (§7.1.2.7.10). |
