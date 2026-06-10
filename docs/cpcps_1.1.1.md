@@ -204,17 +204,6 @@ Root CAs
 
 Intermediate CAs
 
--   NAVER Secure Certification Authority 1
-
-    -   Public Key: RSA 2048
-
-    -   Serial Number: 06046233A5825576A48272694718A8000F2F000D
-
-    -   Fingerprint (SHA256):
-        C5EB1A7639B9D8D70B4F82ADD80794175EE4B6A3DB1861B38717C96FC1914927
-
-    -   Valid Until: 2027-08-19
-
 -   NAVER Secure Certification Authority 2
 
     -   Public Key: RSA 4096
@@ -223,28 +212,6 @@ Intermediate CAs
 
     -   Fingerprint (SHA256):
         571E521E5E22810D33BB1A39991143E9E64CD8DAE97D65931B194E19AEE81E86
-
-    -   Valid Until: 2035-11-19
-
--   NAVER Cloud Trust Services G1 RSA CA1
-
-    -   Public Key: RSA 4096
-
-    -   Serial Number: 04A10F19A216DCBBF6088447D8F371ADCEE7D249
-
-    -   Fingerprint (SHA256):
-        17832DBB48F609B722A27507F1D327DE062D7F7B85B71325D8DD99B19FB5BAD4
-
-    -   Valid Until: 2033-06-06
-
--   NAVER Cloud Trust Services G1 RSA CA2
-
-    -   Public Key: RSA 4096
-
-    -   Serial Number: 0931F2A391E433A99DFA9089B18EE56368893650
-
-    -   Fingerprint (SHA256):
-        45B3942959D74F8B546A6AB47404AFC4A583AD5FA6FFD89A827A2A78522F66FD
 
     -   Valid Until: 2035-11-19
 
@@ -259,27 +226,16 @@ Intermediate CAs
 
     -   Valid Until: 2028-10-19
 
--   NAVER Cloud Trust Services G1 ECC CA1
+-   NAVER Cloud Trust Services G1 RSA CA4
 
-    -   Public Key: EC secp384r1
+    -   Public Key: RSA 4096
 
-    -   Serial Number: 05FAD6522186F62AE88BCB51D545F41EA4A35736
-
-    -   Fingerprint (SHA256):
-        882D9924FC69A00574D54C2BB4014825A1C1C71FA1D0238CAC865FE0AA4AD60B
-
-    -   Valid Until: 2033-06-06
-
--   NAVER Cloud Trust Services G1 ECC CA2
-
-    -   Public Key: EC secp384r1
-
-    -   Serial Number: 0CD7EB1228062E6BF76156A65CE67D86CE0671ED
+    -   Serial Number: 0B449EE955637827A99ECC363CECE34A911E4A4D
 
     -   Fingerprint (SHA256):
-        BBA98FFC6A2D5AD251B34BC6632D3DA88955CB46F4A1F4DF443980A4BF92845F
+        8BC478A581DE657A86C2E8A4CE0A30CA9D7ABDAEF931E590D84DB235B2A5291C
 
-    -   Valid Until: 2035-11-19
+    -   Valid Until: 2029-05-03
 
 -   NAVER Cloud Trust Services G1 ECC CA3
 
@@ -291,6 +247,17 @@ Intermediate CAs
         41C587A6BAC0143297D0EDC5D522B57CD8B2D1A0D4913A1B534A9F9A86668536
 
     -   Valid Until: 2028-10-19
+
+-   NAVER Cloud Trust Services G1 ECC CA4
+
+    -   Public Key: EC secp384r1
+
+    -   Serial Number: 0E37C199673DD94A27F4F83BA63D688C3DBD5A40
+
+    -   Fingerprint (SHA256):
+        1D795B49C4C1AE2EB90393A07D97582077780FE8A838E802919EABC9B32E54AEA
+
+    -   Valid Until: 2029-05-03
 
 Between 11 September 2017 and 4 June 2023, NAVER Cloud Corp. (former
 NAVER BUSINESS PLATFORM) operated NAVER Global Root Certification
