@@ -1,9 +1,9 @@
 # **NAVER Cloud Trust Services**  
-# **Certificate Policy / Certificate Practices Statement**
+# **Certificate Policy / Certificate Practices Statement** 
 
-## Version 1.1.1
+## Version 1.1.2
 
-### 11 June 2026
+### 14 October 2026
 
 # Table of Contents
 
@@ -215,6 +215,17 @@ Intermediate CAs
 
     -   Valid Until: 2035-11-19
 
+-   NAVER Secure Certification Authority 3
+
+    -   Public Key: RSA 4096
+
+    -   Serial Number: 1809A48256C0AA1DEDDAB347707D601A3A6D62BA
+
+    -   Fingerprint (SHA256):
+        5265926E169BBEE7E2233A573DD258FE00AC1A151BE454548A2021CD4D12C1A3
+
+    -   Valid Until: 2029-09-13
+
 -   NAVER Cloud Trust Services G1 RSA CA3
 
     -   Public Key: RSA 4096
@@ -255,7 +266,7 @@ Intermediate CAs
     -   Serial Number: 0E37C199673DD94A27F4F83BA63D688C3DBD5A40
 
     -   Fingerprint (SHA256):
-        1D795B49C4C1AE2EB90393A07D97582077780FE8A838E802919EABC9B32E54AEA
+        1D795B49C4C1AE2EB90393A07D9758207780FE8A838E802919EABC9B32E54AEA
 
     -   Valid Until: 2029-05-03
 
@@ -305,10 +316,15 @@ No Stipulation
 
 ### 1.4.1 Appropriate Certificate Uses
 
-Certificates issued pursuant to this CP/CPS may be used for all legal
-authentication, encryption, access control, and digital signature
-purposes, as designated by the key usage and extended key usage fields
-found within the certificate.
+This CP/CPS covers the Server Authentication Trust Purpose. Subscriber
+Certificates issued under this CP/CPS are TLS server certificates used to
+authenticate servers accessible through the Internet.
+
+The required extended key usage for this Trust Purpose is
+id-kp-serverAuth (1.3.6.1.5.5.7.3.1). Subscriber Certificates assert only
+id-kp-serverAuth, as set forth in Section 7.1.2.7.10. Subordinate CA
+Certificates assert only id-kp-serverAuth, as set forth in Sections
+7.1.2.2.5 and 7.1.2.10.6.
 
 ### 1.4.2 Prohibited Certificate Uses
 
@@ -363,7 +379,7 @@ the CP/CPS, including:
 NAVER Cloud Trust Services may amend this CP/CPS, and any changes will
 be disclosed to the address listed in Section 1.5 of this document. The
 CP/CPS is reviewed at least annually, and updated versions are posted to
-the online repository at <https://navercloudtrust.com/>, with any
+the online repository at <https://pki.navercloudtrust.com/>, with any
 updates overriding conflicting or outdated provisions in previous
 versions. Amendments of the CP/CPS will generally not affect the relying
 parties, but if NAVER Cloud Trust Services determines that the changes
@@ -686,25 +702,43 @@ NAVER Cloud Trust Services publishes the information about the issuance
 and management of certificates on a website so that it will be available
 to any person at any time.
 
-1.  On the web: https://navercloudtrust.com/
+1.  On the web: https://pki.navercloudtrust.com/
 
 2.  By email to: dl_rootca@navercorp.com
 
 3.  By mail addressed to: NAVER Green Factory, 6, Buljeong-ro,
     Jeongja-dong, Bundang-gu, Seongnam-si, Gyeonggi-do, Korea (13561)
     
- Web pages for Application Software Suppliers to test their software with Subscriber Certificates that chain up to each publicly trusted Root Certificate are listed at https://navercloudtrust.com/.
+ Web pages for Application Software Suppliers to test their software with Subscriber Certificates that chain up to each publicly trusted Root Certificate are listed at https://pki.navercloudtrust.com/.
 
 ## 2.3 Time or Frequency of Publication
 
-The CRL is updated promptly upon the revocation of a certificate within
-one (1) day following revocation. Generally, the CRL is periodically
-updated and reissued at least every day, and their validity period is
-limited to seven (7) days.
+NAVER Cloud Trust Services publishes the following Certificate
+Revocation Lists, as set forth in Section 4.9.7:
 
-NAVER Cloud Trust Services revises the CP/CPS at least annually
-regardless of any changes, and continues to update as needed to the
-latest version of the CA Browser Forum Baseline Requirements.
+1.  CRLs for Subscriber Certificates, issued by each Subordinate CA, are
+    reissued and published at least once every twenty-four (24) hours,
+    and within twenty-four (24) hours after recording a Certificate as
+    revoked. The validity period of each such CRL (the interval between
+    the thisUpdate and nextUpdate fields) does not exceed seven (7) days.
+
+2.  CRLs for Subordinate CA Certificates and Cross-Certified Subordinate
+    CA Certificates (Authority Revocation Lists, ARLs), issued by each
+    Root CA, are reissued and published at least once every six (6)
+    months, and within twenty-four (24) hours after recording a CA
+    Certificate as revoked. The validity period of each ARL (the
+    interval between the thisUpdate and nextUpdate fields) does not
+    exceed six (6) months.
+
+OCSP responses are updated with the frequency set forth in Section
+4.9.9.
+
+NAVER Cloud Trust Services reviews this CP/CPS at least once every
+twelve (12) months regardless of whether changes have occurred, and
+updates it whenever a change to the CA/Browser Forum Baseline
+Requirements, the Network and Certificate System Security Requirements,
+or an applicable Root Program policy requires a change to this CP/CPS,
+no later than the effective date of that change.
 
 ## 2.4 Access Controls on Repositories
 
@@ -782,9 +816,12 @@ trademark dispute.
 
 ### 3.2.1 Method to Prove Possession of Private Key
 
-A certificate applicant normally proves the ownership of his/her private
-key by providing a PKCS#10-formatted Certificate Signing Request, or a
-cryptographically equivalent proof to NAVER Cloud Trust Services.
+A certificate applicant proves possession of the private key by
+submitting a PKCS#10 Certificate Signing Request signed with that private
+key, either directly to NAVER Cloud Trust Services or in the finalize
+request of the ACME protocol (RFC 8555, Section 7.4). NAVER Cloud Trust
+Services verifies the signature on the Certificate Signing Request before
+issuance and accepts no other method of proof of possession.
 
 ### 3.2.2 Authentication of Organization and Domain Identity
 
@@ -882,7 +919,7 @@ DBA/tradename using at least one of the following:
 See Section 3.2.2.1
 
 ### 3.2.2.4 Validation of Domain Authorization or Control
-NAVER Cloud Trust Services validates each Fully-Qualified Domain Name (FQDN) listed in the Certificate using only the approved methods defined in this section (3.2.2.4.7, 3.2.2.4.19, 3.2.2.4.21, and 3.2.2.4.22). All other methods defined in the Baseline Requirements are not used or have been retired.
+NAVER Cloud Trust Services validates each Fully-Qualified Domain Name (FQDN) listed in the Certificate using only the approved methods defined in this section (3.2.2.4.7 and 3.2.2.4.22). All other methods defined in the Baseline Requirements are not used or have been retired.
 
 This section defines the permitted processes and procedures for validating the Applicant’s ownership or control of the domain. NAVER Cloud Trust Services SHALL confirm that prior to issuance, it has validated each Fully-Qualified Domain Name (FQDN) listed in the Certificate as follows:
 
@@ -902,7 +939,7 @@ Effective March 15th, 2026: NAVER Cloud Trust Services MUST NOT use local policy
 
 DNSSEC validation back to the IANA DNSSEC root trust anchor MAY be performed on all DNS queries associated with the validation of domain authorization or control by Remote Network Perspectives used for Multi-Perspective Issuance Corroboration.
 
-DNSSEC validation back to the IANA DNSSEC root trust anchor is considered outside the scope of self-audits performed to fulfill the requirements in Section 8.7. NAVER Cloud Trust Services SHALL maintain a record of which domain validation method, including relevant BR version number, they used to validate every domain.
+DNSSEC validation back to the IANA DNSSEC root trust anchor is considered outside the scope of self-audits performed to fulfill the requirements in Section 8.7. NAVER Cloud Trust Services SHALL maintain a record of which domain validation method they used to validate every domain, in accordance with the event-recording requirements of Section 5.4.1.
 
 Note: FQDNs may be listed in Subscriber Certificates using dNSNames in the subjectAltName extension or in Subordinate CA Certificates via dNSNames in permittedSubtrees within the Name Constraints extension.
 
@@ -918,28 +955,6 @@ If a Random Value is used, NAVER Cloud Trust Services SHALL provide a Random Val
 NAVER Cloud Trust Services implements Multi-Perspective Issuance Corroboration (MPIC) as specified in Section 3.2.2.9 when performing validations using this method. To count as corroborating, a Network Perspective MUST observe the same challenge information (i.e., Random Value or Request Token) as the Primary Network Perspective.
 
 If NAVER Cloud Trust Services or its Affiliate operates a DNS zone to which Applicants can delegate (via CNAME) their underscore-prefixed Domain Label, NAVER Cloud Trust Services MUST ensure that each Applicant delegates to a unique FQDN within that zone. NAVER Cloud Trust Services SHOULD NOT operate such a service and SHOULD direct any Applicants using such a service to use the method described in Section 3.2.2.4.22 instead.
-
-Note: Once the FQDN has been validated using this method, NAVER Cloud Trust Services MAY also issue Certificates for other FQDNs that end with all the Domain Labels of the validated FQDN. This method is suitable for validating Wildcard Domain Names.
-
-#### 3.2.2.4.19 Agreed-Upon Change to Website - ACME
-NAVER Cloud Trust Services confirms the Applicant’s control over an FQDN by validating domain control using the ACME HTTP Challenge method defined in Section 8.3 of RFC 8555. The following are additive requirements to RFC 8555:
-* NAVER Cloud Trust Services MUST receive a successful HTTP response from the request (meaning a 2xx HTTP status code must be received).
-* The token (as defined in RFC 8555, Section 8.3) MUST NOT be used for more than 30 days from its creation.
-* If NAVER Cloud Trust Services follows redirects, the following apply:
-  1. Redirects MUST be initiated at the HTTP protocol layer. a. Redirects MUST be the result of a 301, 302, or 307 HTTP status code response, as defined in RFC 7231, Section 6.4, or a 308 HTTP status code response, as defined in RFC 7538, Section 3. Redirects MUST be to the final value of the Location HTTP response header, as defined in RFC 7231, Section 7.1.2.
-  2. Redirects MUST be to resource URLs with either the “http” or “https” scheme.
-  3. Redirects MUST be to resource URLs accessed via Authorized Ports.
-
-Except for Onion Domain Names, NAVER Cloud Trust Services MUST implement Multi-Perspective Issuance Corroboration (MPIC) as specified in Section 3.2.2.9 when performing validations using this method. To count as corroborating, a Network Perspective MUST observe the same challenge information (i.e., token) as the Primary Network Perspective.
-
-Note: NAVER Cloud Trust Services MUST NOT issue Certificates for other FQDNs that end with all the labels of the validated FQDN unless separate validations are performed for each of those other FQDNs using authorized methods. This method is NOT suitable for validating Wildcard Domain Names.
-
-#### 3.2.2.4.21 DNS Labeled with Account ID - ACME
-NAVER Cloud Trust Services confirms the Applicant’s control over the FQDN by performing the procedure documented for a “dns-account-01” challenge in draft 00 of “Automated Certificate Management Environment (ACME) DNS Labeled With ACME Account ID Challenge,” available at https://datatracker.ietf.org/doc/draft-ietf-acme-dns-account-label/.
-
-The token (as defined in Section 3.1 of the aforementioned draft) MUST NOT be used for more than 30 days from its creation.
-
-NAVER Cloud Trust Services implements Multi-Perspective Issuance Corroboration (MPIC) as specified in Section 3.2.2.9 when performing validations using this method. To count as corroborating, a Network Perspective MUST observe the same token as the Primary Network Perspective.
 
 Note: Once the FQDN has been validated using this method, NAVER Cloud Trust Services MAY also issue Certificates for other FQDNs that end with all the Domain Labels of the validated FQDN. This method is suitable for validating Wildcard Domain Names.
 
@@ -974,9 +989,11 @@ Before issuing a certificate with a wildcard character (\*) in a CN or
 subjectAltName of type DNS-ID, NAVER Cloud Trust Services shall refuse
 the issuance if the wildcard character occurs in the first label
 position to the left of a "registry-controlled" label or "public suffix"
-(e.g. "\*.com", "\*.co.kr"). NAVER Cloud Trust Services refers to the
-\"public suffix list\" of http://publicsuffix.org/ (PSL) as the judgment
-criterion, and periodically checks and reflects PSL updates.
+(e.g. "\*.com", "\*.co.kr"). NAVER Cloud Trust Services uses the
+Public Suffix List (PSL) maintained at publicsuffix.org as the judgment
+criterion, and refreshes its copy of the PSL at least once every seven
+(7) days. A request in which the wildcard character occupies the first
+label to the left of a public suffix is rejected.
 
 ### 3.2.2.7 Data Source Accuracy
 Prior to using any data source as a Reliable Data Source, NAVER Cloud Trust Services SHALL evaluate the source for its reliability, accuracy, and resistance to alteration or falsification. NAVER Cloud Trust Services SHOULD consider the following during its evaluation:
@@ -996,10 +1013,11 @@ in Section 4.2.4.
 ### 3.2.2.9 Multi-perspective Issuance Corroboration
 
 Multi-Perspective Issuance Corroboration attempts to corroborate the determinations (i.e., domain validation pass/fail, CAA permission/prohibition) made by the Primary Network Perspective from multiple remote Network Perspectives before Certificate issuance. This process can improve protection against equally-specific prefix Border Gateway Protocol (BGP) attacks or hijacks.
-NAVER Cloud Trust Services MAY use either the same set, or different sets of Network Perspectives when performing Multi-Perspective Issuance Corroboration for the required
-
-1) Domain Authorization or Control and
-2) CAA Record checks.
+NAVER Cloud Trust Services uses the same set of Network Perspectives for both
+Domain Authorization or Control checks and CAA Record checks. That set consists
+of the Primary Network Perspective and at least five (5) remote Network
+Perspectives distributed across at least three (3) Regional Internet Registry
+service regions.
 
 NAVER Cloud Trust Services does not reuse or cached the information obtained from one Network Perspective when performing validation through subsequent Network Perspectives (e.g., different Network Perspectives cannot rely on a shared DNS cache to prevent an adversary with control of traffic from one Network Perspective from poisoning the DNS cache used by other Network Perspectives). All communications between a remote Network Perspective and the NAVER Cloud Trust Services take place over an authenticated and encrypted channel relying on modern protocols (e.g., over HTTPS).
 A Network Perspective MAY use a recursive DNS resolver that is NOT co-located with the Network Perspective. However, the DNS resolver used by the Network Perspective MUST fall within the same Regional Internet Registry service region as the Network Perspective relying upon it. Furthermore, for any pair of DNS resolvers used on a Multi-Perspective Issuance Corroboration attempt, the straight-line distance between the two States, Provinces, or Countries the DNS resolvers reside in MUST be at least 500 km. The location of a DNS resolver is determined by the point where unencapsulated outbound DNS queries are typically first handed off to the network infrastructure providing Internet connectivity to that DNS resolver.
@@ -1013,7 +1031,13 @@ Remote Network Perspectives performing Multi-Perspective Issuance Corroboration 
 Accordingly, NAVER Cloud Trust Services must comply with the allowed number of non-corroborations based on the number of remote Network Perspectives employed during Multi-Perspective Issuance Corroboration, as well as the effective date-based requirements.
 As of September 15, 2025: NAVER Cloud Trust Services MUST perform Multi-Perspective Issuance Corroboration using at least two (2) remote Network Perspectives, and Quorum Requirements MUST be satisfied. Certificate issuance MUST NOT proceed if the number of non-corroborations exceeds the allowed threshold.
 As of March 15, 2026: NAVER Cloud Trust Services MUST perform Multi-Perspective Issuance Corroboration using at least three (3) remote Network Perspectives. In addition, at least two (2) of the Perspectives supporting the Primary MUST be distributed across distinct Regional Internet Registry (RIR) regions.
-Certificate issuance must not proceed if any of these requirements are not met.
+Certificate issuance does not proceed if any of these requirements is not met.
+
+For every Fully-Qualified Domain Name in a request, and for both the Domain
+Authorization or Control check and the CAA Record check, NAVER Cloud Trust
+Services permits at most one (1) non-corroborating Network Perspective. An
+attempt with more than one (1) non-corroboration is recorded as a failed
+validation, and no Certificate is issued on the basis of that attempt.
 
 ### 3.2.3 Authentication of Individual Identity
 
@@ -1070,11 +1094,27 @@ See Section 3.2.2
 
 ## 3.4 Identification and Authentication for Revocation Request
 
-NAVER Cloud Trust Services or the RA authenticates and identifies all
-certificate revocation requests made at the Subscriber\'s request. If
-identification and authentication procedures are required, NAVER Cloud
-Trust Services selects these procedures based on the circumstances of
-the request and follows a documented process.
+NAVER Cloud Trust Services authenticates every certificate revocation
+request made by or on behalf of a Subscriber using one of the following
+methods:
+
+1.  A revocation request submitted through the ACME protocol (RFC 8555,
+    Section 7.6) and signed with either the private key of the ACME
+    account that requested the Certificate or the private key
+    corresponding to the Certificate\'s public key;
+
+2.  A demonstration of possession of the private key corresponding to
+    the Certificate, either by a request signed with that private key or
+    by submission of the private key itself as described in Section
+    4.9.12; or
+
+3.  Confirmation of the request from the Applicant Representative
+    through the telephone number or email address that NAVER Cloud Trust
+    Services verified under Section 3.2 for that Applicant.
+
+A request that cannot be authenticated by one of these methods is not
+processed as a Subscriber revocation request. It is instead treated as a
+Certificate Problem Report and handled under Sections 4.9.3 and 4.9.5.
 
 Identification and authentication are not required in cases where the
 revocation request is made by NAVER Cloud Trust Services or where the
@@ -1187,9 +1227,23 @@ Names or Reserved IP Addresses.
 
 ### 4.2.3 Time to Process Certificate Applications
 
-If the subscriber application and identification documents are processed
-normally, NAVER Cloud Trust Services will issue the certificate within a
-reasonable period of time after the certificate request.
+For Domain Validation Subscriber Certificates, including all
+Certificates requested through the ACME protocol, NAVER Cloud Trust
+Services issues the Certificate automatically and immediately upon
+successful completion of the domain validation, CAA check, and
+Multi-Perspective Issuance Corroboration set forth in Sections 3.2.2.4,
+3.2.2.9, and 4.2.4, and the pre-issuance linting set forth in Section
+4.3.1.
+
+For Organization Validation Subscriber Certificates, NAVER Cloud Trust
+Services issues the Certificate within three (3) business days after all
+of the validation steps set forth in Section 3.2 have been completed.
+Time spent waiting for the Applicant to provide required information or
+documentation is not counted toward this period.
+
+If a certificate request is rejected, NAVER Cloud Trust Services
+notifies the Applicant of the rejection and its reason by email within
+the same period.
 
 ### 4.2.4 Certificate Authority Authorization (CAA) Records
 
@@ -1197,6 +1251,24 @@ NAVER Cloud Trust Services checks for a CAA record for each dNSName in
 the subjectAltName extension of the Certificate to be issued, according
 to the procedure in RFC 8659, following the processing instructions set
 down in RFC 8659 for any records found.
+
+When processing CAA records, NAVER Cloud Trust Services MUST process
+the issue, issuewild, and iodef property tags as specified in RFC 8659.
+
+If NAVER Cloud Trust Services issues a Certificate after processing a
+CAA record, it MUST do so within the TTL of the CAA record or eight
+hours, whichever is greater. If the applicable period has elapsed, the
+required CAA checks MUST be performed again before issuance, unless
+an applicable CAA checking exception described below applies.
+
+DNSSEC validation is performed by the Primary Network Perspective on all
+DNS queries associated with CAA record lookups. The DNS resolver used for
+those queries performs DNSSEC validation using the algorithm defined in
+RFC 4035, Section 5, supports NSEC3 as defined in RFC 5155, supports
+SHA-2 as defined in RFC 4509 and RFC 5702, and properly handles the
+security concerns enumerated in RFC 6840, Section 4. NAVER Cloud Trust
+Services does not use local policy to disable DNSSEC validation on any
+DNS query associated with CAA record lookups.
 
 The following Issuer Domain Names in CAA "issue" or "issuewild" records
 are recognized as permitting NAVER Cloud Trust Services to issue SSL/TLS
@@ -1215,19 +1287,32 @@ NAVER Cloud Trust Services may decide not to check for a CAA record:
     7.1.2.5, where the lack of CAA checking is an explicit contractual
     provision in the contract with the Applicant.
 
-NAVER Cloud Trust Services is permitted to treat a record lookup failure
-as permission to issue if:
+NAVER Cloud Trust Services does not rely on the Baseline Requirements
+exception that permits a CAA record lookup failure to be treated as
+permission to issue. If a required CAA lookup fails, issuance is blocked
+until the required CAA checks have been successfully completed.
+DNSSEC validation errors observed by the Primary Network Perspective
+MUST NOT be treated as permission to issue.
 
--   the failure is outside the CA's infrastructure; and
+A successful determination, in accordance with RFC 8659, that no
+applicable CAA RRset exists is distinct from a record lookup failure.
+The absence of DNSSEC protection by itself is not a reason to reject
+issuance, provided that the required CAA checks and all other applicable
+issuance requirements have been satisfied.
 
--   the lookup has been retried at least once; and
-
--   the domain's zone does not have a DNSSEC validation chain to the
-    ICANN root.
-
-NAVER Cloud Trust Services documents potential issuance that was
+NAVER Cloud Trust Services MUST document potential issuances that were
 prevented by a CAA record in sufficient detail to provide feedback to
-the CAB Forum on the circumstances.
+the CA/Browser Forum on the circumstances, and SHOULD dispatch reports
+of such issuance requests to the contacts stipulated in the applicable
+CAA iodef records, if present. NAVER Cloud Trust Services is not required
+to support URL schemes in iodef records other than mailto: or https:.
+
+When performing Multi-Perspective Issuance Corroboration for CAA record
+checks as described in Section 3.2.2.9, NAVER Cloud Trust Services
+interprets a remote Network Perspective's CAA check response as
+permission to issue, regardless of whether the responses from the
+Primary Network Perspective and the remote Network Perspective are
+byte-for-byte identical.
 
 ## 4.3 Certificate Issuance
 
@@ -1236,12 +1321,18 @@ the CAB Forum on the circumstances.
 Prior to issuing a Certificate NAVER Cloud Trust Services processes the
 Certificate Application and performs the required validation procedures
 in accordance with this CP/CPS. Once these procedures have been
-completed, the Certificate is generated and the appropriate key usage
-extension added.
+completed, the Certificate is generated with the key usage and extended
+key usage extensions set forth in Section 7.1.2 for the applicable
+Certificate profile.
 
-Prior to signing a Certificate NAVER Cloud Trust Services performs
-conformance linting using appropriate tooling. If linting reports a
-nonconformity, a report is generated and issuance is halted.
+Prior to submitting a Precertificate to any Certificate Transparency log
+and prior to signing the corresponding Certificate, NAVER Cloud Trust
+Services lints the to-be-signed certificate (tbsCertificate) of every TLS
+Server Certificate with pkimetal against the CA/Browser Forum Baseline
+Requirements profile and RFC 5280. If the linting reports any finding at
+error severity or higher, signing does not proceed and the failure is
+recorded as an issuance failure event. Linting results are stored with
+the issuance record and retained under Section 5.4.3.
 
 Certificate issuance from a Root CA requires at least two authorized
 individuals one of whom deliberately issues a direct command in order to
@@ -1428,8 +1519,10 @@ one or more of the following occurs:
 
 5.  NAVER Cloud Trust Services obtains evidence that the validation of
     domain authorization or control for any Fully-Qualified Domain Name
-    or IP address in the Certificate should not be relied upon.
-    (CRLReason #4, superseded).
+    or IP address in the Certificate should not be relied upon,
+    including cases where NAVER Cloud Trust Services failed to perform
+    CAA checking correctly or where issuance was not permitted according
+    to Section 3.2.2.8 (CAA Records) (CRLReason #4, superseded).
 
 NAVER Cloud Trust Services will revoke a Certificate within 5 days and
 use the corresponding CRLReason if one or more of the following occurs:
@@ -1536,8 +1629,9 @@ NAVER Cloud Trust Services provides a process for Subscribers to request
 revocation of their own Certificates. Subscribers may request revocation
 of their own certificate on the following methods:
 
--   Sending an email to dl_rootca@navercorp.com including sufficient
-    detail to identify the specific certificates to be revoked
+-   Sending an email to dl_rootca@navercorp.com that includes the serial
+    number(s) of the Certificate(s) to be revoked, or the Certificate(s)
+    themselves, and the reason for revocation
 
 Additionally, Subscribers, Relying Parties, Application Software
 Supplier, and other third parties may submit Certificate Problem Reports
@@ -1552,35 +1646,46 @@ NAVER Cloud Trust Services processes a revocation request as follows:
     NAVER Cloud Trust Services may also include its own reasons for
     revocation in the log.
 
-2.  NAVER Cloud Trust Services may request confirmation of the
-    revocation from a known administrator, where applicable, via out of
-    band communication (e.g., telephone, fax, etc.).
+2.  NAVER Cloud Trust Services authenticates the request using one of
+    the methods set forth in Section 3.4. If a request submitted by
+    email cannot be authenticated by those methods, NAVER Cloud Trust
+    Services requests confirmation from the Applicant Representative
+    through the telephone number or email address verified under
+    Section 3.2 before acting on the request.
 
 3.  If the request is authenticated as originating from the Subscriber,
-    NAVER Cloud Trust Services revokes the certificate.
+    NAVER Cloud Trust Services revokes the certificate within
+    twenty-four (24) hours after receipt of the request, as set forth in
+    Section 4.9.1.1.
 
-4.  For requests from third parties, NAVER Cloud Trust Services
-    personnel investigates the request and (if needed) revokes the
-    applicable certificate within 24 hours after receipt.
+4.  For Certificate Problem Reports from third parties, NAVER Cloud
+    Trust Services begins investigating within twenty-four (24) hours
+    after receipt and provides a preliminary report as set forth in
+    Section 4.9.5. If the investigation establishes one or more of the
+    circumstances listed in Section 4.9.1.1 or Section 4.9.1.2, NAVER
+    Cloud Trust Services revokes the certificate within the time frame
+    set forth in that Section.
 
-5.  If NAVER Cloud Trust Services determines that revocation is
-    appropriate, NAVER Cloud Trust Services personnel revoke the
-    certificate and update the CRL.
+5.  Upon revocation, NAVER Cloud Trust Services personnel publish an
+    updated CRL and OCSP response within twenty-four (24) hours, as set
+    forth in Sections 4.9.7 and 4.9.9.
 
 NAVER Cloud Trust Services maintains a continuous 24x7 ability to accept
-and respond to revocation requests and Certificate Problem Reports. If
-appropriate, NAVER Cloud Trust Services forwards complaints to law
-enforcement.
+and respond to revocation requests and Certificate Problem Reports.
+Where a Certificate Problem Report alleges illegal activity, NAVER Cloud
+Trust Services forwards the report to law enforcement where required by
+applicable law.
 
 Subscriber certificate revocation requests can be submitted to the email
 address disclosed in Section 1.5.2.
 
 ### 4.9.4 Revocation Request Grace Period
 
-Subscribers are required to request revocation within one day after
-detecting the loss or compromise of the Private Key. NAVER Cloud Trust
-Services may grant and extend revocation grace period on a case-by-case
-basis.
+Subscribers are required to request revocation within twenty-four (24)
+hours after detecting the loss or compromise of the Private Key. NAVER
+Cloud Trust Services does not extend this period, and processes the
+request within the time frames set forth in Sections 4.9.1.1 and 4.9.5
+regardless of when the Subscriber detected the event.
 
 ### 4.9.5 Time Within Which CA Must Process the Revocation Request
 
@@ -1629,10 +1734,6 @@ subject name chaining, policy and key use constraints and revocation
 status through CRL or OCSP responder before relying on a certificate.
 
 ### 4.9.7 CRL Issuance Frequency
-
-NAVER Cloud Trust Services will update and reissue CRLs with a frequency
-greater than or equal to that required by the NAVER Cloud Trust Services
-CP/CPS.
 
 CRLs are available via a publicly-accessible HTTP URL (i.e.,
 \"published\").
@@ -1735,7 +1836,8 @@ A key compromise report must include:
 In accordance with CP/CPS Section 4.9.1.1, If NAVER Cloud Trust Services
 obtains evidence that subscriber\'s private key corresponding to the
 public key in the certificate suffered a key compromise, the certificate
-will be revoked in time.
+will be revoked within twenty-four (24) hours after NAVER Cloud Trust
+Services obtains that evidence.
 
 ### 4.9.13 Circumstances for Suspension
 
@@ -2027,16 +2129,28 @@ g.  Introduction of new Certificate Profiles and retirement of existing
 a.  Certificate requests, renewal, and re-key requests, and revocation;
 
 b.  All verification activities stipulated in these Requirements and the
-    CA's Certification Practice Statement;
+    CA's Certification Practice Statement. Effective July 15, 2026, such records MUST include at a minimum: (i) the information being validated (e.g., the applied-for FQDN or the organization name); (ii) the Authorization Domain Name used, if applicable and different from the applied-for FQDN; and (iii) the validation method used (e.g., the Baseline Requirements section number or the registered label of an ACME validation method);
 
 c.  Approval and rejection of certificate requests;
 
 d.  Issuance of Certificates;
 
-e.  Generation of Certificate Revocation Lists; and
+e.  Generation of Certificate Revocation Lists;
 
 f.  Signing of OCSP Responses (as described in Section 4.9 and Section
-    4.10).
+    4.10);
+
+g.  Multi-Perspective Issuance Corroboration attempts from each Network
+    Perspective, recording at a minimum: (i) an identifier that uniquely
+    identifies the Network Perspective used; (ii) the attempted domain
+    name; and (iii) the result of the attempt (e.g., "domain validation
+    pass/fail", "CAA permission/prohibition"); and
+
+h.  Multi-Perspective Issuance Corroboration quorum results for each
+    attempted domain name represented in a Certificate request (e.g.,
+    "3/4", meaning three (3) out of four (4) attempted Network
+    Perspectives corroborated the determinations made by the Primary
+    Network Perspective).
 
 <!-- -->
 
@@ -2089,17 +2203,12 @@ failures, software crashes, and system restarts.
 
 ### 5.4.2 Frequency of Processing Log
 
-Audit log review period cycle is determined by NAVER Cloud Trust
-Services depending on whether automated log monitoring and alerting is
-available or not. For systems capable of continuous automated log
-monitoring and alerting use this function to check log processing, log
-integrity, and automatically receive reports. At least once every month,
-internal auditors review the logs generated by CA systems, check the log
-file integrity.
-
-For systems where continuous automated log monitoring and alerting is
-not possible, At least once every month, internal auditors review the
-logs generated by CA systems, check the log file integrity.
+For Certificate Systems with continuous automated log monitoring and
+alerting, that function checks log processing and log integrity and
+generates alerts and reports automatically. Independently of automated
+monitoring, and for all Certificate Systems including those without it,
+internal auditors review the logs generated by CA systems and verify log
+file integrity at least once every month.
 
 ### 5.4.3 Retention Period for Audit Log
 
@@ -2153,7 +2262,9 @@ No stipulation
 ### 5.4.8 Vulnerability Assessments
 
 NAVER Cloud Trust Services continuously monitors external and internal
-vulnerabilities, and evaluates risks regularly that:
+vulnerabilities, and performs a risk assessment at least once every
+twelve (12) months and upon any material change to its Certificate
+Systems, that:
 
 1.  Identifies foreseeable internal and external threats that could
     result in unauthorized access, disclosure, misuse, alteration, or
@@ -2255,6 +2366,8 @@ specified herein.
 NAVER Cloud Trust Services maintains controls to provide reasonable
 assurance that damage from security incidents and malfunctions is
 minimized through the use of incident reporting and response procedures.
+
+In addition, NAVER Cloud Trust Services complies with the requirements of the CCADB Policy and the CCADB Incident Reporting Guidelines (IRGs) for all matters relating to the disclosure and handling of incidents, including creating and maintaining incident reports and responding to related questions or comments as required, and continues to update such incident reports and respond to questions or comments until the incident is considered resolved in accordance with the IRGs. Where a serious vulnerability or security incident occurs, NAVER Cloud Trust Services discloses it in Bugzilla as a secure bug in accordance with the guidance set out on the Mozilla Vulnerability Disclosure wiki page, in addition to and not in lieu of any applicable public incident reporting requirements.
 
 NAVER Cloud Trust Services documents a business continuity and disaster
 recovery procedures designed to notify and reasonably protect
@@ -2668,10 +2781,11 @@ For NAVER Cloud Trust Services, the vulnerability response timeline is determine
 - 7.0 ~ 8.9 : 30 days 
 - 4.0 ~ 6.9 : 90 days
 - 0.1 ~ 3.9 : 180 days
-Exceptions are assessed for risk and documented.
 
-For NAVER Cloud Trust Services, the vulnerability response timeframe SHALL be established based on a documented risk assessment in accordance with CABF Network and Certificate System Security Requirements v2.0.5. 
-The assessment SHOULD take into account the CVSS score, criticality of assets, and potential impact. Identified vulnerabilities are remediated in a timely manner appropriate to their severity, with urgent cases addressed immediately. Exceptions may be documented and justified through a risk-based process.
+The response timeline begins when the vulnerability is identified by NAVER Cloud
+Trust Services or publicly disclosed, whichever is earlier. Any exception to
+these timelines is documented with a risk assessment describing the compensating
+controls, and is approved before the timeline expires.
 
 ## 6.8 Time-Stamping
 
@@ -2815,7 +2929,7 @@ The subject **MUST** comply with the requirements of Section 7.1.4, or, if the e
 |---------------------------------|-------------|-------------|------------------------------------|
 | authorityKeyIdentifier          | MUST        | N           | See Section 7.1.2.11.1            |
 | basicConstraints                | MUST        | Y           | See Section 7.1.2.10.4            |
-| certificatePolicies              | MUST        | N           | See Section 7.1.2.10.5            |
+| certificatePolicies              | MUST        | N           | See Section 7.1.2.2.6             |
 | crlDistributionPoints           | MUST        | N           | See Section 7.1.2.11.2            |
 | keyUsage                        | MUST        | Y           | See Section 7.1.2.10.7            |
 | subjectKeyIdentifier            | MUST        | N           | See Section 7.1.2.11.4            |
@@ -2897,6 +3011,48 @@ Each included Extended Key Usage key usage purpose:
 **CAs MUST NOT** include additional key usage purposes unless the CA is aware of a reason for including the key usage purpose in the Certificate.
 
 
+##### 7.1.2.2.6 Cross-Certified Subordinate CA Certificate Certificate Policies
+
+The `Certificate Policies` extension **MUST** contain at least one `PolicyInformation`.  
+Each `PolicyInformation` **MUST** match the following profile:
+
+#### Table: No Policy Restrictions (Affiliated CA)
+
+| Field | Presence | Contents  |
+|-------|----------|-----------|
+| **policyIdentifier** | MUST | When the Issuing CA wishes to express that there are no policy restrictions, the Subordinate CA **MUST** be an **Affiliate** of the Issuing CA. The `Certificate Policies` extension **MUST** contain only a **single** `PolicyInformation` value, which **MUST** contain the `anyPolicy` Policy Identifier. |
+| **anyPolicy** | MUST | - |
+| **policyQualifiers** | NOT RECOMMENDED | If present, **MUST** contain only permitted `policyQualifiers` from the table below. |
+
+#### Table: Policy Restricted
+
+| Field | Presence | Contents  |
+|-------|----------|-----------|
+| **policyIdentifier** | MUST | One of the following policy identifiers: |
+| **A Reserved Certificate Policy Identifier** | MUST | The CA **MUST** include at least one **Reserved Certificate Policy Identifier** (see Section 7.1.6.1) associated with the given **Subscriber Certificate type** (see Section 7.1.2.7.1) transitively issued by this Certificate. |
+| **anyPolicy** | MUST NOT | The `anyPolicy` Policy Identifier **MUST NOT** be present. |
+| **Any other identifier** | MAY | If present, **MUST** be defined by the CA and documented in its **Certificate Policy and/or Certification Practice Statement**. |
+| **policyQualifiers** | NOT RECOMMENDED | If present, **MUST** contain only permitted `policyQualifiers` from the table below. |
+
+This Profile **RECOMMENDS** that the first **PolicyInformation** value within the **Certificate Policies** extension contains the **Reserved Certificate Policy Identifier** (see **Section 7.1.6.1**).
+
+Regardless of the order of **PolicyInformation** values, the **Certificate Policies** extension **MUST** include at least one Reserved Certificate Policy Identifier. If any Subscriber Certificates will chain up directly to the Certificate issued under this Certificate Profile, this Cross-Certified Subordinate CA Certificate **MUST** contain exactly **one** Reserved Certificate Policy Identifier.
+
+> **Note:**  
+> `policyQualifiers` is **NOT RECOMMENDED** to be present in any Certificate issued under this Certificate Profile  
+> because this information increases the size of the Certificate without providing any value to a typical **Relying Party**,  
+> and the information may be obtained by other means when necessary.
+
+If the **policyQualifiers** is permitted and present within a **PolicyInformation** field, it **MUST** be formatted as follows:
+
+#### Table: Permitted policyQualifiers
+
+| Qualifier ID                           | Presence | Field Type | Contents  |
+|----------------------------------------|----------|------------|-----------|
+| **id-qt-cps** (OID: `1.3.6.1.5.5.7.2.1`) | MAY      | IA5String  | The HTTP or HTTPS URL for the Issuing CA's Certificate Policies, Certification Practice Statement, Relying Party Agreement, or other pointer to online policy information provided by the Issuing CA. |
+| **Any other qualifier**                | MUST NOT | -          | -         |
+
+
 #### 7.1.2.3 Technically Constrained Non-TLS Subordinate CA Certificate Profile
 
 This Certificate Profile MAY be used when issuing a CA Certificate that will be considered Technically Constrained, and which will not be used to issue TLS certificates directly or transitively.
@@ -2917,7 +3073,7 @@ This Certificate Profile MAY be used when issuing a CA Certificate that will be 
 | **signatureAlgorithm** | Encoded value MUST be byte-for-byte identical to the `tbsCertificate.signature`. |
 | **signature**      |             |
 
-##### 7.1.2.3.2 Technically Constrained Non-TLS Subordinate CA Certificate Policies
+##### 7.1.2.3.1 Technically Constrained Non-TLS Subordinate CA Extensions
 
 | Extension                              | Presence       | Critical | Description                      |
 |----------------------------------------|---------------|----------|----------------------------------|
@@ -2934,6 +3090,8 @@ This Certificate Profile MAY be used when issuing a CA Certificate that will be 
 | **Any other extension**                | NOT RECOMMENDED | -      | See Section 7.1.2.11.5          |
 
 
+
+##### 7.1.2.3.2 Technically Constrained Non-TLS Subordinate CA Certificate Policies
 
 If present, the Certificate Policies extension MUST be formatted as one of the two tables below:
 
@@ -2962,7 +3120,7 @@ Table: No Policy Restrictions (Affiliated CA)
 | id-qt-cps (OID: 1.3.6.1.5.5.7.2.1)    | MAY        | IA5String  | The HTTP or HTTPS URL for the Issuing CA's Certificate Policies, Certification Practice Statement, Relying Party Agreement, or other pointer to online policy information provided by the Issuing CA. |
 | Any other qualifier                    | MUST NOT   | -          | -         |
 
-#7.1.2.3.3 Technically Constrained Non-TLS Subordinate CA Extended Key Usage
+##### 7.1.2.3.3 Technically Constrained Non-TLS Subordinate CA Extended Key Usage
 
 The Issuing CA **MUST** verify that the Subordinate CA Certificate is authorized to issue certificates for each included extended key usage purpose. Multiple, independent key purposes (e.g. id-kp-timeStamping and id-kp-codeSigning) are **NOT RECOMMENDED**.
 
@@ -2998,6 +3156,11 @@ As noted in RFC 6962, Section 3.2, the signature field of a Precertificate is no
 | **extensions**       | See Section 7.1.2.4.1 |
 | **signatureAlgorithm** | Encoded value MUST be byte-for-byte identical to the `tbsCertificate.signature`. |
 | **signature**        |             |
+
+Effective 2026-03-15, this Certificate Profile is not used, and
+Precertificate Signing CAs are not used to issue Precertificates. NAVER
+Cloud Trust Services issues Precertificates directly from the Issuing CA
+as set forth in Section 7.1.2.9.1.
 
 ##### 7.1.2.4.2 Technically Constrained Precertificate Signing CA Extended Key Usage
 
@@ -3560,7 +3723,7 @@ Once a Precertificate is signed, relying parties are permitted to treat this as 
 
 This profile describes the transformations that are permitted to a Certificate to construct a Precertificate. CAs **MUST NOT** issue a Precertificate unless they are willing to issue a corresponding Certificate, regardless of whether they have done so. Similarly, a CA **MUST NOT** issue a Precertificate unless the corresponding Certificate conforms to these **Baseline Requirements**, regardless of whether the CA signs the corresponding Certificate.
 
-A Precertificate may be issued either directly by the **Issuing CA** or by a **Technically Constrained Precertificate Signing CA**, as defined in **Section 7.1.2.4**. If issued by a Precertificate Signing CA, then in addition to the **precertificate poison** and **signed certificate timestamp list** extensions, the **Precertificate issuer field** and, if present, **authorityKeyIdentifier** extension, may differ from the Certificate, as described below.
+NAVER Cloud Trust Services issues each **Precertificate** directly from the **Issuing CA**. Effective 2026-03-15, Precertificate Signing CAs (Section 7.1.2.4) are not used to issue Precertificates.
 
 
 #### Table: When the Precertificate is issued directly by the Issuing CA
@@ -3759,7 +3922,7 @@ Each `PolicyInformation` **MUST** match the following profile:
 | Field | Presence | Contents  |
 |-------|----------|-----------|
 | **policyIdentifier** | MUST | One of the following policy identifiers: |
-| **A Reserved Certificate Policy Identifier** | MUST | The CA **MUST** include at least one **Reserved Certificate Policy Identifier** (see Section 7.1.6.1) associated with the given **Subscriber Certificate type** (see Section 7.1.2.7.1) directly or transitively issued by this Certificate. |
+| **A Reserved Certificate Policy Identifier** | MUST | The CA **MUST** include exactly one **Reserved Certificate Policy Identifier** (see Section 7.1.6.1) associated with the given **Subscriber Certificate type** (see Section 7.1.2.7.1) directly or transitively issued by this Certificate. |
 | **anyPolicy** | MUST NOT | The `anyPolicy` Policy Identifier **MUST NOT** be present. |
 | **Any other identifier** | MAY | If present, **MUST** be defined by the CA and documented in its **Certificate Policy and/or Certification Practice Statement**. |
 | **policyQualifiers** | NOT RECOMMENDED | If present, **MUST** contain only permitted `policyQualifiers` from the table below. |
@@ -4161,7 +4324,7 @@ by NAVER Cloud Trust Services, independent of the Applicant.
 No stipulation.
 
 ### 7.1.6 Certificate Policy Object Identifier
-#### 7.1.6.2 Reserved Certificate Policy Identifiers
+#### 7.1.6.1 Reserved Certificate Policy Identifiers
 
 The certificates issued under NAVER Cloud Trust Services use this CP/CPS
 as a certificate policy, and the related policy identifiers are
@@ -4171,9 +4334,11 @@ specified below.
 -   Organization Validation Subscriber Certificate:
     1.2.410.200081.2.2.3.2
 
-The following Certificate Policy identifiers are reserved for use by
-NAVER Cloud Trust Services as an optional means of asserting that a
-Certificate complies with these Requirements.
+The following Reserved Certificate Policy Identifiers are defined by the
+CA/Browser Forum as a means of asserting compliance with the Baseline
+Requirements. Each Subscriber Certificate issued by NAVER Cloud Trust
+Services contains exactly one Reserved Certificate Policy Identifier
+corresponding to its certificate type (see Section 7.1.2.7.1).
 
 • {joint-iso-itu-t(2) international-organizations(23)
 ca-browser-forum(140) certificate-policies(1) baseline-requirements(2)
@@ -4918,6 +5083,21 @@ reference to the Law requiring a modification of these Requirements
 under this section, and the specific modification to these Requirements
 implemented by NAVER Cloud Trust Services.
 
+Prior to issuing a certificate under the modified requirement, NAVER
+Cloud Trust Services also notifies the CA/Browser Forum of the
+information newly added to this CP/CPS by sending a message to
+questions@cabforum.org, and confirms that the message has been posted to
+the Public Mailing List and is indexed in the Public Mail Archives
+available at https://cabforum.org/pipermail/public/ (or such other email
+addresses and links as the Forum may designate).
+
+NAVER Cloud Trust Services discontinues any modification to its practice
+made under this section when the Law no longer applies, or when the
+Baseline Requirements are modified so that both the Baseline
+Requirements and the Law can be complied with simultaneously. The
+corresponding change in practice, modification to this CP/CPS, and
+notice to the CA/Browser Forum are made within 90 days.
+
 ### 9.16.4 Enforcement (Attorneys' Fees and Waiver of Rights)
 
 NAVER Cloud Trust Services may seek indemnification and attorneys' fees
@@ -4958,3 +5138,4 @@ The following revisions have been made to the original document.
 | 1.0.9 | 12 February 2026 | **Domain Validation:** Updated Section 3.2.2.4 to limit approved methods to 3.2.2.4.7, .19, .21, and .22. Added mandatory DNSSEC validation requirements effective March 15, 2026. <br>**New Method:** Added Section 3.2.2.4.22 for Persistent DNS TXT validation with a 10-day reuse period. <br>**Validity & Reuse:** Revised Sections 4.2.1 and 6.3.2 to align with the industry roadmap for reducing certificate validity and data reuse periods to 199 days and below (2026-2029). <br>**Reliability:** Updated Section 3.2.2.7 to incorporate BR's 5-point evaluation criteria for Reliable Data Sources. |
 | 1.1.0 | 04 June 2026 | **Compliance:** Updated §1.1 (Overview) to require conformance with current Chrome Root Program and CCADB policies (Chrome RP v1.8).<br>**CT Logging:** Revised §1.3.4.1 to require logging of all TLS server precertificates to ≥1 Chrome-recognized CT log before issuance, effective 2026-06-15. <br>**Document Licensing:** Updated §3.3 to provide public documents under CC-BY/BY-SA/BY-ND 4.0 or CC0 (Mozilla Root Store Policy v3.0). |
 | 1.1.1 | 11 June 2026 | **Subordinate CA Inventory (§1.3.1):** Added two newly-issued Subordinate CAs — NAVER Cloud Trust Services G1 ECC CA4 (Serial `0E37C199673DD94A27F4F83BA63D688C3DBD5A40`) and G1 RSA CA4 (Serial `0B449EE955637827A99ECC363CECE34A911E4A4D`), issued 4 June 2026, valid until 3 May 2029. Removed five revoked Subordinate CAs effective 4 June 2026 — NAVER Secure Certification Authority 1, G1 ECC CA1, and G1 RSA CA1 (superseded), and G1 ECC CA2 and G1 RSA CA2 (cessation of operation). <br>**Dedicated TLS Server Authentication (Chrome Root Program Policy v1.8 §1.3.2):** Restricted Subordinate CA Extended Key Usage to assert only `id-kp-serverAuth` (set `id-kp-clientAuth` to MUST NOT) for the TLS Subordinate CA / Technically-Constrained TLS Subordinate CA profiles (§7.1.2.10.6) and the Cross-Certified Subordinate CA profile (§7.1.2.2.5), aligning with the 15 June 2026 requirement. <br>Restricted Subscriber (Server) Certificate Extended Key Usage to assert only `id-kp-serverAuth` (§7.1.2.7.10). |
+| 1.1.2 | 14 October 2026 | **Subordinate CA Inventory (§1.3.1):** Added newly-issued Subordinate CA NAVER Secure Certification Authority 3 (Serial `1809A48256C0AA1DEDDAB347707D601A3A6D62BA`), issued 13 October 2026, valid until 13 September 2029. Corrected the SHA-256 fingerprint of NAVER Cloud Trust Services G1 ECC CA4. <br>**CA Certificate Policies (§7.1.2.10.5):** Revised the Policy Restricted profile to require exactly one Reserved Certificate Policy Identifier associated with the Subscriber Certificate type directly or transitively issued by the CA Certificate. <br>**Reserved Certificate Policy Identifiers (§7.1.6.1):** Renumbered from §7.1.6.2 to §7.1.6.1 and stated that each Subscriber Certificate contains exactly one Reserved Certificate Policy Identifier corresponding to its certificate type. <br>**Cross-Certified Subordinate CA Certificate Policies (§7.1.2.2.3, §7.1.2.2.6):** Added §7.1.2.2.6 for the Certificate Policies of Cross-Certified Subordinate CA Certificates and referenced it from the §7.1.2.2.3 extensions table. <br>**Repository (§1.5.4, §2.2):** Changed the online repository address to https://pki.navercloudtrust.com/. <br>**Certificate Uses (§1.4.1):** Stated that this CP/CPS covers the Server Authentication Trust Purpose and that Subscriber and Subordinate CA Certificates assert only `id-kp-serverAuth`. <br>**Domain Validation (§3.2.2.4):** Removed methods 3.2.2.4.19 and 3.2.2.4.21; approved methods are 3.2.2.4.7 and 3.2.2.4.22. Removed the obligation to record the BR version number of the validation method. <br>**CAA (§4.2.4):** Added CAA processing of issue, issuewild, and iodef property tags, the TTL-or-eight-hours issuance window, DNSSEC validation of CAA lookups by the Primary Network Perspective, blocking of issuance on CAA lookup failure, iodef reporting, and interpretation of remote Network Perspective CAA responses under Multi-Perspective Issuance Corroboration. <br>**Revocation (§4.9.1.1):** Added failure to perform CAA checking correctly and issuance not permitted under Section 3.2.2.8 to revocation reason 5. <br>**Event Logging (§5.4.1):** Added the minimum content of domain and organization validation records and Multi-Perspective Issuance Corroboration attempt and quorum records. <br>**Incident Handling (§5.7.1.1):** Added compliance with the CCADB Policy and CCADB Incident Reporting Guidelines. <br>**Certificate Profiles (§7.1.2.3, §7.1.2.4, §7.1.2.9):** Corrected the subsection numbering of §7.1.2.3. Stated that Precertificate Signing CAs are not used and Precertificates are issued directly by the Issuing CA. <br>**Law and Requirement Conflicts (§9.16.3):** Added notification to the CA/Browser Forum before issuing under a modified requirement and the 90-day timeline after the conflict ends. <br>**Explicit and Verifiable Practices (Mozilla Root Store Policy §3.3):** Replaced subjective wording with explicit time frames and conditions in §2.3 (CRL and ARL reissuance and validity, CP/CPS review), §3.2.1 (proof of possession), §3.2.2.6 (Public Suffix List refresh), §3.2.2.9 (Network Perspectives and non-corroboration limit), §3.4 (authentication of revocation requests), §4.2.3 (time to process applications), §4.3.1 (pre-issuance linting), §4.9.2, §4.9.3, §4.9.4, §4.9.7, §4.9.12 (revocation procedures and time frames), §5.4.2 (audit log review), §5.4.8 (risk assessment), and §6.7 (vulnerability response timelines). |
