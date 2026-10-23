@@ -1,9 +1,9 @@
 # **NAVER Cloud Trust Services**  
 # **Certificate Policy / Certificate Practices Statement** 
 
-## Version 1.1.2
+## Version 1.1.3
 
-### 14 October 2026
+### 23 October 2026
 
 # Table of Contents
 
@@ -178,7 +178,7 @@ Root CAs
     -   Fingerprint (SHA256):
         88F438DCF8FFD1FA8F429115FFE5F82AE1E06E0C70C375FAAD717B34A49E7265
 
-    -   Valid Until: 2037-08-19
+    -   Valid Until: 2037-08-18
 
 -   NAVER Cloud Trust Services RSA Root G1
 
@@ -204,17 +204,6 @@ Root CAs
 
 Intermediate CAs
 
--   NAVER Secure Certification Authority 2
-
-    -   Public Key: RSA 4096
-
-    -   Serial Number: 149E7FC617A0789B17D776FD45C60B69754F5300
-
-    -   Fingerprint (SHA256):
-        571E521E5E22810D33BB1A39991143E9E64CD8DAE97D65931B194E19AEE81E86
-
-    -   Valid Until: 2035-11-19
-
 -   NAVER Secure Certification Authority 3
 
     -   Public Key: RSA 4096
@@ -226,49 +215,49 @@ Intermediate CAs
 
     -   Valid Until: 2029-09-13
 
--   NAVER Cloud Trust Services G1 RSA CA3
+-   NAVER Cloud Trust Services G1 RSA CA5
 
     -   Public Key: RSA 4096
 
-    -   Serial Number: 0AE4F1A43970EF427243F96A66F9C83E8B8D6224
+    -   Serial Number: 0D4F3ACDDC050165007589ACA8694C3D114F954D
 
     -   Fingerprint (SHA256):
-        027B4EEC38B46BFD6B5C3E028F0922D268D367698BD15E01F7BD081EC36C8369
+        0E56381C829694BB526D6F51069B22E66A58CA983D77400B5BE17C200BD4E907
 
-    -   Valid Until: 2028-10-19
+    -   Valid Until: 2029-09-15
 
--   NAVER Cloud Trust Services G1 RSA CA4
+-   NAVER Cloud Trust Services G1 ECC CA5
+
+    -   Public Key: EC secp384r1
+
+    -   Serial Number: 10DDC9696F84463EC689E691A8B807076A4EE0A1
+
+    -   Fingerprint (SHA256):
+        8DCEB7509571B231CEFD76C54BD3353F153BB98DB660A68BB9022FEFB5C27860
+
+    -   Valid Until: 2029-09-15
+
+-   NAVER Cloud Trust Services G1 RSA CA6
 
     -   Public Key: RSA 4096
 
-    -   Serial Number: 0B449EE955637827A99ECC363CECE34A911E4A4D
+    -   Serial Number: 0E96BEAFF8DDE65D60E5774AFFC2BBA4270CB3F8
 
     -   Fingerprint (SHA256):
-        8BC478A581DE657A86C2E8A4CE0A30CA9D7ABDAEF931E590D84DB235B2A5291C
+        7AADCACA1A5B38BCF206B515E41440744DC2F4243AEBB786A4B585C5A0843012
 
-    -   Valid Until: 2029-05-03
+    -   Valid Until: 2029-09-15
 
--   NAVER Cloud Trust Services G1 ECC CA3
+-   NAVER Cloud Trust Services G1 ECC CA6
 
     -   Public Key: EC secp384r1
 
-    -   Serial Number: 0DF5B9C54699D6873F46C53B13D980E0A7A0F466
+    -   Serial Number: 11EB1F102E9C49DD997CD61B50EC70A2CC6626A7
 
     -   Fingerprint (SHA256):
-        41C587A6BAC0143297D0EDC5D522B57CD8B2D1A0D4913A1B534A9F9A86668536
+        59DC3E4F0820C0EFE515FBCB6451632EFB02FFB94362560CD464D2A29770FF9B
 
-    -   Valid Until: 2028-10-19
-
--   NAVER Cloud Trust Services G1 ECC CA4
-
-    -   Public Key: EC secp384r1
-
-    -   Serial Number: 0E37C199673DD94A27F4F83BA63D688C3DBD5A40
-
-    -   Fingerprint (SHA256):
-        1D795B49C4C1AE2EB90393A07D9758207780FE8A838E802919EABC9B32E54AEA
-
-    -   Valid Until: 2029-05-03
+    -   Valid Until: 2029-09-15
 
 Between 11 September 2017 and 4 June 2023, NAVER Cloud Corp. (former
 NAVER BUSINESS PLATFORM) operated NAVER Global Root Certification
@@ -5139,3 +5128,4 @@ The following revisions have been made to the original document.
 | 1.1.0 | 04 June 2026 | **Compliance:** Updated §1.1 (Overview) to require conformance with current Chrome Root Program and CCADB policies (Chrome RP v1.8).<br>**CT Logging:** Revised §1.3.4.1 to require logging of all TLS server precertificates to ≥1 Chrome-recognized CT log before issuance, effective 2026-06-15. <br>**Document Licensing:** Updated §3.3 to provide public documents under CC-BY/BY-SA/BY-ND 4.0 or CC0 (Mozilla Root Store Policy v3.0). |
 | 1.1.1 | 11 June 2026 | **Subordinate CA Inventory (§1.3.1):** Added two newly-issued Subordinate CAs — NAVER Cloud Trust Services G1 ECC CA4 (Serial `0E37C199673DD94A27F4F83BA63D688C3DBD5A40`) and G1 RSA CA4 (Serial `0B449EE955637827A99ECC363CECE34A911E4A4D`), issued 4 June 2026, valid until 3 May 2029. Removed five revoked Subordinate CAs effective 4 June 2026 — NAVER Secure Certification Authority 1, G1 ECC CA1, and G1 RSA CA1 (superseded), and G1 ECC CA2 and G1 RSA CA2 (cessation of operation). <br>**Dedicated TLS Server Authentication (Chrome Root Program Policy v1.8 §1.3.2):** Restricted Subordinate CA Extended Key Usage to assert only `id-kp-serverAuth` (set `id-kp-clientAuth` to MUST NOT) for the TLS Subordinate CA / Technically-Constrained TLS Subordinate CA profiles (§7.1.2.10.6) and the Cross-Certified Subordinate CA profile (§7.1.2.2.5), aligning with the 15 June 2026 requirement. <br>Restricted Subscriber (Server) Certificate Extended Key Usage to assert only `id-kp-serverAuth` (§7.1.2.7.10). |
 | 1.1.2 | 14 October 2026 | **Subordinate CA Inventory (§1.3.1):** Added newly-issued Subordinate CA NAVER Secure Certification Authority 3 (Serial `1809A48256C0AA1DEDDAB347707D601A3A6D62BA`), issued 13 October 2026, valid until 13 September 2029. Corrected the SHA-256 fingerprint of NAVER Cloud Trust Services G1 ECC CA4. <br>**CA Certificate Policies (§7.1.2.10.5):** Revised the Policy Restricted profile to require exactly one Reserved Certificate Policy Identifier associated with the Subscriber Certificate type directly or transitively issued by the CA Certificate. <br>**Reserved Certificate Policy Identifiers (§7.1.6.1):** Renumbered from §7.1.6.2 to §7.1.6.1 and stated that each Subscriber Certificate contains exactly one Reserved Certificate Policy Identifier corresponding to its certificate type. <br>**Cross-Certified Subordinate CA Certificate Policies (§7.1.2.2.3, §7.1.2.2.6):** Added §7.1.2.2.6 for the Certificate Policies of Cross-Certified Subordinate CA Certificates and referenced it from the §7.1.2.2.3 extensions table. <br>**Repository (§1.5.4, §2.2):** Changed the online repository address to https://pki.navercloudtrust.com/. <br>**Certificate Uses (§1.4.1):** Stated that this CP/CPS covers the Server Authentication Trust Purpose and that Subscriber and Subordinate CA Certificates assert only `id-kp-serverAuth`. <br>**Domain Validation (§3.2.2.4):** Removed methods 3.2.2.4.19 and 3.2.2.4.21; approved methods are 3.2.2.4.7 and 3.2.2.4.22. Removed the obligation to record the BR version number of the validation method. <br>**CAA (§4.2.4):** Added CAA processing of issue, issuewild, and iodef property tags, the TTL-or-eight-hours issuance window, DNSSEC validation of CAA lookups by the Primary Network Perspective, blocking of issuance on CAA lookup failure, iodef reporting, and interpretation of remote Network Perspective CAA responses under Multi-Perspective Issuance Corroboration. <br>**Revocation (§4.9.1.1):** Added failure to perform CAA checking correctly and issuance not permitted under Section 3.2.2.8 to revocation reason 5. <br>**Event Logging (§5.4.1):** Added the minimum content of domain and organization validation records and Multi-Perspective Issuance Corroboration attempt and quorum records. <br>**Incident Handling (§5.7.1.1):** Added compliance with the CCADB Policy and CCADB Incident Reporting Guidelines. <br>**Certificate Profiles (§7.1.2.3, §7.1.2.4, §7.1.2.9):** Corrected the subsection numbering of §7.1.2.3. Stated that Precertificate Signing CAs are not used and Precertificates are issued directly by the Issuing CA. <br>**Law and Requirement Conflicts (§9.16.3):** Added notification to the CA/Browser Forum before issuing under a modified requirement and the 90-day timeline after the conflict ends. <br>**Explicit and Verifiable Practices (Mozilla Root Store Policy §3.3):** Replaced subjective wording with explicit time frames and conditions in §2.3 (CRL and ARL reissuance and validity, CP/CPS review), §3.2.1 (proof of possession), §3.2.2.6 (Public Suffix List refresh), §3.2.2.9 (Network Perspectives and non-corroboration limit), §3.4 (authentication of revocation requests), §4.2.3 (time to process applications), §4.3.1 (pre-issuance linting), §4.9.2, §4.9.3, §4.9.4, §4.9.7, §4.9.12 (revocation procedures and time frames), §5.4.2 (audit log review), §5.4.8 (risk assessment), and §6.7 (vulnerability response timelines). |
+| 1.1.3 | 23 October 2026 | **Subordinate CA Inventory (§1.3.1):** Added four newly-issued Subordinate CAs, issued 16 October 2026 and valid until 15 September 2029 — NAVER Cloud Trust Services G1 RSA CA5 (Serial `0D4F3ACDDC050165007589ACA8694C3D114F954D`), G1 ECC CA5 (Serial `10DDC9696F84463EC689E691A8B807076A4EE0A1`), G1 RSA CA6 (Serial `0E96BEAFF8DDE65D60E5774AFFC2BBA4270CB3F8`), and G1 ECC CA6 (Serial `11EB1F102E9C49DD997CD61B50EC70A2CC6626A7`). Removed five Subordinate CAs revoked on 19 October 2026 — NAVER Secure Certification Authority 2, G1 RSA CA3, G1 RSA CA4, G1 ECC CA3, and G1 ECC CA4. Corrected the Valid Until date of NAVER Global Root Certification Authority to 2037-08-18 (UTC). |
