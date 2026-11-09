@@ -1,9 +1,9 @@
 # **NAVER Cloud Trust Services**  
 # **Certificate Policy / Certificate Practices Statement** 
 
-## Version 1.1.3
+## Version 1.1.4
 
-### 23 October 2026
+### 09 November 2026
 
 # Table of Contents
 
@@ -117,11 +117,11 @@ This document is created in accordance with "RFC 3647: Internet X.509
 Public Key Infrastructure Certificate Policy and Certification Practices
 Framework", the international standard document that defines the
 Certificate Policy and Certification Practice Statement (CPS) framework.
-The company\'s Certificate Authority issuing the Secure Server
-Certificate (hereinafter "SSL") conforms to the current version of
+The company\'s Certificate Authority issuing Publicly-Trusted TLS
+Server Certificates conforms to the current version of
 "CA/Browser Forum (CABF) Baseline Requirements for the Issuance and
-Management of Publicly-Trusted Certificates" published by the CA/Browser
-Forum at http://www.cabforum.org.
+Management of Publicly-Trusted TLS Server Certificates" published by the
+CA/Browser Forum at https://www.cabforum.org.
 
 In the event of any inconsistency between this CP/CPS and the Baseline
 Requirements, the Baseline Requirements take precedence over this
@@ -368,7 +368,7 @@ the CP/CPS, including:
 NAVER Cloud Trust Services may amend this CP/CPS, and any changes will
 be disclosed to the address listed in Section 1.5 of this document. The
 CP/CPS is reviewed at least annually, and updated versions are posted to
-the online repository at <https://pki.navercloudtrust.com/>, with any
+the online repository at <https://trust.navercloudtrust.com/>, with any
 updates overriding conflicting or outdated provisions in previous
 versions. Amendments of the CP/CPS will generally not affect the relying
 parties, but if NAVER Cloud Trust Services determines that the changes
@@ -389,10 +389,11 @@ in a certificate
 
 An entity applying for a certificate.
 
-**Application Software Vendor**
+**Application Software Supplier**
 
-A software developer whose software that displays or uses certificates
-and distributes root certificates.
+A supplier of Internet browser software or other relying-party
+application software that displays or uses Certificates and incorporates
+Root Certificates.
 
 **Base Domain**
 
@@ -427,6 +428,12 @@ uses that require random data.
 
 A physical location where a CA's or Delegated Third Party's Private Key
 or cryptographic hardware is located.
+
+**IP Reverse Zone Suffix**
+
+One of the two FQDNs that consist of the Domain Labels "in-addr.arpa"
+or "ip6.arpa". These two FQDNs serve as the root of the IP version 4
+and IP version 6 reverse mapping space.
 
 **Key Pair**
 
@@ -466,7 +473,7 @@ certificate status requests.
 **P-Label**
 
 A XN-Label that contains valid output of the Punycode algorithm (as
-defined in RFC 3492, Section 6.3) from the fifth and subseqeunt
+defined in RFC 3492, Section 6.3) from the fifth and subsequent
 positions.
 
 **Primary Network Perspective**
@@ -596,7 +603,7 @@ Internet Engineering Task Force
 
 **NIST**
 
-National Institute of Standards
+National Institute of Standards and Technology
 
 **OCSP**
 
@@ -691,14 +698,14 @@ NAVER Cloud Trust Services publishes the information about the issuance
 and management of certificates on a website so that it will be available
 to any person at any time.
 
-1.  On the web: https://pki.navercloudtrust.com/
+1.  On the web: https://trust.navercloudtrust.com/
 
 2.  By email to: dl_rootca@navercorp.com
 
 3.  By mail addressed to: NAVER Green Factory, 6, Buljeong-ro,
     Jeongja-dong, Bundang-gu, Seongnam-si, Gyeonggi-do, Korea (13561)
     
- Web pages for Application Software Suppliers to test their software with Subscriber Certificates that chain up to each publicly trusted Root Certificate are listed at https://pki.navercloudtrust.com/.
+ Web pages for Application Software Suppliers to test their software with Subscriber Certificates that chain up to each publicly trusted Root Certificate are listed at https://trust.navercloudtrust.com/.
 
 ## 2.3 Time or Frequency of Publication
 
@@ -1005,7 +1012,7 @@ Multi-Perspective Issuance Corroboration attempts to corroborate the determinati
 NAVER Cloud Trust Services uses the same set of Network Perspectives for both
 Domain Authorization or Control checks and CAA Record checks. That set consists
 of the Primary Network Perspective and at least five (5) remote Network
-Perspectives distributed across at least three (3) Regional Internet Registry
+Perspectives distributed across at least two (2) Regional Internet Registry
 service regions.
 
 NAVER Cloud Trust Services does not reuse or cached the information obtained from one Network Perspective when performing validation through subsequent Network Perspectives (e.g., different Network Perspectives cannot rely on a shared DNS cache to prevent an adversary with control of traffic from one Network Perspective from poisoning the DNS cache used by other Network Perspectives). All communications between a remote Network Perspective and the NAVER Cloud Trust Services take place over an authenticated and encrypted channel relying on modern protocols (e.g., over HTTPS).
@@ -1020,6 +1027,8 @@ Remote Network Perspectives performing Multi-Perspective Issuance Corroboration 
 Accordingly, NAVER Cloud Trust Services must comply with the allowed number of non-corroborations based on the number of remote Network Perspectives employed during Multi-Perspective Issuance Corroboration, as well as the effective date-based requirements.
 As of September 15, 2025: NAVER Cloud Trust Services MUST perform Multi-Perspective Issuance Corroboration using at least two (2) remote Network Perspectives, and Quorum Requirements MUST be satisfied. Certificate issuance MUST NOT proceed if the number of non-corroborations exceeds the allowed threshold.
 As of March 15, 2026: NAVER Cloud Trust Services MUST perform Multi-Perspective Issuance Corroboration using at least three (3) remote Network Perspectives. In addition, at least two (2) of the Perspectives supporting the Primary MUST be distributed across distinct Regional Internet Registry (RIR) regions.
+As of June 15, 2026: NAVER Cloud Trust Services MUST perform Multi-Perspective Issuance Corroboration using at least four (4) remote Network Perspectives. The remote Network Perspectives that corroborate the Primary Network Perspective MUST fall within the service regions of at least two (2) distinct Regional Internet Registries.
+As of December 15, 2026: NAVER Cloud Trust Services MUST perform Multi-Perspective Issuance Corroboration using at least five (5) remote Network Perspectives. The remote Network Perspectives that corroborate the Primary Network Perspective MUST fall within the service regions of at least two (2) distinct Regional Internet Registries.
 Certificate issuance does not proceed if any of these requirements is not met.
 
 For every Fully-Qualified Domain Name in a request, and for both the Domain
@@ -1054,7 +1063,7 @@ Applicant Representative's identity.
 
 NAVER Cloud Trust Services only accepts Certificate requests from
 individuals verified through reliable methods of communication. Among
-verified individuals, NAVER Cloud Trust Services may only accept
+verified individuals, NAVER Cloud Trust Services only accepts
 Certificate requests from individuals with written designation by the
 Applicant to request for Certificates. In cases that the Applicants want
 a list of its authorized Certificate requesters or wish to update that
@@ -1205,14 +1214,17 @@ As specified in Section 1.3.2, all RA functions are performed by NAVER Cloud Tru
 Once all the required subscriber information has been validated, NAVER
 Cloud Trust Services will approve the certificate request. However, if
 the subscriber information is not validated or if the request does not
-comply with the CP/CPS requirements, NAVER Cloud Trust Services may
-reject the certificate request.
+comply with the CP/CPS requirements, NAVER Cloud Trust Services rejects
+the certificate request.
 
 Certificate applications that contain a new gTLD are not approved while
 the gTLD is still under consideration by ICANN.
 
 NAVER Cloud Trust Services does not issue Certificates for Internal
 Names or Reserved IP Addresses.
+
+NAVER Cloud Trust Services does not issue Certificates containing
+Domain Names that end in an IP Reverse Zone Suffix.
 
 ### 4.2.3 Time to Process Certificate Applications
 
@@ -1887,6 +1899,11 @@ No Stipulation
 
 # 5. FACILITY, MANAGEMENT, AND OPERATIONAL CONTROLS
 
+NAVER Cloud Trust Services complies with the current version of the
+CA/Browser Forum's Network and Certificate System Security Requirements,
+which are incorporated into this CP/CPS by reference as if fully set
+forth herein.
+
 ## 5.1 Physical Security Controls
 
 NAVER Cloud Trust Services protects the location where the CA system is
@@ -1983,9 +2000,11 @@ activation.
 
 ### 5.2.3 Identification and Authentication for Each Role
 
-Each CA or Delegated Third Party SHALL require that each individual in a
-Trusted Role use a unique credential created by or assigned to that
-person in order to authenticate to Certificate Systems.
+NAVER Cloud Trust Services requires each individual in a Trusted Role to
+authenticate to Certificate Systems and their supporting systems using a
+unique credential created by or assigned to that person. Authentication
+is required before the individual is granted access to any system needed
+to perform that Trusted Role.
 
 ### 5.2.4 Roles Requiring Separation of Duties
 
@@ -2297,9 +2316,12 @@ or revoked.
 
 ### 5.5.3 Protection of Archive
 
-The backups of information archived should be maintained and managed at
-a distinct and separate location with similar security and availability
-requirements.
+NAVER Cloud Trust Services stores backups of archived information at a
+location separate from the primary location, with physical and logical
+security and availability controls equivalent to those of the primary
+location. The backups are stored in a manner that prevents unauthorized
+modification, substitution, or destruction, and that protects them from
+loss.
 
 ### 5.5.4 Archive Backup Procedures
 
@@ -2474,12 +2496,68 @@ include:
 
 ### 6.1.1 Key Pair Generation
 
+#### 6.1.1.1 CA Key Pair Generation
+
 The CA keys operated by NAVER Cloud Trust Services are generated inside
-a FIPS 140-2 Level 3-certified hardware security module(HSM). The
+a FIPS 140-3 Level 3-certified hardware security module(HSM). The
 generated private keys cannot be extracted outside the HSM except for
 the purpose of a key backup allowed by NAVER Cloud Trust Services.
 
+For every CA Key Pair, NAVER Cloud Trust Services:
+
+1.  generates the CA Key Pair in a physically secured environment as
+    described in Section 5.1;
+2.  generates the CA Key Pair using personnel in Trusted Roles under the
+    principles of multiple person control and split knowledge, as set
+    forth in Section 6.2.2;
+3.  generates the CA Key Pair within a cryptographic module meeting the
+    requirements of Section 6.2.1;
+4.  logs its CA Key Pair generation activities, as set forth in Section
+    5.4.1; and
+5.  maintains effective controls to provide reasonable assurance that the
+    Private Key was generated and protected in conformance with this
+    CP/CPS and its Key Generation Script.
+
+For a CA Key Pair used as a CA Key Pair for a Root Certificate, NAVER
+Cloud Trust Services prepares and follows a Key Generation Script,
+records a video of the entire CA Key Pair generation process, and has a
+Qualified Auditor issue a report opining that NAVER Cloud Trust Services
+followed its key ceremony during the Key and Certificate generation
+process and on the controls used to ensure the integrity and
+confidentiality of the Key Pair.
+
+All Subordinate CAs operating under the NAVER Cloud Trust Services Root
+Certificates are operated by NAVER Cloud Trust Services. For those
+Subordinate CA Key Pairs, NAVER Cloud Trust Services prepares and follows
+a Key Generation Script and records a video of the entire CA Key Pair
+generation process.
+
+#### 6.1.1.2 RA Key Pair Generation
+
+No stipulation.
+
+#### 6.1.1.3 Subscriber Key Pair Generation
+
 Subscriber Key Pairs are generated by the Subscriber.
+
+NAVER Cloud Trust Services rejects a certificate request if one or more
+of the following conditions are met:
+
+1.  The Key Pair does not meet the requirements set forth in Section
+    6.1.5 and/or Section 6.1.6;
+2.  There is clear evidence that the specific method used to generate
+    the Private Key was flawed;
+3.  NAVER Cloud Trust Services is aware of a demonstrated or proven
+    method that exposes the Applicant's Private Key to compromise;
+4.  NAVER Cloud Trust Services has previously been notified that the
+    Applicant's Private Key has suffered a Key Compromise using the
+    procedure described in Section 4.9.3 and Section 4.9.12;
+5.  The Public Key corresponds to an industry-demonstrated weak Private
+    Key, including at least Debian weak keys
+    (https://wiki.debian.org/SSLkeys), keys identified by the ROCA
+    detection tool (https://github.com/crocs-muni/roca), and RSA keys
+    that can be factored within 100 rounds using Fermat's factorization
+    method (Close Primes).
 
 ### 6.1.2 Private Key Delivery to Subscriber
 
@@ -2512,6 +2590,13 @@ Certificates will follow the same requirements:
 | **Minimum RSA modulus size (bits)** | - **Root CA:** at least RSA 4096   <br> - **Subordinate CA:** at least RSA 2048  <br> - **Subscriber:** at least RSA 2048  |
 | **Minimum ECDSA key size (bits)**  | - **Root CA:** at least NIST P-384   <br> - **Subordinate CA:** at least NIST P-256  <br> - **Subscriber:** at least NIST P-256  |
 
+For RSA key pairs, NAVER Cloud Trust Services ensures that the modulus
+size, when encoded, is at least 2048 bits, and that the modulus size in
+bits is evenly divisible by 8. For ECDSA key pairs, NAVER Cloud Trust
+Services ensures that the key represents a valid point on the NIST
+P-256, NIST P-384, or NIST P-521 elliptic curve. No other algorithms or
+key sizes are permitted.
+
 ### 6.1.6 Public Key Parameters Generation and Quality Checking
 
 For RSA keys, NAVER Cloud Trust Services confirms that the value of the
@@ -2540,14 +2625,22 @@ following cases:
 
 ### 6.2.1 Cryptographic Module Standards and Controls
 
-CA key pairs are archived and operated in a hardware security module
-with FIPS 140-2 Level 3 or higher.
+NAVER Cloud Trust Services generates, stores, and operates CA key pairs
+in a hardware security module validated as meeting FIPS 140-3 Level 3.
+Backup and archived copies of CA Private Keys are held in a hardware
+security module validated as meeting FIPS 140-2 Level 3, as set forth in
+Sections 6.2.4 and 6.2.5.
 
 ### 6.2.2 Private Key (n out of m) Multi-Person Control
 
 NAVER Cloud Trust Services performs the generation of CA key pairs in
 accordance with its internal key generation procedures. At least three
-personnel participate in key pair generation.
+personnel in Trusted Roles participate in key pair generation.
+
+Physical and logical access to a CA Private Key requires at least two
+personnel in Trusted Roles acting together. This applies to every copy of
+a CA Private Key, including the backup copies described in Section
+6.2.4.
 
 ### 6.2.3 Private Key Escrow
 
@@ -2563,7 +2656,12 @@ hardware security module (HSM).
 
 ### 6.2.5 Private Key Archival
 
-NAVER Cloud Trust Services does not archive CA private keys.
+NAVER Cloud Trust Services archives CA Private Keys in a hardware
+security module, as described in Section 6.2.4. No party other than
+NAVER Cloud Trust Services archives these Private Keys. Access to an
+archived CA Private Key is subject to the multi-person control set forth
+in Section 6.2.2, and an archived CA Private Key is destroyed only as set
+forth in Section 6.2.10.
 
 ### 6.2.6 Private Key Transfer Into or From a Cryptographic Module
 
@@ -3124,39 +3222,9 @@ The Issuing CA **MUST** verify that the Subordinate CA Certificate is authorized
 
 #### 7.1.2.4 Technically Constrained Precertificate Signing CA Certificate Profile
 
-This Certificate Profile **MUST** be used when issuing a CA Certificate that will be used as a Precertificate Signing CA, as described in RFC 6962, Section 3.1. If a CA Certificate conforms to this profile, it is considered Technically Constrained.
-
-A Precertificate Signing CA **MUST** only be used to sign Precertificates, as defined in Section 7.1.2.9. When a Precertificate Signing CA issues a Precertificate, it shall be interpreted as if the Issuing CA of the Precertificate Signing CA has issued a Certificate with a matching `tbsCertificate` of the Precertificate, after applying the modifications specified in RFC 6962, Section 3.2.
-
-As noted in RFC 6962, Section 3.2, the signature field of a Precertificate is not altered as part of these modifications. As such, the Precertificate Signing CA **MUST** use the same signature algorithm as the Issuing CA when issuing Precertificates, and, correspondingly, **MUST** use a public key of the same public key algorithm as the Issuing CA, although **MAY** use a different CA Key Pair.
-
-| Field                  | Description  |
-|------------------------|-------------|
-| **tbsCertificate**     |             |
-| **version**           | MUST be v3(2) |
-| **serialNumber**      | MUST be a non-sequential number greater than zero (0) and less than 2¹⁵⁹ containing at least 64 bits of output from a CSPRNG. |
-| **signature**         | See Section 7.1.3.2 |
-| **issuer**           | MUST be byte-for-byte identical to the subject field of the Issuing CA. See Section 7.1.4.1 |
-| **validity**         | See Section 7.1.2.10.1 |
-| **subject**          | See Section 7.1.2.10.2 |
-| **subjectPublicKeyInfo** | The algorithm identifier MUST be byte-for-byte identical to the algorithm identifier of the subjectPublicKeyInfo field of the Issuing CA. See Section 7.1.3.1 |
-| **issuerUniqueID**   | MUST NOT be present |
-| **subjectUniqueID**  | MUST NOT be present |
-| **extensions**       | See Section 7.1.2.4.1 |
-| **signatureAlgorithm** | Encoded value MUST be byte-for-byte identical to the `tbsCertificate.signature`. |
-| **signature**        |             |
-
-Effective 2026-03-15, this Certificate Profile is not used, and
-Precertificate Signing CAs are not used to issue Precertificates. NAVER
-Cloud Trust Services issues Precertificates directly from the Issuing CA
-as set forth in Section 7.1.2.9.1.
-
-##### 7.1.2.4.2 Technically Constrained Precertificate Signing CA Extended Key Usage
-
-| Key Purpose                         | OID                     | Presence  |
-|--------------------------------------|-------------------------|-----------|
-| **Precertificate Signing Certificate** | 1.3.6.1.4.1.11129.2.4.4 | MUST      |
-| **Any other value**                   | -                       | MUST NOT  |
+Not applicable. NAVER Cloud Trust Services does not issue Technically
+Constrained Precertificate Signing CA Certificates. Each Precertificate is
+issued directly by the Issuing CA, as set forth in Section 7.1.2.9.
 
 ##### 7.1.2.5 Technically Constrained TLS Subordinate CA Certificate Profile
 
@@ -3556,7 +3624,7 @@ one `dNSName` or `iPAddress` GeneralName.
 |---------------------------|-----------|------------|
 | **otherName**             | N         | -          |
 | **rfc822Name**            | N         | -          |
-| **dNSName**               | Y         | The entry **MUST** contain either a Fully-Qualified Domain Name (FQDN) or Wildcard Domain Name that the CA has validated in accordance with Section 3.2.2.4. Wildcard Domain Names **MUST** be validated for consistency with Section 3.2.2.6. The entry **MUST NOT** contain an Internal Name. The FQDN or the FQDN portion of the Wildcard Domain Name **MUST** be composed entirely of P-Labels or Non-Reserved LDH Labels joined together by a `U+002E FULL STOP (".")` character. The zero-length Domain Label representing the root zone **MUST NOT** be included (e.g., `"example.com"` **MUST** be encoded as `"example.com"` and **MUST NOT** be encoded as `"example.com."`). |
+| **dNSName**               | Y         | The entry **MUST** contain either a Fully-Qualified Domain Name (FQDN) or Wildcard Domain Name that the CA has validated in accordance with Section 3.2.2.4. Wildcard Domain Names **MUST** be validated for consistency with Section 3.2.2.6. The entry **MUST NOT** contain an Internal Name. The entry **MUST NOT** contain a Domain Name that ends in an IP Reverse Zone Suffix. The FQDN or the FQDN portion of the Wildcard Domain Name **MUST** be composed entirely of P-Labels or Non-Reserved LDH Labels joined together by a `U+002E FULL STOP (".")` character. The zero-length Domain Label representing the root zone **MUST NOT** be included (e.g., `"example.com"` **MUST** be encoded as `"example.com"` and **MUST NOT** be encoded as `"example.com."`). |
 | **x400Address**           | N         | -          |
 | **directoryName**         | N         | -          |
 | **ediPartyName**          | N         | -          |
@@ -3733,33 +3801,6 @@ NAVER Cloud Trust Services issues each **Precertificate** directly from the **Is
 | **signatureAlgorithm** | Encoded value **MUST** be byte-for-byte identical to the `tbsCertificate.signature`. |
 | **signature**        |             |
 
-#### Table: When the Precertificate is issued by a Precertificate Signing CA on behalf of an Issuing CA
-
-| **Field**                 | **Description** |
-|---------------------------|----------------|
-| **tbsCertificate**        | |
-|   **version**             | Encoded value **MUST** be byte-for-byte identical to the version field of the Certificate. |
-|   **serialNumber**        | Encoded value **MUST** be byte-for-byte identical to the serialNumber field of the Certificate. |
-|   **signature**           | Encoded value **MUST** be byte-for-byte identical to the signature field of the Certificate. |
-|   **issuer**              | Encoded value **MUST** be byte-for-byte identical to the subject field of the Precertificate Signing CA Certificate. |
-| **validity**              | Encoded value **MUST** be byte-for-byte identical to the validity field of the Certificate. |
-| **subject**               | Encoded value **MUST** be byte-for-byte identical to the subject field of the Certificate. |
-| **subjectPublicKeyInfo**  | Encoded value **MUST** be byte-for-byte identical to the subjectPublicKeyInfo field of the Certificate. |
-| **issuerUniqueID**        | Encoded value **MUST** be byte-for-byte identical to the issuerUniqueID field of the Certificate, or omitted if omitted in the Certificate. |
-| **subjectUniqueID**       | Encoded value **MUST** be byte-for-byte identical to the subjectUniqueID field of the Certificate, or omitted if omitted in the Certificate. |
-| **extensions**            | See **Section 7.1.2.9.2**. |
-| **signatureAlgorithm**    | Encoded value **MUST** be byte-for-byte identical to the `tbsCertificate.signature`. |
-| **signature**             | Encoded value **MUST** be byte-for-byte identical to the signature field of the Certificate. |
-
-> **Note:**  
-> This profile requires that the **serialNumber** field of the Precertificate be identical to that of the corresponding Certificate.  
-> **RFC 5280, Section 4.1.2.2** requires that the **serialNumber** of certificates be unique.  
-> For the purposes of this document, a **Precertificate shall not be considered a "certificate"** subject to that requirement,  
-> and thus **may have the same serialNumber** as the corresponding Certificate.  
-> However, this does not permit two **Precertificates** to share the same **serialNumber**, unless they correspond to the same Certificate,  
-> as this would otherwise indicate there are two corresponding Certificates that share the same serialNumber.
-
-
 ##### 7.1.2.9.1 Precertificate Profile Extensions - Directly Issued
 
 These extensions apply to a **Precertificate** directly issued from a **CA**, and not from a **Precertificate Signing CA Certificate**,  
@@ -3767,7 +3808,7 @@ as defined in **Section 7.1.2.4**.
 
 | Extension | Presence | Critical | Description |
 |-----------|----------|----------|-------------|
-| **Precertificate Poison** (OID: `1.3.6.1.4.1.11129.2.4.3`) | MUST | Y | See Section 7.1.2.9.3 |
+| **Precertificate Poison** (OID: `1.3.6.1.4.1.11129.2.4.3`) | MUST | Y | See Section 7.1.2.9.2 |
 | **Signed Certificate Timestamp List** | MUST NOT | - | - |
 | **Any other extension** | * | * | The order, criticality, and encoded values of all other extensions **MUST** be byte-for-byte identical to the `extensions` field of the **Certificate**. |
 
@@ -3777,52 +3818,11 @@ and the **Signed Certificate Timestamp List** is removed from the **Certificate*
 the contents of the `extensions` field **MUST** be byte-for-byte identical.
 
 
-##### 7.1.2.9.2 Precertificate Profile Extensions - Precertificate CA Issued
-
-These extensions apply when a **Precertificate** is issued from a **Precertificate Signing CA Certificate**,  
-as defined in **Section 7.1.2.4**.  
-
-For such **Precertificates**, the `authorityKeyIdentifier`, if present in the **Certificate**, is modified in the **Precertificate**,  
-as described in **RFC 6962, Section 3.2**.
-
-| Extension | Presence | Critical | Description |
-|-----------|----------|----------|-------------|
-| **Precertificate Poison** (OID: `1.3.6.1.4.1.11129.2.4.3`) | MUST | Y | See Section 7.1.2.9.3 |
-| **authorityKeyIdentifier** | * | * | See Section 7.1.2.9.4 |
-| **Signed Certificate Timestamp List** | MUST NOT | - | - |
-| **Any other extension** | * | * | The order, criticality, and encoded values of all other extensions **MUST** be byte-for-byte identical to the `extensions` field of the **Certificate**. |
-
-
-##### 7.1.2.9.3 Precertificate Poison
+##### 7.1.2.9.2 Precertificate Poison
 
 The **Precertificate** **MUST** contain the **Precertificate Poison** extension (OID: `1.3.6.1.4.1.11129.2.4.3`).  
 This extension **MUST** have an `extnValue` **OCTET STRING** that is exactly the **hex-encoded bytes `0500`**,  
 the encoded representation of the **ASN.1 NULL** value, as specified in **RFC 6962, Section 3.1**.
-
-
-##### 7.1.2.9.4 Precertificate Authority Key Identifier
-
-For **Precertificates** issued by a **Precertificate Signing CA**, the contents of the `authorityKeyIdentifier` extension **MUST**  
-be one of the following:
-1. **SHOULD** be as defined in the profile below, or;
-2. **MAY** be byte-for-byte identical with the contents of the `authorityKeyIdentifier` extension of the corresponding **Certificate**.
-
-| Field | Description |
-|--------|-------------|
-| **keyIdentifier** | **MUST** be present. **MUST** be identical to the `subjectKeyIdentifier` field of the **Precertificate Signing CA Certificate**. |
-| **authorityCertIssuer** | **MUST NOT** be present. |
-| **authorityCertSerialNumber** | **MUST NOT** be present. |
-
-**Note:**  
-**RFC 6962** describes how the `authorityKeyIdentifier` present on a **Precertificate** is transformed to contain the value  
-of the **Precertificate Signing CA's authorityKeyIdentifier** extension (i.e., reflecting the actual issuer certificate's `keyIdentifier`),  
-thus matching the **corresponding Certificate** when verified by clients.  
-
-These **Baseline Requirements** **RECOMMEND** using the **Precertificate Signing CA's keyIdentifier** in **Precertificates** issued by it  
-to ensure consistency between the `subjectKeyIdentifier` and `authorityKeyIdentifier` of all certificates in the chain.  
-
-Although **RFC 5280** does not strictly require such consistency, some client implementations enforce it for **Certificates**,  
-and this helps avoid potential issues with **Certificate Transparency Logs** incorrectly implementing such checks.
 
 
 #### 7.1.2.10 Common CA Fields
@@ -4970,6 +4970,33 @@ Relying Party, this CP/CPS, or applicable law; (ii) unreasonable
 reliance on a certificate; or (iii) failure to check the certificate's
 status prior to use.
 
+### 9.9.3 Indemnification of Application Software Suppliers
+
+Notwithstanding any limitations on its liability to Subscribers and
+Relying Parties, NAVER Cloud Trust Services understands and acknowledges
+that the Application Software Suppliers who have a Root Certificate
+distribution agreement in place with NAVER Cloud Trust Services do not
+assume any obligation or potential liability of NAVER Cloud Trust
+Services under the Baseline Requirements or that otherwise might exist
+because of the issuance or maintenance of Certificates or reliance
+thereon by Relying Parties or others.
+
+Thus, NAVER Cloud Trust Services shall defend, indemnify, and hold
+harmless each Application Software Supplier for any and all claims,
+damages, and losses suffered by such Application Software Supplier
+related to a Certificate issued by NAVER Cloud Trust Services, regardless
+of the cause of action or legal theory involved. This does not apply,
+however, to any claim, damages, or loss suffered by such Application
+Software Supplier related to a Certificate issued by NAVER Cloud Trust
+Services where such claim, damage, or loss was directly caused by such
+Application Software Supplier's software displaying as not trustworthy a
+Certificate that is still valid, or displaying as trustworthy: (1) a
+Certificate that has expired, or (2) a Certificate that has been revoked
+(but only in cases where the revocation status is currently available
+from NAVER Cloud Trust Services online, and the application software
+either failed to check such status or ignored an indication of revoked
+status).
+
 ## 9.10 Term and Termination
 
 ### 9.10.1 Term
@@ -5129,3 +5156,4 @@ The following revisions have been made to the original document.
 | 1.1.1 | 11 June 2026 | **Subordinate CA Inventory (§1.3.1):** Added two newly-issued Subordinate CAs — NAVER Cloud Trust Services G1 ECC CA4 (Serial `0E37C199673DD94A27F4F83BA63D688C3DBD5A40`) and G1 RSA CA4 (Serial `0B449EE955637827A99ECC363CECE34A911E4A4D`), issued 4 June 2026, valid until 3 May 2029. Removed five revoked Subordinate CAs effective 4 June 2026 — NAVER Secure Certification Authority 1, G1 ECC CA1, and G1 RSA CA1 (superseded), and G1 ECC CA2 and G1 RSA CA2 (cessation of operation). <br>**Dedicated TLS Server Authentication (Chrome Root Program Policy v1.8 §1.3.2):** Restricted Subordinate CA Extended Key Usage to assert only `id-kp-serverAuth` (set `id-kp-clientAuth` to MUST NOT) for the TLS Subordinate CA / Technically-Constrained TLS Subordinate CA profiles (§7.1.2.10.6) and the Cross-Certified Subordinate CA profile (§7.1.2.2.5), aligning with the 15 June 2026 requirement. <br>Restricted Subscriber (Server) Certificate Extended Key Usage to assert only `id-kp-serverAuth` (§7.1.2.7.10). |
 | 1.1.2 | 14 October 2026 | **Subordinate CA Inventory (§1.3.1):** Added newly-issued Subordinate CA NAVER Secure Certification Authority 3 (Serial `1809A48256C0AA1DEDDAB347707D601A3A6D62BA`), issued 13 October 2026, valid until 13 September 2029. Corrected the SHA-256 fingerprint of NAVER Cloud Trust Services G1 ECC CA4. <br>**CA Certificate Policies (§7.1.2.10.5):** Revised the Policy Restricted profile to require exactly one Reserved Certificate Policy Identifier associated with the Subscriber Certificate type directly or transitively issued by the CA Certificate. <br>**Reserved Certificate Policy Identifiers (§7.1.6.1):** Renumbered from §7.1.6.2 to §7.1.6.1 and stated that each Subscriber Certificate contains exactly one Reserved Certificate Policy Identifier corresponding to its certificate type. <br>**Cross-Certified Subordinate CA Certificate Policies (§7.1.2.2.3, §7.1.2.2.6):** Added §7.1.2.2.6 for the Certificate Policies of Cross-Certified Subordinate CA Certificates and referenced it from the §7.1.2.2.3 extensions table. <br>**Repository (§1.5.4, §2.2):** Changed the online repository address to https://pki.navercloudtrust.com/. <br>**Certificate Uses (§1.4.1):** Stated that this CP/CPS covers the Server Authentication Trust Purpose and that Subscriber and Subordinate CA Certificates assert only `id-kp-serverAuth`. <br>**Domain Validation (§3.2.2.4):** Removed methods 3.2.2.4.19 and 3.2.2.4.21; approved methods are 3.2.2.4.7 and 3.2.2.4.22. Removed the obligation to record the BR version number of the validation method. <br>**CAA (§4.2.4):** Added CAA processing of issue, issuewild, and iodef property tags, the TTL-or-eight-hours issuance window, DNSSEC validation of CAA lookups by the Primary Network Perspective, blocking of issuance on CAA lookup failure, iodef reporting, and interpretation of remote Network Perspective CAA responses under Multi-Perspective Issuance Corroboration. <br>**Revocation (§4.9.1.1):** Added failure to perform CAA checking correctly and issuance not permitted under Section 3.2.2.8 to revocation reason 5. <br>**Event Logging (§5.4.1):** Added the minimum content of domain and organization validation records and Multi-Perspective Issuance Corroboration attempt and quorum records. <br>**Incident Handling (§5.7.1.1):** Added compliance with the CCADB Policy and CCADB Incident Reporting Guidelines. <br>**Certificate Profiles (§7.1.2.3, §7.1.2.4, §7.1.2.9):** Corrected the subsection numbering of §7.1.2.3. Stated that Precertificate Signing CAs are not used and Precertificates are issued directly by the Issuing CA. <br>**Law and Requirement Conflicts (§9.16.3):** Added notification to the CA/Browser Forum before issuing under a modified requirement and the 90-day timeline after the conflict ends. <br>**Explicit and Verifiable Practices (Mozilla Root Store Policy §3.3):** Replaced subjective wording with explicit time frames and conditions in §2.3 (CRL and ARL reissuance and validity, CP/CPS review), §3.2.1 (proof of possession), §3.2.2.6 (Public Suffix List refresh), §3.2.2.9 (Network Perspectives and non-corroboration limit), §3.4 (authentication of revocation requests), §4.2.3 (time to process applications), §4.3.1 (pre-issuance linting), §4.9.2, §4.9.3, §4.9.4, §4.9.7, §4.9.12 (revocation procedures and time frames), §5.4.2 (audit log review), §5.4.8 (risk assessment), and §6.7 (vulnerability response timelines). |
 | 1.1.3 | 23 October 2026 | **Subordinate CA Inventory (§1.3.1):** Added four newly-issued Subordinate CAs, issued 16 October 2026 and valid until 15 September 2029 — NAVER Cloud Trust Services G1 RSA CA5 (Serial `0D4F3ACDDC050165007589ACA8694C3D114F954D`), G1 ECC CA5 (Serial `10DDC9696F84463EC689E691A8B807076A4EE0A1`), G1 RSA CA6 (Serial `0E96BEAFF8DDE65D60E5774AFFC2BBA4270CB3F8`), and G1 ECC CA6 (Serial `11EB1F102E9C49DD997CD61B50EC70A2CC6626A7`). Removed five Subordinate CAs revoked on 19 October 2026 — NAVER Secure Certification Authority 2, G1 RSA CA3, G1 RSA CA4, G1 ECC CA3, and G1 ECC CA4. Corrected the Valid Until date of NAVER Global Root Certification Authority to 2037-08-18 (UTC). |
+| 1.1.4 | 09 November 2026 | **Overview (§1.1):** Replaced the "Secure Server Certificate (SSL)" naming with Publicly-Trusted TLS Server Certificates and updated the Baseline Requirements title. <br>**Multi-Perspective Issuance Corroboration (§3.2.2.9):** Added the 15 June 2026 and 15 December 2026 phase-in requirements of at least four (4) and five (5) remote Network Perspectives, and aligned the number of Regional Internet Registry service regions with the Baseline Requirements (two). <br>**Validation of Authority (§3.2.5), Approval or Rejection (§4.2.2):** Replaced "may only accept" and "may reject" with unconditional statements of practice. <br>**Identification and Authentication for Each Role (§5.2.3):** Stated that authentication with a unique credential is required before access is granted to systems needed to perform a Trusted Role. <br>**Protection of Archive (§5.5.3):** Stated that archive backups are stored at a separate location with equivalent controls and protected against unauthorized modification, substitution, destruction, and loss. <br>**Key Pair Generation (§6.1.1), Cryptographic Module Standards and Controls (§6.2.1):** Stated that operational CA key pairs are generated, stored, and operated in a FIPS 140-3 Level 3 validated hardware security module, and that backup and archived copies are held in a FIPS 140-2 Level 3 validated hardware security module. <br>**Private Key Archival (§6.2.5):** Stated that NAVER Cloud Trust Services archives CA Private Keys, that no other party archives them, and that access is subject to multi-person control, resolving the conflict with §6.2.1. <br>**Multi-Person Control (§6.2.2):** Stated that physical and logical access to a CA Private Key requires at least two personnel in Trusted Roles, for every copy including backups. <br>**Certificate Profiles (§7.1.2.4, §7.1.2.9):** Removed the Technically Constrained Precertificate Signing CA Certificate Profile body and the Precertificate Signing CA issuance table, extensions subsection, and authority key identifier subsection, and renumbered Precertificate Poison to §7.1.2.9.2. <br>**Network and Certificate System Security Requirements (§5):** Incorporated the CA/Browser Forum's Network and Certificate System Security Requirements by reference. <br>**CA Key Pair Generation (§6.1.1):** Divided Section 6.1.1 into CA, RA, and Subscriber Key Pair Generation and stated the controls applied to every CA Key Pair generation (physically secured environment, Trusted Roles under multiple person control and split knowledge, cryptographic module, logging, and effective controls), that Root Certificate CA Key Pairs are generated following a Key Generation Script with the entire process recorded on video and a report issued by a Qualified Auditor, and that Subordinate CA Key Pairs, all of which are operated by NAVER Cloud Trust Services, are generated following a Key Generation Script with the entire process recorded on video. <br>**Indemnification of Application Software Suppliers (§9.9.3):** Added the indemnification of Application Software Suppliers required by Baseline Requirements Section 9.9. <br>**Definitions (§1.6.1, §1.6.2):** Renamed "Application Software Vendor" to "Application Software Supplier" and aligned the definition with the Baseline Requirements; corrected "subseqeunt" and expanded the NIST acronym. <br>**Repository (§1.5.4, §2.2):** Changed the online repository address to https://trust.navercloudtrust.com/. <br>**Subscriber Key Pair Generation (§6.1.1.3), Key Sizes (§6.1.5):** Stated the conditions under which NAVER Cloud Trust Services rejects a certificate request, including industry-demonstrated weak keys, and the RSA modulus size and ECDSA curve requirements. |
